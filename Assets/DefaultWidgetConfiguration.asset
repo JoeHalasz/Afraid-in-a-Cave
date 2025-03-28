@@ -18,6 +18,6 @@ MonoBehaviour:
   ListenIpAddress: 127.0.0.1
   PublishIpAddress: 127.0.0.1
   Port: 0
-  NetworkHandler: {fileID: 11400000, guid: bfc9da09af414d74180918484d4f6f5e, type: 2}
+  NetworkHandler: {fileID: 0}
   MaxPlayers: 8
   EnableVoiceChat: 0

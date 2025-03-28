@@ -1,0 +1,81 @@
+using UnityEngine;
+using Unity.Netcode;
+
+public class PlayerMovement : NetworkBehaviour
+{
+    public float speed = 5f; // Speed of the player
+    public float jumpForce = 5f; // Jump force of the player
+    private Rigidbody rb; // Reference to the Rigidbody component
+    private bool isGrounded; // Check if the player is on the ground
+    GameObject camera;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>(); // Get the Rigidbody component attached to the player
+        camera = transform.Find("Camera").gameObject; // Find the child object named "Camera"
+    }
+
+    void Update()
+    {
+        if (!IsOwner || !IsSpawned) return;
+        Move(); // Call the Move function every frame
+        Jump(); // Call the Jump function every frame
+    }
+
+    void Move()
+    {
+        float horizontal = 0;
+        float vertical = 0;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            vertical = 1; // Move forward
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            vertical = -1; // Move backward
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            horizontal = -1; // Move left
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            horizontal = 1; // Move right
+        }
+        
+        Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+        
+        if (moveDirection.magnitude > 1f)
+        {
+            moveDirection.Normalize();
+        }
+
+        rb.MovePosition(rb.position + moveDirection * speed * Time.deltaTime); // Move the player based on input and speed
+    }
+
+    void Jump()
+    {
+        if (isGrounded && Input.GetButtonDown("Jump")) // Check if the player is grounded and jump button is pressed
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Apply an upward force to make the player jump
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground")) // Check if the player collides with an object tagged as "Ground"
+        {
+            isGrounded = true; // Set isGrounded to true when touching the ground
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground")) // Check if the player exits collision with an object tagged as "Ground"
+        {
+            isGrounded = false; // Set isGrounded to false when leaving the ground
+        }
+    }
+}

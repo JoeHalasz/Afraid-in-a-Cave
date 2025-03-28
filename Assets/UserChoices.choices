@@ -17,13 +17,13 @@ MonoBehaviour:
     Answers:
     - QuestionId: Pace
       Answers:
-      - Fast
+      - Slow
     - QuestionId: Cheating
       Answers:
-      - CheatingNotImportant
+      - CheatingImportant
     - QuestionId: CostSensitivity
       Answers:
-      - BestExperience
+      - BestMargin
     - QuestionId: NetcodeArchitecture
       Answers:
       - ClientServer
