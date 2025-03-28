@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TODO.md",
+                "file": "Enemies.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "TODO"
+              "title": "Enemies"
             }
           }
         ]
@@ -165,8 +165,8 @@
   },
   "active": "709ac950379e43d9",
   "lastOpenFiles": [
-    "Mod Support.md",
     "TODO.md",
+    "Mod Support.md",
     "Enemies.md",
     "Welcome.md"
   ]

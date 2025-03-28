@@ -19,3 +19,6 @@ Player controlled
 
 4
 	fast enemy that can steal loot and be annoying 
+
+5
+	clown

@@ -11,12 +11,16 @@ public class ObjectSpawner : NetworkBehaviour
     [Range(0, 100)]
     int numberOfObjects = 10;
 
+    int seed = 1234567;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (!HasAuthority) return;
 
         if(!NetworkManager.LocalClient.IsSessionOwner) return;
+
+        Random.InitState(seed);
 
         List<Vector3> randPositions = new List<Vector3>();
         // rotation
@@ -33,7 +37,6 @@ public class ObjectSpawner : NetworkBehaviour
             NetworkObject networkObject = obj.GetComponent<NetworkObject>();
             networkObject.Spawn();
         }
-
     }
 
 }
