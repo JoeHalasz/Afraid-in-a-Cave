@@ -92,22 +92,6 @@ public class SessionManager : MonoBehaviour
         }
     }
 
-    async void CreateSession()
-    {
-        var playerProperties = await GetPlayerProperties();
-
-        var options = new SessionOptions()
-        {
-            MaxPlayers = 8,
-            PlayerProperties = playerProperties
-        }.WithRelayNetwork(); // might want to change this to WithDistributionAuthorityNetwork
-
-        ActiveSession = await MultiplayerService.Instance.CreateSessionAsync(options);
-
-        Debug.Log($"Created session {ActiveSession.Id} with code {ActiveSession.Code}");
-
-    }
-
     async UniTaskVoid JoinSessionById(string sessionId)
     {
         ActiveSession = await MultiplayerService.Instance.JoinSessionByIdAsync(sessionId);
@@ -150,7 +134,4 @@ public class SessionManager : MonoBehaviour
             ActiveSession = null;
         }
     }
-
-
-
 }
