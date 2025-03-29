@@ -19,7 +19,6 @@ public class PickupItem : NetworkBehaviour
 
     public void checkPickupItem()
     {
-        Debug.Log("Checking for item pickup");
         // raycast to check if the player is looking at the item
         RaycastHit hit;
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 2f))
@@ -35,7 +34,6 @@ public class PickupItem : NetworkBehaviour
 
     private void pickupItem(GameObject item)
     {
-        Debug.Log("Item picked up: " + item.name);
         pickedUpItem = item;
         pickedUpItemRB = item.GetComponent<Rigidbody>();
         if (pickedUpItemRB != null)
@@ -47,7 +45,6 @@ public class PickupItem : NetworkBehaviour
 
     private void dropItem()
     {
-        Debug.Log("Item dropped: " + pickedUpItem.name);
         if (pickedUpItemRB != null)
         {
             pickedUpItemRB.useGravity = true;
@@ -75,13 +72,11 @@ public class PickupItem : NetworkBehaviour
         // if the item gets too far away then drop the item
         if (pickedUpItem != null && Vector3.Distance(camera.transform.position, pickedUpItem.transform.position) > breakDistance)
         {
-            Debug.Log("Item too far away");
             dropItem();
         }
         // if the mouse is released then drop the item
         if (!Input.GetMouseButton(0) && pickedUpItem != null)
         {
-            Debug.Log("Item dropped");
             dropItem();
         }
     }
