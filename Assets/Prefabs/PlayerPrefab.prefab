@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 5111432083115278370}
   - component: {fileID: 6954069727367320281}
   - component: {fileID: -876803523994673787}
+  - component: {fileID: 1488438363271395565}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -297,6 +298,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 0.5
+--- !u!114 &1488438363271395565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126033940717042450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a860a98640dcff74387727fe85c336e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  pickedUpItem: {fileID: 0}
 --- !u!1 &8179578419554847107
 GameObject:
   m_ObjectHideFlags: 0
