@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2345423f951d657b",
+        "id": "98faf43b74ea804c",
         "type": "tabs",
         "children": [
           {
-            "id": "709ac950379e43d9",
+            "id": "09f5e494a278cb59",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -163,11 +163,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "709ac950379e43d9",
+  "active": "09f5e494a278cb59",
   "lastOpenFiles": [
-    "TODO.md",
-    "Mod Support.md",
+    "Classes.md",
+    "Death.md",
+    "Untitled.md",
+    "Store.md",
     "Enemies.md",
+    "Loot.md",
+    "Mod Support.md",
+    "TODO.md",
+    "World.md",
+    "Untitled.canvas",
+    "Base idea.md",
+    "Untitled 1.canvas",
+    "2025-03-29.md",
     "Welcome.md"
   ]
 }
