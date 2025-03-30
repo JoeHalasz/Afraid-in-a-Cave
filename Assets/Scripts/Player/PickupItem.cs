@@ -64,7 +64,7 @@ public class PickupItem : NetworkBehaviour
         {
             Vector3 targetPosition = camera.transform.position + camera.transform.forward * holdDistance;
             // accelerate the RB based on the items mass, less acceleration for heavier items
-            float acceleration = 10f / pickedUpItemRB.mass;
+            float acceleration = 2f / pickedUpItemRB.mass;
             pickedUpItemRB.linearVelocity = Vector3.Lerp(pickedUpItemRB.linearVelocity, (targetPosition - pickedUpItem.transform.position) * acceleration, Time.deltaTime * 5f);
             // TODO slow the items rotation to 0
             pickedUpItemRB.angularVelocity = Vector3.Lerp(pickedUpItemRB.angularVelocity, Vector3.zero, Time.deltaTime * 5f);

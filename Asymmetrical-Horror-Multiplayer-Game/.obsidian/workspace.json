@@ -6,6 +6,7 @@
       {
         "id": "84f877f97ca5a944",
         "type": "tabs",
+        "dimension": 43.05054151624549,
         "children": [
           {
             "id": "56b9a8d75e08f30b",
@@ -40,6 +41,7 @@
       {
         "id": "98faf43b74ea804c",
         "type": "tabs",
+        "dimension": 56.94945848375451,
         "children": [
           {
             "id": "09f5e494a278cb59",
@@ -212,11 +214,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "56b9a8d75e08f30b",
+  "active": "fb7ca1845f49cafe",
   "lastOpenFiles": [
+    "Mod Support.md",
     "Loot.md",
     "Store.md",
-    "Mod Support.md",
     "TODO.md",
     "Enemies.md",
     "Classes.md",
