@@ -41,6 +41,7 @@ Might want AIs for each of these
 	
 6
 	Bat like creature that has bad eyesight but has echo location for sounds, and gets a pathway to how to get to the sound 
+	Can fly
 	Screams a scary sound to alert other monsters to come towards the players, only if the bat can see players and those players walkie talkies dont work
 	Has to rest after yelling, on the ceiling 
 	
@@ -54,3 +55,7 @@ Might want AIs for each of these
 
 9
 	Big slow robot with long range gun that has to recharge
+
+10
+	Enemy that can travel through the ground (not caves)
+	This needs to be balanced so that he cant just see everything 

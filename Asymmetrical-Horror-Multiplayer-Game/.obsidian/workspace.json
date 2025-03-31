@@ -36,7 +36,8 @@
               "title": "Store"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "98faf43b74ea804c",
@@ -216,11 +217,11 @@
   },
   "active": "fb7ca1845f49cafe",
   "lastOpenFiles": [
+    "Store.md",
+    "Enemies.md",
     "Mod Support.md",
     "Loot.md",
-    "Store.md",
     "TODO.md",
-    "Enemies.md",
     "Classes.md",
     "Base idea.md",
     "World.md",
