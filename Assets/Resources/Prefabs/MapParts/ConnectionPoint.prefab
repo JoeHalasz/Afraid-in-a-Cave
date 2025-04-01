@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6828275285975770275}
   - component: {fileID: 5994368495915561906}
   - component: {fileID: 8834961416623700565}
-  - component: {fileID: 2013511644193117571}
   - component: {fileID: 8707215721324070634}
-  m_Layer: 0
+  - component: {fileID: -5204345372521851180}
+  m_Layer: 8
   m_Name: ConnectionPoint
   m_TagString: ConnectionPoint
   m_Icon: {fileID: 0}
@@ -88,27 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2013511644193117571
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8708077336299981198}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8707215721324070634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,3 +103,16 @@ MonoBehaviour:
   connectPart: 0
   partToConnectIndex: 0
   partToConnectConnectionIndex: 0
+--- !u!114 &-5204345372521851180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8708077336299981198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c14ec6b4cf9a69342a38b3d3ed7b969e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connection: {fileID: 0}

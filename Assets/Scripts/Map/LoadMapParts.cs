@@ -31,7 +31,6 @@ public class LoadMapParts : MonoBehaviour
                 Debug.Log("Loading prefab: " + obj.name);
                 foreach (Transform child in obj.transform)
                 {
-                    Debug.Log("Child: " + child.name);
                     data.Connections.Add(child.gameObject);
                 }
                 if (obj.name.Contains("Room"))

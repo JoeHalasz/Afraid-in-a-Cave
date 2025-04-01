@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1283644924636870424}
   - component: {fileID: 3920554913882582969}
   - component: {fileID: 1133460795668652413}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Room1
   m_TagString: MapPart
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6828275285975770275, guid: c6365a9525a273b4ea9b1e520b84454e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.275
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6828275285975770275, guid: c6365a9525a273b4ea9b1e520b84454e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -281,7 +281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6828275285975770275, guid: c6365a9525a273b4ea9b1e520b84454e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.2009
+      value: -0.375
       objectReference: {fileID: 0}
     - target: {fileID: 6828275285975770275, guid: c6365a9525a273b4ea9b1e520b84454e, type: 3}
       propertyPath: m_LocalRotation.w

@@ -1,0 +1,1 @@
+All players can hear all other players no matter the team

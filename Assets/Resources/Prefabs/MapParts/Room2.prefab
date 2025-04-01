@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1428535238466101495}
   - component: {fileID: 7486481155028832164}
   - component: {fileID: 2035969056730585396}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Room2
   m_TagString: MapPart
   m_Icon: {fileID: 0}

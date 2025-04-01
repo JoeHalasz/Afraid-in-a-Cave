@@ -1,10 +1,12 @@
 
 Things to buy
+	Item that shows the path back to camp
 	Pickaxe 
 	Gun
 	Explosives
 	Sword
 	Stun gun
+	sentry gun (cant aim at glowing things like enemy 2 or 7)
 	Metal detector
 	Themo goggles (see close enemies through walls)
 	Grenade
@@ -22,6 +24,7 @@ Things to buy
 	Danger meter (can find all enemies, used for mimic mostly)
 	Player revive
 	Soda can single use to run faster for a few seconds
+	Mouse trap for monster food
 	Specific monster kill items
 		1 : bb gun
 		2 : Some kind of mining thing
@@ -31,7 +34,7 @@ Things to buy
 		6 : Air Horn
 		7 : Flashbang
 		8 : Bug spray
-		9 : Magnet
+		9 : Canary in a cage
 
 	
 	

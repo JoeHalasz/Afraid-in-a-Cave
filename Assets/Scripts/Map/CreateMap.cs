@@ -4,22 +4,19 @@ using System.Collections;
 
 public class CreateMap : MonoBehaviour
 {
-    public static CreateMap Instance { get; private set; }
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     [SerializeField]
+    int maxRooms = 30;
+    [SerializeField]
     bool StartMapCreation = false;
+    [SerializeField]
+    bool stopGeneration = false;
+    List<LoadMapParts.MapPartData> roomsData;
+    List<LoadMapParts.MapPartData> hallwaysData;
+    List<GameObject> allAvailableConnections = new List<GameObject>();
+    private List<Bounds> collisionBounds = new List<Bounds>();
+    int totalParts = 1;
+    bool mapPlanComplete = false;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -29,13 +26,15 @@ public class CreateMap : MonoBehaviour
             StartMapCreation = false;
             // spawn a thread to create the map
             Debug.Log("Creating map...");
-            StartCoroutine(createMap());
+            StartCoroutine(createMapPlan());
+        }
+        if (mapPlanComplete)
+        {
+            mapPlanComplete = false;
+            // start the next step
         }
     }
 
-    [SerializeField]
-    int firstHallwayPrefabIndex = 0;    
-    
     public void alignNewPart(Transform parentB, Transform connectionPointA, Transform connectionPointB)
     {
         Transform parentA = connectionPointA.parent;
@@ -49,60 +48,40 @@ public class CreateMap : MonoBehaviour
         parentB.position = newPos;
         // if its off by 90 degrees then rotate it 90 degrees
         if (Mathf.Round(Quaternion.Angle(connectionPointA.rotation, connectionPointB.rotation)) == 90)
-        {
             parentB.RotateAround(connectionPointB.position, Vector3.up, -90);
-        }
         else if (Mathf.Round(Quaternion.Angle(connectionPointA.rotation, connectionPointB.rotation)) == -90)
-        {
             parentB.RotateAround(connectionPointB.position, Vector3.up, 90);
-        }
-        // if its off by 270 degrees then rotate it 90 degrees
-        else if (Mathf.Round(Quaternion.Angle(connectionPointA.rotation, connectionPointB.rotation)) == 270)
-        {
-            parentB.RotateAround(connectionPointB.position, Vector3.up, -270);
-        }
-        else if (Mathf.Round(Quaternion.Angle(connectionPointA.rotation, connectionPointB.rotation)) == -270)
-        {
-            parentB.RotateAround(connectionPointB.position, Vector3.up, 270);
-        }
-        // if the rotations are really close, then rotate it 180 degrees
         if (Mathf.Round(Quaternion.Angle(connectionPointA.rotation, connectionPointB.rotation)) == 0)
-        {
             parentB.RotateAround(connectionPointB.position, Vector3.up, 180);
-        }
-        // move the parents slightly away from each other to avoid collision
-        Vector3 direction = (parentB.position - parentA.position).normalized;
-        float distance = Vector3.Distance(parentA.position, parentB.position);
-        float offsetDistance = 0.1f; // adjust this value to control the distance between the two parents
-        parentB.position += direction * offsetDistance;
+        // round the position to 2 decimal places
+        // Vector3 posBefore = parentB.position;
+        // parentB.position = new Vector3(Mathf.Round(parentB.position.x * 100) / 100, Mathf.Round(parentB.position.y * 100) / 100, Mathf.Round(parentB.position.z * 100) / 100);
+        // Vector3 posAfter = parentB.position;
+        // if (posBefore != posAfter)
+        //     Debug.Log($"Aligning {posBefore} to {posAfter}");
     }
 
-    List<LoadMapParts.MapPartData> roomsData;
-    List<LoadMapParts.MapPartData> hallwaysData;
-    List<GameObject> allAvailableConnections = new List<GameObject>();
-    private List<Bounds> collisionBounds = new List<Bounds>();
-
-    public void addPartToConnection(GameObject connectionPoint, int newPartIndex, int newPartConnectionPointIndex)
+    public GameObject addPartToConnection(GameObject connectionPoint, int newPartIndex, int newPartConnectionPointIndex)
     {
         if (roomsData == null || hallwaysData == null)
         {
             Debug.Log("Map has not been created yet");
-            return;
+            return null;
         }
         // make sure the indicies are good 
         if (newPartIndex < 0 || newPartIndex >= hallwaysData.Count)
         {
             Debug.Log("Invalid part index: " + newPartIndex);
-            return;
+            return null;
         }
         if (newPartConnectionPointIndex < 0 || newPartConnectionPointIndex >= hallwaysData[newPartIndex].Connections.Count)
         {
             Debug.Log("Invalid connection point index: " + newPartConnectionPointIndex);
-            return;
+            return null;
         }
         // spawn it in 
         GameObject newPart = Instantiate(hallwaysData[newPartIndex].obj, connectionPoint.transform.position, connectionPoint.transform.rotation);
-        newPart.transform.parent = connectionPoint.transform;
+        newPart.transform.parent = transform;
         newPart.name = "Hallway" + totalParts;
         // get the connection point on the new part
         Transform newPartConnectionPoint = newPart.transform.GetChild(newPartConnectionPointIndex);
@@ -110,6 +89,7 @@ public class CreateMap : MonoBehaviour
         alignNewPart(newPart.transform, connectionPoint.transform, newPartConnectionPoint);
         addCollider(newPart);
         totalParts++;
+        return newPart;
     }
 
     void addCollider(GameObject newPart)
@@ -118,16 +98,39 @@ public class CreateMap : MonoBehaviour
         {
             newPart.AddComponent<Rigidbody>();
             newPart.GetComponent<Rigidbody>().isKinematic = true;
+            newPart.GetComponent<Rigidbody>().useGravity = false;
+            newPart.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
         if (newPart.GetComponent<BoxCollider>() == null)
         {
             BoxCollider boxCollider = newPart.AddComponent<BoxCollider>();
             boxCollider.isTrigger = true;
+            boxCollider.size = new Vector3(.99f,.99f,.99f);
+            boxCollider.center = new Vector3(0, 0, 0);
+        }
+        foreach (Transform child in newPart.GetComponentsInChildren<Transform>())
+        {
+            if (child.CompareTag("ConnectionPoint"))
+            {
+                if (child.GetComponent<BoxCollider>() == null)
+                {
+                    BoxCollider boxCollider = child.gameObject.AddComponent<BoxCollider>();
+                    boxCollider.isTrigger = true;
+                    boxCollider.size = new Vector3(1,1,1);
+                    boxCollider.center = new Vector3(0, 0, 0);
+                }
+                if (child.GetComponent<Rigidbody>() == null)
+                {
+                    Rigidbody rb = child.gameObject.AddComponent<Rigidbody>();
+                    rb.isKinematic = true;
+                    rb.useGravity = false;
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                }
+            }
         }
     }
 
-    int totalParts = 1;
-    IEnumerator createMap()
+    IEnumerator createMapPlan()
     {
         foreach (Transform child in transform)
         {
@@ -142,29 +145,30 @@ public class CreateMap : MonoBehaviour
 
         int roomCount = 0;
         int hallwayCount = 0;
-        totalParts = 1;
+        totalParts = 0;
 
-        // Spawn the first hallway
-        GameObject firstHallway = Instantiate(hallwaysData[firstHallwayPrefabIndex].obj, new Vector3(0, 0, 0), Quaternion.identity);
-        firstHallway.transform.parent = transform;
-        firstHallway.name = "Hallway0";
-        addCollider(firstHallway);
-
-        // Add its connections to the list of available connections
-        foreach (Transform connection in firstHallway.GetComponentsInChildren<Transform>())
-        {
-            if (connection.CompareTag("ConnectionPoint"))
-            {
-                allAvailableConnections.Add(connection.gameObject);
-            }
-        }
+        GameObject enterance = Instantiate(hallwaysData[3].obj, new Vector3(0, 0, 0), Quaternion.identity);
+        enterance.transform.parent = transform;
+        enterance.name = "Hallway" + totalParts++;
+        addCollider(enterance);
+        enterance = addPartToConnection(enterance.transform.GetChild(0).gameObject, 3, 1);
+        addCollider(enterance);
+        GameObject firstHallway = addPartToConnection(enterance.transform.GetChild(0).gameObject, 1, 2);
+        // add the second connection point of that hallway to the list of available connections
+        allAvailableConnections.Add(firstHallway.transform.GetChild(0).gameObject);
+        allAvailableConnections.Add(firstHallway.transform.GetChild(1).gameObject);
 
         // Procedurally generate the map
-        while (roomCount < 10 && allAvailableConnections.Count > 0 && hallwayCount < 300)
+        while (roomCount < maxRooms && allAvailableConnections.Count > 0)
         {
-            // Debug.Log($"Room count: {roomCount}, Hallway count: {hallwayCount}, Available connections: {allAvailableConnections.Count}");
-            // Randomly select an available connection
-            GameObject connectionPoint = allAvailableConnections[Random.Range(0, allAvailableConnections.Count)];
+            if (stopGeneration)
+            {
+                Debug.Log("Stopping generation");
+                stopGeneration = false;
+                break;
+            }
+            Debug.Log($"Room count: {roomCount}, Hallway count: {hallwayCount}, Available connections: {allAvailableConnections.Count}");
+            GameObject connectionPoint = allAvailableConnections[0];
             allAvailableConnections.Remove(connectionPoint);
             // make sure it still exists
             if (connectionPoint == null)
@@ -179,9 +183,15 @@ public class CreateMap : MonoBehaviour
             }
             else if (connectionPoint.transform.parent.name.Contains("Hallway")) // hallways connect to anything
             {
-                // roomsToTry.AddRange(roomsData);
-                hallwaysToTry.AddRange(hallwaysData);
-                hallwaysToTry.RemoveAll(x => x.obj.name == connectionPoint.transform.parent.name);
+                roomsToTry.AddRange(roomsData);
+                foreach (LoadMapParts.MapPartData hallway in hallwaysData)
+                {
+                    // if there materials colors are not the same then add it to the list 
+                    if (!hallway.obj.transform.GetComponent<Renderer>().sharedMaterial.color.Equals(connectionPoint.transform.parent.GetComponent<Renderer>().material.color))
+                    {
+                        hallwaysToTry.Add(hallway);
+                    }
+                }
             }
 
             // try adding rooms until we cant anymore or something was added
@@ -190,8 +200,7 @@ public class CreateMap : MonoBehaviour
                 // make sure this connection point stil exists
                 if (connectionPoint == null)
                     break;
-                // Debug.Log($"Trying connection {connectionPoint.name} on {connectionPoint.transform.parent.name} with {roomsToTry.Count} rooms and {hallwaysToTry.Count} hallways left");
-                bool spawnRoom = roomsToTry.Count != 0 && Random.value > .75f;
+                bool spawnRoom = roomsToTry.Count != 0 && Random.value > .25f;
 
                 GameObject newPart = null;
                 if (spawnRoom || hallwaysToTry.Count == 0)
@@ -210,7 +219,7 @@ public class CreateMap : MonoBehaviour
                     newPart.name = "Hallway" + totalParts;
                 }
                 totalParts++;
-                newPart.transform.parent = connectionPoint.transform;
+                newPart.transform.parent = transform;
 
                 List<Transform> newConnectionsToTry = new List<Transform>();
                 foreach (Transform connection in newPart.GetComponentsInChildren<Transform>())
@@ -220,7 +229,6 @@ public class CreateMap : MonoBehaviour
                         newConnectionsToTry.Add(connection);
                     }
                 }
-                // Debug.Log($"New part: {newPart.name} with {newConnectionsToTry.Count} connections");
                 bool connectionFound = false;
                 Transform newConnection = null;
                 while (newConnectionsToTry.Count != 0)
@@ -233,28 +241,29 @@ public class CreateMap : MonoBehaviour
                     if (newConnection == null)
                         continue;
                     alignNewPart(newPart.transform, connectionPoint.transform, newConnection);
-                    addCollider(newPart);
-                    yield return new WaitForSeconds(1f/30f); // TODO see how fast this can go
-                    if (newPart == null)
+                    // if the new part is higher than the first part then delete it and move on
+                    if (newPart.transform.position.y > firstHallway.transform.position.y)
                     {
+                        connectionFound = false;
                         continue;
                     }
+                    addCollider(newPart);
+                    // wait 1 frame
+                    yield return 0;
+                    if (newPart == null)
+                        continue;
                     else
-                    {
                         connectionFound = true;
-                    }
                 }
 
                 if (!connectionFound || newPart == null)
                 {
-                    // Debug.Log("No connection found for " + newPart.name);
-                    // newPart.GetComponent<Renderer>().material.color = Color.red;
-                    // Destroy(newPart);
+                    if (newPart != null)
+                        Destroy(newPart);
                     continue;
                 }
                 else
                 {
-                    // Debug.Log("No collision detected with " + newPart.name);
                     // Add the new part's connections to the list of available connections
                     foreach (Transform connection in newPart.GetComponentsInChildren<Transform>())
                     {
@@ -272,16 +281,7 @@ public class CreateMap : MonoBehaviour
             }
         }
         Debug.Log($"Stopped because room count: {roomCount}, hallway count: {hallwayCount}, available connections: {allAvailableConnections.Count}");
+        mapPlanComplete = true;
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Debug.Log("Total collision bounds: " + collisionBounds.Count);
-    //     foreach (Bounds bounds in collisionBounds)
-    //     {
-    //         Debug.Log("Drawing bounds: " + bounds);
-    //         Gizmos.DrawWireCube(bounds.center, bounds.size);
-    //     }
-    // }
 }

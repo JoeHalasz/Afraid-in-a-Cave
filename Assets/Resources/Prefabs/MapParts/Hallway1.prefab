@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 688381310161196129}
   - component: {fileID: 8713410443159914350}
   - component: {fileID: 2790481156589962355}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hallway1
   m_TagString: MapPart
   m_Icon: {fileID: 0}
