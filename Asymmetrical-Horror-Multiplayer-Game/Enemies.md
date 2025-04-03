@@ -3,17 +3,20 @@ Can change monster type on revive
 Might want AIs for each of these 
 MAYBE enemies drop a sellable item
 [[Spawning enemy food]]
+Some enemies are not from this world. They will have a different style/look to them. 
 
 1
 	Giant floating eye 
 	Cant moved when being looked at 
 	Other players take damage when looking at them
 	Can disappear (blinks and it disappears)
+	Extremely high res scary ( not from this world )
 
 2 
 	Floating glowing crystal/rock
 	Causes held weapons to fire randomly when other player is being looked at 
 	If damaged by weapon whoever is holding the weapon is also damaged
+	Low poly ( from this world )
 
 3
 	oldtimey cartoon character
@@ -28,6 +31,7 @@ MAYBE enemies drop a sellable item
 	Anvils that drop
 	Need to eat vegetables to spawn more traps
 	Can leave cameras around for all enemies to use 
+	2D, always faces whatever camera is seeing it ( not from this dimension )
 
 4
 	Slenderman look
@@ -37,6 +41,7 @@ MAYBE enemies drop a sellable item
 	Cant damage loot
 	Needs to eat something to be able to sprint
 	When it finds a dead player, it can become them (skin stealer) and use their items
+	Evil ethereal looking ( from the same place as the void enemy )
 
 5
 	Mimic
@@ -45,6 +50,7 @@ MAYBE enemies drop a sellable item
 	can steal an item that the player is holding every few seconds
 	Forced back to base state on damage
 	Tracker when on a player for other enemies 
+	low poly ( from this world )
 	
 6
 	Bat like creature that has bad eyesight but has echo location for sounds, and gets a pathway to how to get to the sound 
@@ -53,19 +59,16 @@ MAYBE enemies drop a sellable item
 	can see players and those players walkie talkies don't work
 	Has to rest after yelling, on the ceiling
 	Needs to eat rats  
+	Realistic look ( same look as the eye )
 	
 7
 	Void enemy that breaks lighting items like flashlights and dims cave lights 
 	is silent but moves slowly
 	As it gets closer the environment gets darker and darker. Once pitch black, for too long player dies
 	Needs to eat light to stay alive ( it has to move through the caves, cant just sit)
+	Evil ethereal looking ( from the same place as the slenderman enemy )
 
 8
 	Spider that webs players to slow them down, and poisons them when it bites 
 	Eat rats to make poison
-
-9
-	Worm enemy that can travel through the ground (not caves)
-	This needs to be balanced so that he cant just see everything
-	Can see one room over if the room is attached but there is no hole into it 
-	Needs to eat something to be able to dig through caves 
+	Spider is low poly ( from this world )

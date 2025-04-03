@@ -225,12 +225,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fb7ca1845f49cafe",
+  "active": "e7265b9e249c58c8",
   "lastOpenFiles": [
-    "Enemy AI.md",
-    "Lighting.md",
-    "Spawning enemy food.md",
+    "LOre.md",
     "Enemies.md",
+    "Lighting.md",
+    "Enemy AI.md",
+    "Spawning enemy food.md",
     "Loot.md",
     "Death.md",
     "proximity chat.md",
