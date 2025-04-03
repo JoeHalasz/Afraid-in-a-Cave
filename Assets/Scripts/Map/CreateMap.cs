@@ -11,12 +11,20 @@ public class CreateMap : MonoBehaviour
     bool StartMapCreation = false;
     [SerializeField]
     bool stopGeneration = false;
+    [SerializeField]
+    bool redoReplace = false;
     List<LoadMapParts.MapPartData> roomsData;
     List<LoadMapParts.MapPartData> hallwaysData;
     List<GameObject> allAvailableConnections = new List<GameObject>();
     private List<Bounds> collisionBounds = new List<Bounds>();
     int totalParts = 1;
     bool mapPlanComplete = false;
+    ReplaceMapParts replaceMapParts = null;
+
+    void Start()
+    {
+        replaceMapParts = GetComponent<ReplaceMapParts>();
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -28,11 +36,19 @@ public class CreateMap : MonoBehaviour
             Debug.Log("Creating map...");
             StartCoroutine(createMapPlan());
         }
-        if (mapPlanComplete)
+        if (mapPlanComplete || redoReplace)
         {
+            redoReplace = false;
             mapPlanComplete = false;
             // start the next step
+            StartCoroutine(createMapPlanThread());
         }
+    }
+
+    IEnumerator createMapPlanThread()
+    {
+        yield return 20;
+        replaceMapParts.replaceParts();
     }
 
     public void alignNewPart(Transform parentB, Transform connectionPointA, Transform connectionPointB)
@@ -82,6 +98,7 @@ public class CreateMap : MonoBehaviour
         // spawn it in 
         GameObject newPart = Instantiate(hallwaysData[newPartIndex].obj, connectionPoint.transform.position, connectionPoint.transform.rotation);
         newPart.transform.parent = transform;
+        newPart.GetComponent<SavedPartType>().partTypeName = newPart.name.Replace("(Clone)", "");
         newPart.name = "Hallway" + totalParts;
         // get the connection point on the new part
         Transform newPartConnectionPoint = newPart.transform.GetChild(newPartConnectionPointIndex);
@@ -149,6 +166,7 @@ public class CreateMap : MonoBehaviour
 
         GameObject enterance = Instantiate(hallwaysData[3].obj, new Vector3(0, 0, 0), Quaternion.identity);
         enterance.transform.parent = transform;
+        enterance.GetComponent<SavedPartType>().partTypeName = enterance.name.Replace("(Clone)", "");
         enterance.name = "Hallway" + totalParts++;
         addCollider(enterance);
         enterance = addPartToConnection(enterance.transform.GetChild(0).gameObject, 3, 1);
@@ -209,6 +227,7 @@ public class CreateMap : MonoBehaviour
                     int choice = Random.Range(0, roomsToTry.Count);
                     newPart = Instantiate(roomsToTry[choice].obj);
                     roomsToTry.RemoveAt(choice);
+                    newPart.GetComponent<SavedPartType>().partTypeName = newPart.name.Replace("(Clone)", "");
                     newPart.name = "Room" + totalParts;
                 }
                 else
@@ -216,6 +235,7 @@ public class CreateMap : MonoBehaviour
                     int choice = Random.Range(0, hallwaysToTry.Count);
                     newPart = Instantiate(hallwaysToTry[choice].obj);
                     hallwaysToTry.RemoveAt(choice);
+                    newPart.GetComponent<SavedPartType>().partTypeName = newPart.name.Replace("(Clone)", "");
                     newPart.name = "Hallway" + totalParts;
                 }
                 totalParts++;

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7734810528918002071}
   - component: {fileID: 1888783644257880728}
   - component: {fileID: 4928004268201445765}
+  - component: {fileID: -4494394158353868426}
   m_Layer: 7
   m_Name: Hallway4
   m_TagString: MapPart
@@ -100,6 +101,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b507f2fafe024643aa5cde1b2daa54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4494394158353868426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393476087363926052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c926cde13b306045bd73164c4356353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2438480572641305405

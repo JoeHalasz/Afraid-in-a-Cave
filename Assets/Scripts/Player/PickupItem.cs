@@ -25,7 +25,8 @@ public class PickupItem : NetworkBehaviour
         {
             if (hit.collider.gameObject != gameObject)
             {
-                pickupItem(hit.collider.gameObject);
+                if (hit.collider.gameObject.tag == "Pickup")
+                    pickupItem(hit.collider.gameObject);
             }
         }
         // draw the ray
