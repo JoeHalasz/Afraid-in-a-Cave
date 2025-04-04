@@ -62,7 +62,7 @@ public class ReplaceMapParts : MonoBehaviour
                 }
 
                 // destroy the old part
-                // Destroy(child.gameObject);
+                Destroy(child.gameObject);
             }
         }
 

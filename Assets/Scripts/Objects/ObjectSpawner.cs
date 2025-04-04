@@ -29,7 +29,7 @@ public class ObjectSpawner : NetworkBehaviour
         List<float> randMasses = new List<float>();
         for (int i = 0; i < numberOfObjects; i++)
         {
-            randPositions.Add(new Vector3(Random.Range(-10, 10), Random.Range(1,10), Random.Range(-10, 10)));
+            randPositions.Add(new Vector3(Random.Range(-10, 10), 1, Random.Range(-10, 10)));
             randRotations.Add(Quaternion.Euler(0, Random.Range(0, 360), 0));
             randMasses.Add(Random.Range(.1f,1));
         }

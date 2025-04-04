@@ -49,9 +49,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 61401518adb988f4e84c3f464bc36785, type: 3}
+      propertyPath: m_RayTracingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 61401518adb988f4e84c3f464bc36785, type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: -7511558181221131132, guid: 61401518adb988f4e84c3f464bc36785, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 61401518adb988f4e84c3f464bc36785, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: fd491dc1193e0f84f828fded2eb4ce04, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 61401518adb988f4e84c3f464bc36785, type: 3}
+      propertyPath: m_RayTracingAccelStructBuildFlagsOverride
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 61401518adb988f4e84c3f464bc36785, type: 3}
       propertyPath: m_Name
       value: Rock4

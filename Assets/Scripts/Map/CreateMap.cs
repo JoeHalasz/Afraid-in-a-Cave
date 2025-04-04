@@ -177,7 +177,7 @@ public class CreateMap : MonoBehaviour
         allAvailableConnections.Add(firstHallway.transform.GetChild(1).gameObject);
 
         // Procedurally generate the map
-        while (roomCount < maxRooms && allAvailableConnections.Count > 0)
+        while (hallwayCount < maxRooms && allAvailableConnections.Count > 0) // TODO put this back to roomCount
         {
             if (stopGeneration)
             {
@@ -201,7 +201,7 @@ public class CreateMap : MonoBehaviour
             }
             else if (connectionPoint.transform.parent.name.Contains("Hallway")) // hallways connect to anything
             {
-                roomsToTry.AddRange(roomsData);
+                //roomsToTry.AddRange(roomsData);
                 foreach (LoadMapParts.MapPartData hallway in hallwaysData)
                 {
                     // if there materials colors are not the same then add it to the list 

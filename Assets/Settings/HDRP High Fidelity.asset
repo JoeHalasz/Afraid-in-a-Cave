@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HDRP High Fidelity
   m_EditorClassIdentifier: 
   m_RenderPipelineSettings:
-    supportShadowMask: 0
+    supportShadowMask: 1
     supportSSR: 0
     supportSSRTransparent: 0
     supportSSAO: 1
@@ -50,7 +50,7 @@ MonoBehaviour:
     supportTransparentDepthPostpass: 1
     colorBufferFormat: 48
     supportCustomPass: 1
-    customBufferFormat: 12
+    customBufferFormat: 48
     supportedLitShaderMode: 2
     planarReflectionResolution:
       m_Values: 000100000004000000080000
@@ -82,7 +82,7 @@ MonoBehaviour:
     supportProbeVolumeScenarios: 0
     supportProbeVolumeScenarioBlending: 1
     probeVolumeBlendingMemoryBudget: 128
-    supportRayTracing: 0
+    supportRayTracing: 1
     supportVFXRayTracing: 0
     supportedRayTracingMode: 3
     lightLoopSettings:
@@ -115,10 +115,10 @@ MonoBehaviour:
       maxLocalVolumetricFogSize: 32
       maxLocalVolumetricFogOnScreen: 64
     hdShadowInitParams:
-      maxShadowRequests: 128
+      maxShadowRequests: 1280
       directionalShadowsDepthBits: 16
-      punctualShadowFilteringQuality: 2
-      directionalShadowFilteringQuality: 2
+      punctualShadowFilteringQuality: 1
+      directionalShadowFilteringQuality: 1
       areaShadowFilteringQuality: 0
       punctualLightShadowAtlas:
         shadowAtlasResolution: 4096

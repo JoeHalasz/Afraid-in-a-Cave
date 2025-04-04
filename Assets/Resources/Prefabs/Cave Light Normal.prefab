@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3258040570011977187}
   - component: {fileID: 8732800004524268153}
   m_Layer: 0
-  m_Name: Cave Light
+  m_Name: Cave Light Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 0.62473303, g: 0.8609629, b: 0.9528302, a: 1}
-  m_Intensity: 55
+  m_Intensity: 25
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -83,7 +83,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
