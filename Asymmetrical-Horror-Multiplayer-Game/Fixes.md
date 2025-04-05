@@ -6,3 +6,5 @@ Object grabber breaks too easily and does not go far enough
 
 More fog/ something that makes the player see less far, but also more light around the player so they can see around them 
 Maybe lantern on the player?
+
+Fix multiplayer after alt f4
