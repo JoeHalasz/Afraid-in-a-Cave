@@ -27,4 +27,13 @@ public class ConnectConnectionPoints : MonoBehaviour
         }
     }
 
+    void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject == connection)
+        {
+            connection.GetComponent<ConnectConnectionPoints>().connection = null;
+            connection = null;
+        }
+    }
+
 }

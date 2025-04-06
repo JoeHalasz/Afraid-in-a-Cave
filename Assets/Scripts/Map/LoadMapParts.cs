@@ -19,7 +19,6 @@ public class LoadMapParts : MonoBehaviour
     void Start()
     {
         Debug.Log("Loading map parts...");
-
         foreach (GameObject obj in Resources.LoadAll<GameObject>("Prefabs/MapParts"))
         {
             if (obj != null)

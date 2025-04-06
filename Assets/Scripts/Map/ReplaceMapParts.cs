@@ -81,7 +81,7 @@ public class ReplaceMapParts : MonoBehaviour
 
     List<GameObject> findCloseParts(GameObject obj) // this should have connectionPoints as children
     {
-        Debug.Log($"Finding close parts for {obj.name}");
+        // Debug.Log($"Finding close parts for {obj.name}");
         List<GameObject> closeParts = new List<GameObject>();
         List<GameObject> secondLayer = new List<GameObject>();
         ConnectConnectionPoints[] connectionPoints = obj.GetComponentsInChildren<ConnectConnectionPoints>();
@@ -93,7 +93,7 @@ public class ReplaceMapParts : MonoBehaviour
             {
                 GameObject connectionParent = connectionPoint.connection.transform.parent.gameObject;
                 secondLayer.Add(connectionParent);
-                if (!closeParts.Contains(replacements[connectionParent]))
+                if (replacements.ContainsKey(connectionParent) && !closeParts.Contains(replacements[connectionParent]))
                     closeParts.Add(replacements[connectionParent]);
             }
         }
@@ -106,12 +106,12 @@ public class ReplaceMapParts : MonoBehaviour
                 if (connectionPoint.connection != null)
                 {
                     GameObject connectionParent2 = connectionPoint.connection.transform.parent.gameObject;
-                    if (!closeParts.Contains(replacements[connectionParent2]))
+                    if (replacements.ContainsKey(connectionParent2) && !closeParts.Contains(replacements[connectionParent2]))
                         closeParts.Add(replacements[connectionParent2]);
                 }
             }
         }
-        Debug.Log($"Found {closeParts.Count} close parts for {obj.name}");
+        // Debug.Log($"Found {closeParts.Count} close parts for {obj.name}");
         return closeParts;
     }
 

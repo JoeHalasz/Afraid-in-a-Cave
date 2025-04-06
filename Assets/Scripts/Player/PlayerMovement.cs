@@ -8,6 +8,9 @@ public class PlayerMovement : NetworkBehaviour
     private Rigidbody rb; // Reference to the Rigidbody component
     private bool isGrounded; // Check if the player is on the ground
     GameObject camera;
+    // store what time we were last grounded
+    float lastGroundedTime = 0f;
+    float lastJumpTime = 0f;
 
     void Start()
     {
@@ -24,41 +27,45 @@ public class PlayerMovement : NetworkBehaviour
 
     void Move()
     {
-        float horizontal = 0;
-        float vertical = 0;
+        if (isGrounded || Time.time - lastGroundedTime > 2f)
+        {
+            float horizontal = 0;
+            float vertical = 0;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            vertical = 1; // Move forward
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            vertical = -1; // Move backward
-        }
+            if (Input.GetKey(KeyCode.W))
+            {
+                vertical = 1; // Move forward
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                vertical = -1; // Move backward
+            }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            horizontal = -1; // Move left
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            horizontal = 1; // Move right
-        }
-        
-        Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-        
-        if (moveDirection.magnitude > 1f)
-        {
-            moveDirection.Normalize();
-        }
+            if (Input.GetKey(KeyCode.A))
+            {
+                horizontal = -1; // Move left
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                horizontal = 1; // Move right
+            }
+            
+            Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+            
+            if (moveDirection.magnitude > 1f)
+            {
+                moveDirection.Normalize();
+            }
 
-        rb.MovePosition(rb.position + moveDirection * speed * Time.deltaTime); // Move the player based on input and speed
+            rb.linearVelocity = new Vector3(moveDirection.x * speed, rb.linearVelocity.y, moveDirection.z * speed); // Set the velocity of the player
+        }
     }
 
     void Jump()
     {
-        if (isGrounded && Input.GetButtonDown("Jump")) // Check if the player is grounded and jump button is pressed
+        if (isGrounded && Input.GetButtonDown("Jump") && Time.time - lastJumpTime > 1f) // Check if the player is grounded and the jump button is pressed
         {
+            lastJumpTime = Time.time;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Apply an upward force to make the player jump
         }
     }
@@ -71,11 +78,20 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground")) // Check if the player is still colliding with an object tagged as "Ground"
+        {
+            isGrounded = true; // Keep isGrounded true while touching the ground
+        }
+    }
+
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) // Check if the player exits collision with an object tagged as "Ground"
         {
             isGrounded = false; // Set isGrounded to false when leaving the ground
+            lastGroundedTime = Time.time;
         }
     }
 }

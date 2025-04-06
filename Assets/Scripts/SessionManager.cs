@@ -53,6 +53,8 @@ public class SessionManager : MonoBehaviour
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.Log("Signed in anonymously. PlayerID: " + AuthenticationService.Instance.PlayerId);
 
+            sessionName = $"Session_{UnityEngine.Random.Range(0, 10000)}";
+
             var options = new SessionOptions()
             {
                 Name = sessionName,
@@ -132,6 +134,15 @@ public class SessionManager : MonoBehaviour
         finally
         {
             ActiveSession = null;
+        }
+    }
+
+    // on game quit or application quit, leave the session
+    void OnApplicationQuit()
+    {
+        if (ActiveSession != null)
+        {
+            LeaveSession().Forget();
         }
     }
 }

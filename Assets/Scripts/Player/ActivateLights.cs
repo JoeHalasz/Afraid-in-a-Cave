@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ActivateLights : MonoBehaviour
 {
-
     // on trigger enter
     private void OnTriggerEnter(Collider other)
     {
@@ -27,5 +26,4 @@ public class ActivateLights : MonoBehaviour
                 Debug.LogWarning($"Light component not found on {other.gameObject.name}.");
         }
     }
-
 }

@@ -69,12 +69,6 @@ public class CreateMap : MonoBehaviour
             parentB.RotateAround(connectionPointB.position, Vector3.up, 90);
         if (Mathf.Round(Quaternion.Angle(connectionPointA.rotation, connectionPointB.rotation)) == 0)
             parentB.RotateAround(connectionPointB.position, Vector3.up, 180);
-        // round the position to 2 decimal places
-        // Vector3 posBefore = parentB.position;
-        // parentB.position = new Vector3(Mathf.Round(parentB.position.x * 100) / 100, Mathf.Round(parentB.position.y * 100) / 100, Mathf.Round(parentB.position.z * 100) / 100);
-        // Vector3 posAfter = parentB.position;
-        // if (posBefore != posAfter)
-        //     Debug.Log($"Aligning {posBefore} to {posAfter}");
     }
 
     public GameObject addPartToConnection(GameObject connectionPoint, int newPartIndex, int newPartConnectionPointIndex)
@@ -177,7 +171,7 @@ public class CreateMap : MonoBehaviour
         allAvailableConnections.Add(firstHallway.transform.GetChild(1).gameObject);
 
         // Procedurally generate the map
-        while (hallwayCount < maxRooms && allAvailableConnections.Count > 0) // TODO put this back to roomCount
+        while (roomCount < maxRooms && allAvailableConnections.Count > 0)
         {
             if (stopGeneration)
             {
@@ -185,7 +179,7 @@ public class CreateMap : MonoBehaviour
                 stopGeneration = false;
                 break;
             }
-            Debug.Log($"Room count: {roomCount}, Hallway count: {hallwayCount}, Available connections: {allAvailableConnections.Count}");
+            // Debug.Log($"Room count: {roomCount}, Hallway count: {hallwayCount}, Available connections: {allAvailableConnections.Count}");
             GameObject connectionPoint = allAvailableConnections[0];
             allAvailableConnections.Remove(connectionPoint);
             // make sure it still exists
@@ -201,7 +195,7 @@ public class CreateMap : MonoBehaviour
             }
             else if (connectionPoint.transform.parent.name.Contains("Hallway")) // hallways connect to anything
             {
-                //roomsToTry.AddRange(roomsData);
+                roomsToTry.AddRange(roomsData);
                 foreach (LoadMapParts.MapPartData hallway in hallwaysData)
                 {
                     // if there materials colors are not the same then add it to the list 
