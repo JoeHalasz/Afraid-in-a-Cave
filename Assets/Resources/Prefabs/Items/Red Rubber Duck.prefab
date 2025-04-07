@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6608539909654210400}
   - component: {fileID: -893848085849894346}
   m_Layer: 10
-  m_Name: rubber_duck
+  m_Name: Red Rubber Duck
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.029999997, y: 0.029999997, z: 0.029999997}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44609c7d5fc7cb147a013f97803f180e, type: 2}
+  - {fileID: 2100000, guid: 09ef0b68c330bc94f960aca723448885, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,10 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c1e039f11486245a204a535d27ce94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWorth: 100
+  maxWorth: 1000
   mass: 100
+  minDamageThreshold: 0.1
   damageDampener: 25
   hurtSound: {fileID: 0}
   destroySound: {fileID: 0}
-  rarity: 0
+  rarity: 2
   worth: 0

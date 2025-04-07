@@ -9,6 +9,7 @@ TagManager:
   - ConnectionPoint
   - Pickup
   - Lights
+  - ItemSpawner
   layers:
   - Default
   - TransparentFX

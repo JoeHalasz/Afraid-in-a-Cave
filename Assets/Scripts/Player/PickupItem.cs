@@ -8,7 +8,8 @@ public class PickupItem : NetworkBehaviour
     Rigidbody pickedUpItemRB;
     GameObject camera;
 
-    float holdDistance = 2f; // distance to hold the item at
+    [SerializeField]
+    float holdDistance = 1f; // distance to hold the item at
     float breakDistance = 3f;
 
     [SerializeField]
@@ -26,7 +27,7 @@ public class PickupItem : NetworkBehaviour
     {
         // raycast to check if the player is looking at the item
         RaycastHit hit;
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 2f))
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, range))
         {
             if (hit.collider.gameObject != gameObject)
             {
@@ -72,7 +73,10 @@ public class PickupItem : NetworkBehaviour
             // accelerate the RB based on the items mass, less acceleration for heavier items
             float acceleration = moveForce / pickedUpItemRB.mass;
             pickedUpItemRB.linearVelocity = Vector3.Lerp(pickedUpItemRB.linearVelocity, (targetPosition - pickedUpItem.transform.position) * acceleration, Time.deltaTime * 5f);
-            // TODO slow the items rotation to 0
+            if (Vector3.Distance(camera.transform.position, pickedUpItem.transform.position) < 1f)
+            {
+                pickedUpItemRB.linearVelocity += camera.transform.forward * acceleration * Time.deltaTime * 3f;
+            }
             pickedUpItemRB.angularVelocity = Vector3.Lerp(pickedUpItemRB.angularVelocity, Vector3.zero, Time.deltaTime * 5f);
         }
         // if the item gets too far away then drop the item

@@ -8,6 +8,8 @@ public class CreateMap : MonoBehaviour
     [SerializeField]
     int maxRooms = 30;
     [SerializeField]
+    float moneyNeeded = 5000f;
+    [SerializeField]
     bool StartMapCreation = false;
     [SerializeField]
     bool stopGeneration = false;
@@ -19,11 +21,15 @@ public class CreateMap : MonoBehaviour
     private List<Bounds> collisionBounds = new List<Bounds>();
     int totalParts = 1;
     bool mapPlanComplete = false;
+    bool replacementComplete = false;
+    bool spawnItemsComplete = false;
     ReplaceMapParts replaceMapParts = null;
+    ItemManager itemManager = null;
 
     void Start()
     {
         replaceMapParts = GetComponent<ReplaceMapParts>();
+        itemManager = GetComponent<ItemManager>();
     }
 
     // Update is called once per frame
@@ -43,12 +49,41 @@ public class CreateMap : MonoBehaviour
             // start the next step
             StartCoroutine(createMapPlanThread());
         }
+        if (replacementComplete)
+        {
+            replacementComplete = false;
+            spawnItems();
+        }
+        if (spawnItemsComplete)
+        {
+            spawnItemsComplete = false;
+            unloadMap();
+        }
     }
 
     IEnumerator createMapPlanThread()
     {
         yield return 20;
         replaceMapParts.replaceParts();
+        replacementComplete = true;
+    }
+
+    void spawnItems()
+    {
+        itemManager.spawnItems(moneyNeeded);
+        spawnItemsComplete = true;
+    }
+
+    void unloadMap()
+    {
+        foreach (Transform child in transform)
+        {
+            LoadNearMapParts loadNearMapParts = child.GetComponentInChildren<LoadNearMapParts>();
+            if (loadNearMapParts != null)
+            {
+                // loadNearMapParts.checkShouldBeLoaded();
+            }
+        }
     }
 
     public void alignNewPart(Transform parentB, Transform connectionPointA, Transform connectionPointB)

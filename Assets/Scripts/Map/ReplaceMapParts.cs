@@ -65,7 +65,6 @@ public class ReplaceMapParts : MonoBehaviour
                 // get the LoadNearMapParts component from newParts child called LoadNearMapParts
                 LoadNearMapParts loadNearMapParts = newPart.GetComponentInChildren<LoadNearMapParts>();
                 loadNearMapParts.replacementObject = child.gameObject;
-                loadNearMapParts.checkShouldBeLoaded();
             }
         }
 

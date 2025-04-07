@@ -19,7 +19,7 @@ public class Item : MonoBehaviour
     AudioClip destroySound;
     AudioSource audioSource;
 
-    enum Rarity
+    public enum Rarity
     {
         Normal,
         Rare,
@@ -29,10 +29,13 @@ public class Item : MonoBehaviour
     [SerializeField]
     Rarity rarity = Rarity.Normal;
 
+    public Rarity getRarity() { return rarity; }
+
     // make it so you can see the worth but not edit it in the inspector
     [SerializeField]
     float worth = 0f;
     public float getWorth() { return worth; }
+    public float getMaxWorth() { return maxWorth; }
 
     void Start()
     {

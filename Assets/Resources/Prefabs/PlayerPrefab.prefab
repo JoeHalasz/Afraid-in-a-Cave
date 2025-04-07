@@ -605,7 +605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  moveForce: 500
+  holdDistance: 1
+  moveForce: 750
   range: 4
 --- !u!136 &4592444484914746814
 CapsuleCollider:
