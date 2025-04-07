@@ -11,6 +11,11 @@ public class PickupItem : NetworkBehaviour
     float holdDistance = 2f; // distance to hold the item at
     float breakDistance = 3f;
 
+    [SerializeField]
+    float moveForce = 5f;
+    [SerializeField]
+    float range = 4f;
+
     void Start()
     {
         // get the camera child object
@@ -30,7 +35,7 @@ public class PickupItem : NetworkBehaviour
             }
         }
         // draw the ray
-        Debug.DrawRay(camera.transform.position, camera.transform.forward * 2f, Color.red);
+        Debug.DrawRay(camera.transform.position, camera.transform.forward * range, Color.red);
     }
 
     private void pickupItem(GameObject item)
@@ -65,7 +70,7 @@ public class PickupItem : NetworkBehaviour
         {
             Vector3 targetPosition = camera.transform.position + camera.transform.forward * holdDistance;
             // accelerate the RB based on the items mass, less acceleration for heavier items
-            float acceleration = 2f / pickedUpItemRB.mass;
+            float acceleration = moveForce / pickedUpItemRB.mass;
             pickedUpItemRB.linearVelocity = Vector3.Lerp(pickedUpItemRB.linearVelocity, (targetPosition - pickedUpItem.transform.position) * acceleration, Time.deltaTime * 5f);
             // TODO slow the items rotation to 0
             pickedUpItemRB.angularVelocity = Vector3.Lerp(pickedUpItemRB.angularVelocity, Vector3.zero, Time.deltaTime * 5f);
