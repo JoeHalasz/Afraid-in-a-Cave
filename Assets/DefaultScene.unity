@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cff3a3116740b42b9dc333b8fc8f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRooms: 2
+  maxRooms: 50
   moneyNeeded: 4000
   StartMapCreation: 1
   stopGeneration: 0

@@ -53,18 +53,16 @@ public class ReplaceMapParts : MonoBehaviour
                         // find the same named child in the new part
                         Transform newPartConnectionPoint = newPart.transform.Find(connectionPoint.name);
                         if (newPartConnectionPoint != null)
-                        {
                             Destroy(newPartConnectionPoint.gameObject);
-                        }
                         else
-                        {
                             Debug.LogWarning($"Could not find connection point {connectionPoint.name} in new part {newPart.name}.");
-                        }
                     }
                 }
                 // get the LoadNearMapParts component from newParts child called LoadNearMapParts
                 LoadNearMapParts loadNearMapParts = newPart.GetComponentInChildren<LoadNearMapParts>();
-                loadNearMapParts.replacementObject = child.gameObject;
+                if (loadNearMapParts != null)
+                    loadNearMapParts.replacementObject = child.gameObject;
+                child.gameObject.SetActive(false);
             }
         }
 
