@@ -1,6 +1,0 @@
-// formatted like this:
-// assume 0,0,0 is the bottom front left of the part, and width,height,length is the top back right
-// name:openingPos,rotation:openingPos,rotation:openingPos,rotation:...
-Hallway:1:0,0,-7.5,0,0,0:0,0,7.5,0,180,0
-Hallway:2:-7.5,0,-2.5,0,0,0:-7.5,-2.5,5,0,180,0:7.5,0,0,0,90,0
-Hallway:3:0,0,0,0,0,0:0,0,10,0,180,0:17.5,2.10,0,0,90,0

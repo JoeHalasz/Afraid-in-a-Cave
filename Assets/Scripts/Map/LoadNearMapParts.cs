@@ -73,30 +73,32 @@ public class LoadNearMapParts : MonoBehaviour
         }
     }
 
+    void recursiveUnload(GameObject obj)
+    {
+        if (obj.name.Contains("Rock") || obj.name.Contains("Lantern"))
+            obj.SetActive(false);
+        else if (!obj.name.Contains("ItemBench"))
+            foreach (Transform child in obj.transform)
+                recursiveUnload(child.gameObject);
+    }
+
+    void recursiveLoad(GameObject obj)
+    {
+        if (obj.name.Contains("Rock") || obj.name.Contains("Lantern"))
+            obj.SetActive(true);
+        else if (!obj.name.Contains("ItemBench"))
+            foreach (Transform child in obj.transform)
+                recursiveLoad(child.gameObject);
+    }
+
     void unload()
     {
-        replacementObject.SetActive(true);
-        // disable every object on this objects parent except this object
-        foreach (Transform child in transform.parent)
-        {
-            if (child.gameObject != gameObject)
-            {
-                child.gameObject.SetActive(false);
-            }
-        }
+        recursiveUnload(transform.parent.gameObject);
     }
 
     void load()
     {
-        replacementObject.SetActive(false);
-        // enable every object on this objects parent except this object
-        foreach (Transform child in transform.parent)
-        {
-            if (child.gameObject != gameObject)
-            {
-                child.gameObject.SetActive(true);
-            }
-        }
+        recursiveLoad(transform.parent.gameObject);
     }
 
 }

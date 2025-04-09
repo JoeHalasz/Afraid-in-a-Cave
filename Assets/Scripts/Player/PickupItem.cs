@@ -4,6 +4,7 @@ using Unity.Netcode;
 public class PickupItem : NetworkBehaviour
 {
     
+    [SerializeField]
     GameObject pickedUpItem;
     Rigidbody pickedUpItemRB;
     GameObject camera;
@@ -17,18 +18,22 @@ public class PickupItem : NetworkBehaviour
     [SerializeField]
     float range = 4f;
 
+    LayerMask layerMask;
+
     void Start()
     {
         // get the camera child object
         camera = GameObject.Find("Camera");
+        layerMask = LayerMask.GetMask("Item");
     }
 
     public void checkPickupItem()
     {
         // raycast to check if the player is looking at the item
         RaycastHit hit;
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, range))
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, range, layerMask))
         {
+            Debug.Log("Hit: " + hit.collider.gameObject.name);
             if (hit.collider.gameObject != gameObject)
             {
                 if (hit.collider.gameObject.tag == "Pickup")

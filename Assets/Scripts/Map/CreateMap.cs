@@ -40,10 +40,12 @@ public class CreateMap : MonoBehaviour
             StartMapCreation = false;
             // spawn a thread to create the map
             Debug.Log("Creating map...");
+            Debug.LogWarning("here0");
             StartCoroutine(createMapPlan());
         }
         if (mapPlanComplete || redoReplace)
         {
+            Debug.LogWarning("here1");
             redoReplace = false;
             mapPlanComplete = false;
             // start the next step
@@ -51,11 +53,13 @@ public class CreateMap : MonoBehaviour
         }
         if (replacementComplete)
         {
+            Debug.LogWarning("here2");
             replacementComplete = false;
             spawnItems();
         }
         if (spawnItemsComplete)
         {
+            Debug.LogWarning("here3");
             spawnItemsComplete = false;
             unloadMap();
         }
@@ -78,12 +82,14 @@ public class CreateMap : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
+            Debug.Log("Unloading: " + child.name);
             LoadNearMapParts loadNearMapParts = child.GetComponentInChildren<LoadNearMapParts>();
             if (loadNearMapParts != null)
-            {
-                // loadNearMapParts.checkShouldBeLoaded();
-            }
+                loadNearMapParts.checkShouldBeLoaded();
         }
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            player.transform.position = new Vector3(0, 0, 0);
     }
 
     public void alignNewPart(Transform parentB, Transform connectionPointA, Transform connectionPointB)

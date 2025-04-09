@@ -70,9 +70,12 @@ public class ReplaceMapParts : MonoBehaviour
         {
             newPart.transform.parent = mapManager.transform;
             LoadNearMapParts loadNearMapParts = newPart.GetComponentInChildren<LoadNearMapParts>();
-            GameObject oldPart = loadNearMapParts.replacementObject;
-            List<GameObject> closeParts = findCloseParts(oldPart);
-            loadNearMapParts.closeMapParts = closeParts;
+            if (loadNearMapParts != null)
+            {
+                GameObject oldPart = loadNearMapParts.replacementObject;
+                List<GameObject> closeParts = findCloseParts(oldPart);
+                loadNearMapParts.closeMapParts = closeParts;
+            }
         }
     }
 

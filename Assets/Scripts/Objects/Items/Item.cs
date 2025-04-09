@@ -9,6 +9,8 @@ public class Item : MonoBehaviour
     float mass = 100f;
     [SerializeField]
     float minDamageThreshold = 0.1f;
+    private float maxHealth = 1f;
+    public void changeMaxHealth(float amount) { maxHealth = amount; }
 
     [SerializeField]
     float damageDampener = 25f;
@@ -37,7 +39,7 @@ public class Item : MonoBehaviour
     public float getWorth() { return worth; }
     public float getMaxWorth() { return maxWorth; }
 
-    void Start()
+    void Awake()
     {
         worth = maxWorth;
         if (GetComponent<Rigidbody>() == null)
@@ -64,21 +66,20 @@ public class Item : MonoBehaviour
         // set tag to Pickup
         gameObject.tag = "Pickup";
         // set layer to Rock
-        gameObject.layer = LayerMask.NameToLayer("Rock");
+        gameObject.layer = LayerMask.NameToLayer("Item");
     }
 
     // on collision with anything, make the damage go up based on how hard it hit the other object
     void OnCollisionEnter(Collision collision)
     {
         float collisionForce = collision.relativeVelocity.magnitude;
-        Debug.Log($"Collision force: {collisionForce}");
         float damage = Mathf.Clamp01(collisionForce / damageDampener);
         if (damage < minDamageThreshold) return;
         
         damagePercent += damage;
-        if (damagePercent >= 1f)
+        if (damagePercent >= maxHealth)
         {
-            damagePercent = 1f;
+            damagePercent = maxHealth;
             itemBreak();
             return;
         }
@@ -108,10 +109,11 @@ public class Item : MonoBehaviour
     public void itemBreak()
     {
         if (destroySound != null)
-        {
             audioSource.PlayOneShot(destroySound, 1f);
-        }
         gameObject.GetComponent<Renderer>().enabled = false;
+        foreach (Transform child in transform)
+            Destroy(child.gameObject);
+
         Destroy(gameObject, 1f);
     }
 
