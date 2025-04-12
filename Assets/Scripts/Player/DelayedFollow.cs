@@ -1,21 +1,19 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class DelayedFollow : MonoBehaviour
+public class DelayedFollow : NetworkBehaviour
 {
 
     [SerializeField]
     private Transform target; // The target to follow
     [SerializeField]
     private float followSpeed = 7.5f;
+    [SerializeField]
     GameObject correctPosTarget = null;
     
-    void Start()
-    {
-        correctPosTarget = GameObject.Find("FlashlightCorrectPos");
-    }
-
     void Update()
     {
+        if (!IsOwner || !IsSpawned) return;
         if (target != null)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, Time.deltaTime*followSpeed);

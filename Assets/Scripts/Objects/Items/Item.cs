@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class Item : MonoBehaviour
 {
@@ -55,6 +56,8 @@ public class Item : MonoBehaviour
             MeshCollider c = gameObject.AddComponent<MeshCollider>();
             c.convex = true;
         }
+        if (GetComponent<NetworkObject>() == null)
+            Debug.LogError("Item does not have a NetworkObject component. Please add one.");
         if (GetComponent<AudioSource>() == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -67,6 +70,7 @@ public class Item : MonoBehaviour
         gameObject.tag = "Pickup";
         // set layer to Rock
         gameObject.layer = LayerMask.NameToLayer("Item");
+        // make sure it has a network object script component
     }
 
     // on collision with anything, make the damage go up based on how hard it hit the other object

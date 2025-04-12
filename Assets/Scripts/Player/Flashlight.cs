@@ -1,9 +1,11 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class Flashlight : MonoBehaviour
+public class Flashlight : NetworkBehaviour
 {
     void Update()
     {
+        if (!IsOwner || !IsSpawned) return;
         if (Input.GetKeyDown(KeyCode.F))
         {
             // this object is the flashlight

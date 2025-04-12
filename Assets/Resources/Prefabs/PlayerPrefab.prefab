@@ -320,8 +320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b41442f1c87cf46bb177ab3b35cd43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   target: {fileID: 2042780229811547225}
   followSpeed: 7.5
+  correctPosTarget: {fileID: 2746414707775465529}
 --- !u!114 &9050048379619171469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4659e5c1ba224e45ad59b61022acb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &2126033940717042450
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,11 +353,12 @@ GameObject:
   - component: {fileID: 9200531397072630950}
   - component: {fileID: 1276405841128004130}
   - component: {fileID: 1747348690414518889}
+  - component: {fileID: 4592444484914746814}
   - component: {fileID: 5111432083115278370}
   - component: {fileID: 6954069727367320281}
   - component: {fileID: -876803523994673787}
   - component: {fileID: 1488438363271395565}
-  - component: {fileID: 4592444484914746814}
+  - component: {fileID: 858302743281182491}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -452,10 +456,10 @@ MonoBehaviour:
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
+  ActiveSceneSynchronization: 1
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
+  DontDestroyWithOwner: 1
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
@@ -550,6 +554,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!136 &4592444484914746814
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126033940717042450}
+  m_Material: {fileID: 13400000, guid: 8676afb5bec9aed4e9e329141efc1d0a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5111432083115278370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,32 +632,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  pickedUpItem: {fileID: 0}
   holdDistance: 1
   moveForce: 750
   range: 4
---- !u!136 &4592444484914746814
-CapsuleCollider:
+--- !u!114 &858302743281182491
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126033940717042450}
-  m_Material: {fileID: 13400000, guid: 8676afb5bec9aed4e9e329141efc1d0a, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c256294367215b34ea1210dfec33e367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sessionName: DefaultSession
+  connect: 0
+  createMap: 0
 --- !u!1 &2746414707775465529
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3558c2d710462ce40a57dc09d7342935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8179578419554847107
 GameObject:
   m_ObjectHideFlags: 0

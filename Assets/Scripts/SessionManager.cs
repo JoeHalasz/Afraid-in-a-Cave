@@ -6,9 +6,14 @@ using Unity.Services.Core;
 using Unity.Services.Multiplayer;
 using UnityEngine;
 using Unity.Netcode;
+using System.Threading.Tasks;
+
 
 public class SessionManager : MonoBehaviour
 {
+
+    public static SessionManager Instance { get; private set; }
+    void Awake() { Instance = this; }
 
     ISession activeSession;
 
@@ -22,11 +27,15 @@ public class SessionManager : MonoBehaviour
         }
     }
 
+    public bool isConnected => ActiveSession != null;
+
     NetworkManager networkManager;
 
     const string playerNamePropertyKey = "PlayerName";
 
     string sessionName = "MySession";
+
+    int seed = 0;
 
     void OnClientConnectedCallback(ulong clientId)
     {
@@ -43,6 +52,18 @@ public class SessionManager : MonoBehaviour
 
     async void Start()
     {
+        // connect to a random session
+        sessionName = "Session3";// + UnityEngine.Random.Range(0, 10000).ToString();
+        await startSession(sessionName);
+    }
+
+    async public Task startSession(string sessionName)
+    {
+        // if we are connected to a session then leave it
+        if (ActiveSession != null)
+        {
+            await LeaveSession();
+        }
         try
         {
             networkManager = GetComponent<NetworkManager>();
@@ -53,8 +74,7 @@ public class SessionManager : MonoBehaviour
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.Log("Signed in anonymously. PlayerID: " + AuthenticationService.Instance.PlayerId);
 
-            sessionName = $"Session_{UnityEngine.Random.Range(0, 10000)}";
-
+            // make seed from current time
             var options = new SessionOptions()
             {
                 Name = sessionName,
@@ -62,6 +82,9 @@ public class SessionManager : MonoBehaviour
             }.WithDistributedAuthorityNetwork();
 
             ActiveSession = await MultiplayerService.Instance.CreateOrJoinSessionAsync(sessionName, options);
+            seed = (int)DateTime.UtcNow.Ticks;
+
+            Debug.Log($"Session {ActiveSession.Id} created with code {ActiveSession.Code}");
         }
         catch (RequestFailedException e)
         {
@@ -85,7 +108,9 @@ public class SessionManager : MonoBehaviour
         {
             var playerName = await AuthenticationService.Instance.GetPlayerNameAsync();
             var playerNameProperty = new PlayerProperty("PlayerName", VisibilityPropertyOptions.Member);
-            return new Dictionary<string, PlayerProperty> { { playerNamePropertyKey, playerNameProperty } };
+            var playerSeedProperty = new PlayerProperty("PlayerSeed", VisibilityPropertyOptions.Member);
+            var playerIsHostProperty = new PlayerProperty("PlayerIsHost", VisibilityPropertyOptions.Member);
+            return new Dictionary<string, PlayerProperty> { { playerNamePropertyKey, playerNameProperty }, { seed.ToString(), playerSeedProperty }, { ActiveSession.IsHost.ToString(), playerIsHostProperty } };
         }
         catch (RequestFailedException e)
         {
@@ -117,7 +142,7 @@ public class SessionManager : MonoBehaviour
         Debug.Log($"Kicked player {playerId} from session {ActiveSession.Id}");
     }
 
-    async UniTaskVoid LeaveSession()
+    async UniTask LeaveSession()
     {
         if (ActiveSession == null)
         {
@@ -145,4 +170,34 @@ public class SessionManager : MonoBehaviour
             LeaveSession().Forget();
         }
     }
+
+    public int getSeed()
+    {
+        // If the player is the host, return the seed. Otherwise, get the host's seed from the player properties.
+        if (networkManager.LocalClient.IsSessionOwner)
+        {
+            return seed;
+        }
+        else
+        {
+            // Iterate through all players in the session to find the host
+            foreach (var player in ActiveSession.Players)
+            {
+                // Check if the player is the host
+                if (player.Properties.TryGetValue("PlayerIsHost", out var isHostProperty) && isHostProperty.Value == "True")
+                {
+                    // Get the seed from the player's properties
+                    if (player.Properties.TryGetValue("PlayerSeed", out var seedProperty))
+                    {
+                        seed = int.Parse(seedProperty.Value);
+                        return seed;
+                    }
+                }
+            }
+        }
+
+        Debug.LogError("Could not find host to get the seed from");
+        return seed;
+    }
+
 }

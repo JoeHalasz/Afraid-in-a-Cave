@@ -37,7 +37,6 @@ public class ItemManager : MonoBehaviour
                 itemsByRarity[(Rarity)itemScript.getRarity()].Add(item);
             else
                 Debug.LogError("Item prefab has an invalid rarity: " + item.name);
-            Debug.Log(item.name);
         }
     }
 

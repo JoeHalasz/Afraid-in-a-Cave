@@ -27,7 +27,6 @@ public class LoadMapParts : MonoBehaviour
                 data.obj = obj;
                 data.number = roomsData.Count + hallwaysData.Count;
                 data.Connections = new List<GameObject>();
-                Debug.Log("Loading prefab: " + obj.name);
                 foreach (Transform child in obj.transform)
                 {
                     data.Connections.Add(child.gameObject);

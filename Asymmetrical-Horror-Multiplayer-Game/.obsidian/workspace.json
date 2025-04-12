@@ -24,12 +24,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Lighting.md",
+                "file": "Store.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lighting"
+              "title": "Store"
             }
           }
         ],
@@ -227,12 +227,12 @@
   },
   "active": "fb7ca1845f49cafe",
   "lastOpenFiles": [
-    "Items.md",
     "TODO.md",
+    "Items.md",
+    "Lighting.md",
     "Untitled.md",
     "Fixes.md",
     "Enemy AI.md",
-    "Lighting.md",
     "Enemies.md",
     "LOre.md",
     "Spawning enemy food.md",

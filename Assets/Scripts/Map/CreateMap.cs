@@ -10,7 +10,7 @@ public class CreateMap : MonoBehaviour
     [SerializeField]
     float moneyNeeded = 5000f;
     [SerializeField]
-    bool StartMapCreation = false;
+    public bool StartMapCreation = false;
     [SerializeField]
     bool stopGeneration = false;
     [SerializeField]
@@ -38,14 +38,20 @@ public class CreateMap : MonoBehaviour
         if (StartMapCreation)
         {
             StartMapCreation = false;
+            int seed = GameManager.Instance.getSeed();
+            if (seed == 0)
+            {
+                Debug.LogError("Seed is not set. Please set the seed");
+                return;
+            }
+            Debug.Log($"Seed is {(int)seed}");
+            Random.InitState((int)seed);
             // spawn a thread to create the map
             Debug.Log("Creating map...");
-            Debug.LogWarning("here0");
             StartCoroutine(createMapPlan());
         }
         if (mapPlanComplete || redoReplace)
         {
-            Debug.LogWarning("here1");
             redoReplace = false;
             mapPlanComplete = false;
             // start the next step
@@ -53,13 +59,11 @@ public class CreateMap : MonoBehaviour
         }
         if (replacementComplete)
         {
-            Debug.LogWarning("here2");
             replacementComplete = false;
             spawnItems();
         }
         if (spawnItemsComplete)
         {
-            Debug.LogWarning("here3");
             spawnItemsComplete = false;
             unloadMap();
         }
