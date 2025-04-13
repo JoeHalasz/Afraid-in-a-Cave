@@ -7,7 +7,6 @@ public class PlayerMovement : NetworkBehaviour
     public float jumpForce = 5f; // Jump force of the player
     private Rigidbody rb; // Reference to the Rigidbody component
     private bool isGrounded; // Check if the player is on the ground
-    GameObject camera;
     // store what time we were last grounded
     float lastGroundedTime = 0f;
     float lastJumpTime = 0f;
@@ -15,7 +14,6 @@ public class PlayerMovement : NetworkBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>(); // Get the Rigidbody component attached to the player
-        camera = transform.Find("Camera").gameObject; // Find the child object named "Camera"
     }
 
     void Update()

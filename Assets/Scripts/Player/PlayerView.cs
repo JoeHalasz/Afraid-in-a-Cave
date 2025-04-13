@@ -3,12 +3,12 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour
 {
 
-    GameObject camera;
+    GameObject cam;
     public float mouseSensitivity = .5f;
 
     void Start()
     {
-        camera = transform.Find("Camera").gameObject;
+        cam = transform.Find("Camera").gameObject;
     }
 
     void Update()
@@ -19,7 +19,7 @@ public class PlayerView : MonoBehaviour
         transform.Rotate(0, mouseX, 0); // Rotate this object left and right
 
         // clamp the camera rotation to prevent flipping
-        Vector3 cameraRotation = camera.transform.localEulerAngles;
+        Vector3 cameraRotation = cam.transform.localEulerAngles;
         cameraRotation.x -= mouseY; // Rotate the camera up and down
         
         if (cameraRotation.x > 90 && cameraRotation.x < 270)
@@ -30,6 +30,6 @@ public class PlayerView : MonoBehaviour
             else
                 cameraRotation.x = 90;
         }
-        camera.transform.localEulerAngles = cameraRotation; // Apply the rotation to the camera
+        cam.transform.localEulerAngles = cameraRotation; // Apply the rotation to the camera
     }
 }

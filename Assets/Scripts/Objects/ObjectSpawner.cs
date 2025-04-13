@@ -16,9 +16,18 @@ public class ObjectSpawner : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!HasAuthority) return;
+        if (!HasAuthority)
+        {
+            Debug.Log("Not the authority, not spawning objects.");
+            return;
+        }
 
-        if(!NetworkManager.LocalClient.IsSessionOwner) return;
+        if(!NetworkManager.LocalClient.IsSessionOwner)
+        {
+            Debug.Log("Not the session owner, not spawning objects.");
+            return;
+        }
+        Debug.Log("Spawning objects...");
 
         Random.InitState(seed);
 

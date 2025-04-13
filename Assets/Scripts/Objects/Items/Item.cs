@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 
 public class Item : MonoBehaviour
 {
@@ -43,28 +44,29 @@ public class Item : MonoBehaviour
     void Awake()
     {
         worth = maxWorth;
-        if (GetComponent<Rigidbody>() == null)
-        {
-            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-            rb.mass = mass;
-            rb.useGravity = true;
-            // add rocks, player, and item as include layers
-            rb.includeLayers = LayerMask.GetMask("Rock", "Player", "Item");
-        }
-        if (GetComponent<Collider>() == null)
-        {
-            MeshCollider c = gameObject.AddComponent<MeshCollider>();
-            c.convex = true;
-        }
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb == null)
+            rb = gameObject.AddComponent<Rigidbody>();
+        rb.mass = mass;
+        rb.useGravity = true;
+        // add rocks, player, and item as include layers
+        rb.includeLayers = LayerMask.GetMask("Rock", "Player", "Item");
+        MeshCollider c = GetComponent<MeshCollider>();
+        if (c == null)
+            c = gameObject.AddComponent<MeshCollider>();
+        c.convex = true;
         if (GetComponent<NetworkObject>() == null)
             Debug.LogError("Item does not have a NetworkObject component. Please add one.");
-        if (GetComponent<AudioSource>() == null)
-        {
+        if (GetComponent<NetworkTransform>() == null)
+            Debug.LogError("Item does not have a NetworkTransform component. Please add one.");
+        if (GetComponent<NetworkRigidbody>() == null)
+            Debug.LogError("Item does not have a NetworkRigidbody component. Please add one.");
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.playOnAwake = false;
-            audioSource.spatialBlend = 1f; // 3D sound
-            audioSource.maxDistance = 10f; // max distance for the sound to be heard
-        }
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f; // 3D sound
+        audioSource.maxDistance = 10f; // max distance for the sound to be heard
         audioSource = GetComponent<AudioSource>();
         // set tag to Pickup
         gameObject.tag = "Pickup";

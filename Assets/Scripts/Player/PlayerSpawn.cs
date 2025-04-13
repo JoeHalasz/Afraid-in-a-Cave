@@ -16,7 +16,7 @@ public class PlayerSpawn : NetworkBehaviour
             camera.SetActive(true);
 
             // Disable cameras on other players
-            foreach (var player in FindObjectsOfType<PlayerSpawn>())
+            foreach (var player in Object.FindObjectsByType<PlayerSpawn>(FindObjectsSortMode.None))
             {
                 if (player != this)
                 {

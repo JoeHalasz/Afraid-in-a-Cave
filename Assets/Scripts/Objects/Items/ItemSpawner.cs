@@ -9,7 +9,7 @@ public class ItemSpawner : MonoBehaviour
         gameObject.tag = "ItemSpawner";
     }
 
-    public async Task SpawnItem(GameObject itemPrefab)
+    public void SpawnItem(GameObject itemPrefab)
     {
         // spawn an item randomly inside of this objects bounds, accounting for this items rotation
         // get the bounds of this object
