@@ -225,8 +225,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fb7ca1845f49cafe",
+  "active": "e7265b9e249c58c8",
   "lastOpenFiles": [
+    "Store.md",
     "TODO.md",
     "Items.md",
     "Lighting.md",
@@ -238,7 +239,6 @@
     "Spawning enemy food.md",
     "Death.md",
     "proximity chat.md",
-    "Store.md",
     "Mod Support.md",
     "Name.md",
     "Sellables.md",
