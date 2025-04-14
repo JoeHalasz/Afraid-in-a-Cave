@@ -2,7 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 
-public class Item : MonoBehaviour
+public class Item : NetworkBehaviour
 {
     [SerializeField]
     float maxWorth = 100f;
@@ -51,6 +51,13 @@ public class Item : MonoBehaviour
         rb.useGravity = true;
         // add rocks, player, and item as include layers
         rb.includeLayers = LayerMask.GetMask("Rock", "Player", "Item");
+        // if it has any type of collider skip this 
+        if (GetComponent<Collider>() == null)
+        {
+            BoxCollider bc = gameObject.AddComponent<BoxCollider>();
+            bc.isTrigger = false;
+            bc.size = new Vector3(.5f, .5f, .5f);
+        }
         MeshCollider c = GetComponent<MeshCollider>();
         if (c == null)
             c = gameObject.AddComponent<MeshCollider>();
@@ -73,6 +80,26 @@ public class Item : MonoBehaviour
         // set layer to Rock
         gameObject.layer = LayerMask.NameToLayer("Item");
         // make sure it has a network object script component
+    }
+
+    void Start()
+    {
+        // get the item config from LoadItemConfig.Instance
+        string itemName = gameObject.name;
+        itemName = itemName.Replace("(Clone)", "");
+        if (LoadItemConfig.Instance.itemConfigs.ContainsKey(itemName))
+        {
+            LoadItemConfig.ItemConfig config = LoadItemConfig.Instance.itemConfigs[itemName];
+            maxWorth = config.maxWorth;
+            mass = config.mass;
+            minDamageThreshold = config.minDamageThreshold;
+            damageDampener = config.damageDampener;
+            rarity = (Rarity)System.Enum.Parse(typeof(Rarity), config.rarity);
+        }
+        else
+        {
+            Debug.LogError($"Item {itemName} not found in item config. Please add to Assets/Scripts/Objects/ItemConfig.txt.");
+        }
     }
 
     // on collision with anything, make the damage go up based on how hard it hit the other object

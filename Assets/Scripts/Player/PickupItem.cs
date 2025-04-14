@@ -13,7 +13,6 @@ public class PickupItem : NetworkBehaviour
     float holdDistance = 1f; // distance to hold the item at
     float breakDistance = 3f;
 
-    [SerializeField]
     float moveForce = 5f;
     [SerializeField]
     float range = 4f;
@@ -23,7 +22,7 @@ public class PickupItem : NetworkBehaviour
     void Start()
     {
         // get the camera child object
-        cam = GameObject.Find("Camera");
+        cam = transform.Find("Camera").gameObject;
         layerMask = LayerMask.GetMask("Item");
     }
 
@@ -67,33 +66,36 @@ public class PickupItem : NetworkBehaviour
 
     public void FixedUpdate()
     {
+        if (!HasAuthority || !IsSpawned) return;
         if (Input.GetMouseButton(0) && pickedUpItem == null)
-        {
             checkPickupItem();
-        }
         // while the mouse is held down, make the item float towards infront of the player by the holdDistance
         if (Input.GetMouseButton(0) && pickedUpItem != null)
         {
             Vector3 targetPosition = cam.transform.position + cam.transform.forward * holdDistance;
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.transform.position = targetPosition;
+            sphere.transform.localScale = new Vector3(.1f, .1f, .1f);
+            sphere.GetComponent<Collider>().enabled = false;
+            Destroy(sphere, 0.1f);
             // accelerate the RB based on the items mass, less acceleration for heavier items
+            Debug.Log(moveForce + " " + pickedUpItemRB.mass);
             float acceleration = moveForce / pickedUpItemRB.mass;
-            pickedUpItemRB.linearVelocity = Vector3.Lerp(pickedUpItemRB.linearVelocity, (targetPosition - pickedUpItem.transform.position) * acceleration, Time.deltaTime * 5f);
-            if (Vector3.Distance(cam.transform.position, pickedUpItem.transform.position) < 1f)
-            {
-                pickedUpItemRB.linearVelocity += cam.transform.forward * acceleration * Time.deltaTime * 3f;
-            }
-            pickedUpItemRB.angularVelocity = Vector3.Lerp(pickedUpItemRB.angularVelocity, Vector3.zero, Time.deltaTime * 5f);
+            // move the item towards the target position
+            pickedUpItemRB.linearVelocity = Vector3.Lerp(pickedUpItemRB.linearVelocity, (targetPosition - pickedUpItem.transform.position) * acceleration, Time.fixedDeltaTime * 5f);
+
+
+            // if its too close to the player camera then push it away 
+            // if (Vector3.Distance(cam.transform.position, pickedUpItem.transform.position) < 1f)
+            //     pickedUpItemRB.linearVelocity += cam.transform.forward * acceleration * Time.deltaTime * 3f;
+            // pickedUpItemRB.angularVelocity = Vector3.Lerp(pickedUpItemRB.angularVelocity, Vector3.zero, Time.deltaTime * 5f);
         }
         // if the item gets too far away then drop the item
         if (pickedUpItem != null && Vector3.Distance(cam.transform.position, pickedUpItem.transform.position) > breakDistance)
-        {
             dropItem();
-        }
         // if the mouse is released then drop the item
         if (!Input.GetMouseButton(0) && pickedUpItem != null)
-        {
             dropItem();
-        }
     }
 
     private void transferOwnershipOnPickup(GameObject item)

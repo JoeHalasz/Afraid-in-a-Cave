@@ -225,8 +225,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e7265b9e249c58c8",
+  "active": "fb7ca1845f49cafe",
   "lastOpenFiles": [
+    "Enemies.md",
     "Store.md",
     "TODO.md",
     "Items.md",
@@ -234,7 +235,6 @@
     "Untitled.md",
     "Fixes.md",
     "Enemy AI.md",
-    "Enemies.md",
     "LOre.md",
     "Spawning enemy food.md",
     "Death.md",

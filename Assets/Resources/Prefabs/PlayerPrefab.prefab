@@ -634,7 +634,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   pickedUpItem: {fileID: 0}
   holdDistance: 1
-  moveForce: 750
+  moveForce: 5
   range: 4
 --- !u!114 &858302743281182491
 MonoBehaviour:

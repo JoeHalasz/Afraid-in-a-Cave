@@ -92,8 +92,8 @@ public class CreateMap : MonoBehaviour
             if (loadNearMapParts != null)
                 loadNearMapParts.checkShouldBeLoaded();
         }
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
             player.transform.position = new Vector3(0, 0, 0);
     }
 
