@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 8017617039210992119}
   - component: {fileID: 144985651620512512}
   - component: {fileID: 6608539909654210400}
+  - component: {fileID: 4818855888523407717}
   - component: {fileID: -893848085849894346}
   - component: {fileID: -613089114100891769}
-  - component: {fileID: 4818855888523407717}
   - component: {fileID: -5494314115879962729}
   - component: {fileID: 6897196322379081388}
   - component: {fileID: -6185107507302861824}
+  - component: {fileID: 3090304768835388395}
   m_Layer: 10
   m_Name: Red Rubber Duck
   m_TagString: Pickup
@@ -93,38 +94,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-893848085849894346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520813607336596771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c1e039f11486245a204a535d27ce94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxWorth: 1000
-  mass: 100
-  minDamageThreshold: 0.1
-  damageDampener: 25
-  hurtSound: {fileID: 0}
-  destroySound: {fileID: 0}
-  rarity: 2
-  worth: 0
---- !u!114 &-613089114100891769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520813607336596771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e3f4203c2a048647b32224883166150, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4818855888523407717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +119,39 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &-893848085849894346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520813607336596771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c1e039f11486245a204a535d27ce94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxWorth: 1000
+  mass: 100
+  minDamageThreshold: 0.1
+  damageDampener: 25
+  hurtSound: {fileID: 0}
+  destroySound: {fileID: 0}
+  rarity: 2
+  worth: 0
+--- !u!114 &-613089114100891769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520813607336596771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e3f4203c2a048647b32224883166150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-5494314115879962729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +232,19 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &3090304768835388395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520813607336596771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac35373b42abe46ea8f7cab1a1c353f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &5932294735036509524
 GameObject:
   m_ObjectHideFlags: 0

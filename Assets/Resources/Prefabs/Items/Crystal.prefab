@@ -349,7 +349,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5475643594190904283b33784a8bb06e, type: 2}
     - target: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
       propertyPath: m_Name
-      value: Crystal Variant
+      value: Crystal
       objectReference: {fileID: 0}
     - target: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
       propertyPath: m_Layer
@@ -450,10 +450,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -8459322856452798276}
+      addedObject: {fileID: 335056219439698903}
     - targetCorrespondingSourceObject: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 335056219439698903}
+      addedObject: {fileID: -8459322856452798276}
     - targetCorrespondingSourceObject: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7790851596020856811}
@@ -463,6 +463,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6588101942223602094}
+    - targetCorrespondingSourceObject: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6688839443995277525}
   m_SourcePrefab: {fileID: 100100000, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
 --- !u!4 &6239712357842870576 stripped
 Transform:
@@ -474,26 +477,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1287992549081035467, guid: 74c941f2886da0845b4f81ee0ab71299, type: 3}
   m_PrefabInstance: {fileID: 5477476241331554625}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-8459322856452798276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6763344481600584586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c1e039f11486245a204a535d27ce94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxWorth: 300
-  mass: 50
-  minDamageThreshold: 0.3
-  damageDampener: 10
-  hurtSound: {fileID: 0}
-  destroySound: {fileID: 0}
-  rarity: 1
-  worth: 0
 --- !u!114 &335056219439698903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,6 +502,27 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &-8459322856452798276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763344481600584586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c1e039f11486245a204a535d27ce94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxWorth: 300
+  mass: 50
+  minDamageThreshold: 0.3
+  damageDampener: 10
+  hurtSound: {fileID: 0}
+  destroySound: {fileID: 0}
+  rarity: 1
+  worth: 0
 --- !u!114 &-7790851596020856811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,3 +603,16 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &-6688839443995277525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763344481600584586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac35373b42abe46ea8f7cab1a1c353f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1

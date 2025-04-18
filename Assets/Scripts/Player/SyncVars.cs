@@ -17,6 +17,7 @@ public class SyncVars : NetworkBehaviour
 
     void Start()
     {
+        if (!HasAuthority || !IsSpawned) return;
         createMap = GameObject.Find("MapManager").GetComponent<CreateMap>();
         if (NetworkManager.LocalClient.IsSessionOwner)
             generateNewSeed();
@@ -59,12 +60,15 @@ public class SyncVars : NetworkBehaviour
                 int hNextStage = -1;
                 if (playerSyncVars.isHost.Value)
                     hNextStage = playerSyncVars.hostNextStage.Value;
-                Debug.Log($"Client {NetworkManager.LocalClientId} is checking host stage {hNextStage} and current stage {currentStage.Value}");
-                if (hNextStage > currentStage.Value)
+                if (hNextStage != -1)
                 {
-                    createMap.startNextStage = true;
-                    Debug.Log($"Client {NetworkManager.LocalClientId} is starting stage {currentStage.Value}");
-                    break;
+                    Debug.Log($"Client {NetworkManager.LocalClientId} is checking host stage {hNextStage} and current stage {currentStage.Value}");
+                    if (hNextStage > currentStage.Value)
+                    {
+                        createMap.startNextStage = true;
+                        Debug.Log($"Client {NetworkManager.LocalClientId} is starting stage {currentStage.Value}");
+                        break;
+                    }
                 }
             }
         }

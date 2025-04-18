@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
             connect = false;
             onConnectPress();
         }
-
     }
 
     async void onConnectPress()

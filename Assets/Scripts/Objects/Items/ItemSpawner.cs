@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
-
+using System.Collections;
+using Unity.Netcode;
 public class ItemSpawner : MonoBehaviour
 {
     
@@ -11,6 +12,8 @@ public class ItemSpawner : MonoBehaviour
 
     public void SpawnItem(GameObject itemPrefab)
     {
+        // if the item is not spawned yet call this function in 1 second 
+
         // spawn an item randomly inside of this objects bounds, accounting for this items rotation
         // get the bounds of this object
         Bounds bounds = GetComponent<Collider>().bounds;
@@ -28,6 +31,7 @@ public class ItemSpawner : MonoBehaviour
         Vector3 spawnRotation = new Vector3( 0, Random.Range(0, 360), 0 );
 
         GameObject item = Instantiate(itemPrefab, spawnPosition, Quaternion.Euler(spawnRotation));
+        item.GetComponent<NetworkObject>().Spawn(true);
         
         float scaleChange = Random.Range(-0.6f, 0.3f);
         item.transform.localScale = new Vector3(
@@ -36,8 +40,18 @@ public class ItemSpawner : MonoBehaviour
             item.transform.localScale.z + item.transform.localScale.z * scaleChange
         );
         
-        // set the item to be a child of this object
-        item.transform.parent = transform.parent;
+        // StartCoroutine(parentNetworkObject(item));
     }
 
+    // coroutine like parentNetworkObject function
+    IEnumerator parentNetworkObject(GameObject item)
+    {
+        Debug.Log($"Parenting item {item.name} to {transform.parent.name}");
+        if (!item.GetComponent<NetworkObject>().TrySetParent(transform.parent))
+        {
+            Debug.Log("trying again");
+            yield return new WaitForSeconds(.5f);
+            StartCoroutine(parentNetworkObject(item));
+        }
+    }
 }

@@ -25,6 +25,9 @@ public class CreateMap : MonoBehaviour
     public bool startNextStage = false;
     bool working = false;
 
+    int seed;
+    int randomStep = 0; // this is needed because this happens over multiple frames and we need the same random numbers every time
+
     void Start()
     {
         replaceMapParts = GetComponent<ReplaceMapParts>();
@@ -57,14 +60,13 @@ public class CreateMap : MonoBehaviour
             switch (syncVars.currentStage.Value)
             {
                 case 0:
-                    int seed = GameManager.Instance.getSeed();
+                    seed = GameManager.Instance.getSeed();
                     if (seed == 0)
                     {
                         Debug.LogError("Seed is not set. Please set the seed");
                         return;
                     }
                     Debug.Log($"Seed is {(int)seed}");
-                    Random.InitState((int)seed);
                     working = true;
                     // spawn a thread to create the map
                     Debug.Log("Creating map...");
@@ -102,7 +104,7 @@ public class CreateMap : MonoBehaviour
 
     void spawnItems()
     {
-        if (NetworkManager.Singleton.LocalClient != null && NetworkManager.Singleton.IsHost)
+        if (syncVars.isHost.Value)
             itemManager.spawnItems(moneyNeeded);
         syncVars.currentStage.Value++;
         startNextStage = false;
@@ -286,6 +288,8 @@ public class CreateMap : MonoBehaviour
                 // make sure this connection point stil exists
                 if (connectionPoint == null)
                     break;
+
+                Random.InitState((int)seed+randomStep++);
                 bool spawnRoom = roomsToTry.Count != 0 && Random.value > .25f;
 
                 GameObject newPart = null;
@@ -324,6 +328,7 @@ public class CreateMap : MonoBehaviour
                     if (connectionPoint == null || newPart == null)
                         break;
                     // Align the new part using a random connection point on the new part 
+                    Random.InitState((int)seed+randomStep++);
                     newConnection = newConnectionsToTry[Random.Range(0, newConnectionsToTry.Count)];
                     newConnectionsToTry.Remove(newConnection);
                     if (newConnection == null)
