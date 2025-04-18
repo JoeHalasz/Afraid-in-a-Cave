@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager Instance { get; private set; }
     void Awake() { Instance = this; }
 
@@ -25,7 +24,18 @@ public class GameManager : MonoBehaviour
 
     public int getSeed()
     {
-        return networkManager.GetComponent<SessionManager>().getSeed();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+        {
+            SyncVars playerSyncVars = player.GetComponent<SyncVars>();
+            if (playerSyncVars.isHost.Value)
+            {
+                Debug.Log("Seed is " + playerSyncVars.seed.Value);
+                return playerSyncVars.seed.Value;
+            }
+        }
+        Debug.LogError("No host found, returning -1");
+        return -1;
     }
 
     void FixedUpdate()
@@ -34,11 +44,6 @@ public class GameManager : MonoBehaviour
         {
             connect = false;
             onConnectPress();
-        }
-        if (createMap)
-        {
-            createMap = false;
-            onCreateMapPress();
         }
 
     }
@@ -49,17 +54,6 @@ public class GameManager : MonoBehaviour
         await networkManager.GetComponent<SessionManager>().startSession(sessionName);
         if (!networkManager.GetComponent<SessionManager>().isConnected)
             Debug.LogError($"Could not connect to {sessionName}");
-    }
-
-    void onCreateMapPress()
-    {
-        // make sure we are connected to a session
-        if (!networkManager.GetComponent<SessionManager>().isConnected)
-        {
-            Debug.LogError("Not connected to a session. Cannot create map.");
-            return;
-        }
-        mapManager.GetComponent<CreateMap>().StartMapCreation = true;
     }
 
 }

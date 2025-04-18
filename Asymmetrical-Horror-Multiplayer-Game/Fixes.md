@@ -8,3 +8,7 @@ More fog/ something that makes the player see less far, but also more light arou
 Maybe lantern on the player?
 
 turn on direct x 12 again
+
+Masses not being synced between items
+fix players unloading things if there is another player in the collider 
+fix seeds not making the same maps 

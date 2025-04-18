@@ -51,17 +51,11 @@ public class Item : NetworkBehaviour
         rb.useGravity = true;
         // add rocks, player, and item as include layers
         rb.includeLayers = LayerMask.GetMask("Rock", "Player", "Item");
-        // if it has any type of collider skip this 
-        if (GetComponent<Collider>() == null)
-        {
-            BoxCollider bc = gameObject.AddComponent<BoxCollider>();
-            bc.isTrigger = false;
-            bc.size = new Vector3(.5f, .5f, .5f);
-        }
         MeshCollider c = GetComponent<MeshCollider>();
-        if (c == null)
+        if (c == null && GetComponent<Collider>() == null)
             c = gameObject.AddComponent<MeshCollider>();
-        c.convex = true;
+        if (c != null)
+            c.convex = true;
         if (GetComponent<NetworkObject>() == null)
             Debug.LogError("Item does not have a NetworkObject component. Please add one.");
         if (GetComponent<NetworkTransform>() == null)
@@ -141,6 +135,7 @@ public class Item : NetworkBehaviour
 
     public void itemBreak()
     {
+        Debug.Log($"Item {gameObject.name} broke");
         if (destroySound != null)
             audioSource.PlayOneShot(destroySound, 1f);
         gameObject.GetComponent<Renderer>().enabled = false;

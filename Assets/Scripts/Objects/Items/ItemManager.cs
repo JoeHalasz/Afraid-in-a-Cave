@@ -43,6 +43,7 @@ public class ItemManager : MonoBehaviour
 
     public void spawnItems(float maxValue)
     {
+        Debug.Log("Spawning items...");
         float totalValue = 0f;
         
         int maxItems = 100;

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Threading.Tasks;
+using Unity.Netcode;
 
 public class CreateMap : MonoBehaviour
 {
@@ -11,21 +12,18 @@ public class CreateMap : MonoBehaviour
     [SerializeField]
     float moneyNeeded = 5000f;
     [SerializeField]
-    public bool StartMapCreation = false;
-    [SerializeField]
     bool stopGeneration = false;
-    [SerializeField]
-    bool redoReplace = false;
     List<LoadMapParts.MapPartData> roomsData;
     List<LoadMapParts.MapPartData> hallwaysData;
     List<GameObject> allAvailableConnections = new List<GameObject>();
     private List<Bounds> collisionBounds = new List<Bounds>();
     int totalParts = 1;
-    bool mapPlanComplete = false;
-    bool replacementComplete = false;
-    bool spawnItemsComplete = false;
     ReplaceMapParts replaceMapParts = null;
     ItemManager itemManager = null;
+    SyncVars syncVars = null;
+
+    public bool startNextStage = false;
+    bool working = false;
 
     void Start()
     {
@@ -33,40 +31,62 @@ public class CreateMap : MonoBehaviour
         itemManager = GetComponent<ItemManager>();
     }
 
+    void findSyncVars()
+    {
+        if (syncVars == null)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in players)
+            {
+                if (player.GetComponent<NetworkObject>().IsOwner)
+                {
+                    syncVars = player.GetComponent<SyncVars>();
+                    break;
+                }
+            }
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (StartMapCreation)
+        findSyncVars();
+        if (syncVars != null && startNextStage && !working && syncVars.currentStage.Value != -1)
         {
-            StartMapCreation = false;
-            int seed = GameManager.Instance.getSeed();
-            if (seed == 0)
+            Debug.Log("Starting next stage in map creation: " + syncVars.currentStage.Value);
+            switch (syncVars.currentStage.Value)
             {
-                Debug.LogError("Seed is not set. Please set the seed");
-                return;
+                case 0:
+                    int seed = GameManager.Instance.getSeed();
+                    if (seed == 0)
+                    {
+                        Debug.LogError("Seed is not set. Please set the seed");
+                        return;
+                    }
+                    Debug.Log($"Seed is {(int)seed}");
+                    Random.InitState((int)seed);
+                    working = true;
+                    // spawn a thread to create the map
+                    Debug.Log("Creating map...");
+                    StartCoroutine(createMapPlan());
+                    break;
+                case 1:
+                    working = true;
+                    StartCoroutine(createMapPlanThread());
+                    break;
+                case 2:
+                    working = true;
+                    spawnItems();
+                    break;
+                case 3:
+                    working = true;
+                    unloadMap();
+                    break;
+                case 4:
+                    Debug.Log("Map creation finished");
+                    syncVars.currentStage.Value = -1;
+                    break;
             }
-            Debug.Log($"Seed is {(int)seed}");
-            Random.InitState((int)seed);
-            // spawn a thread to create the map
-            Debug.Log("Creating map...");
-            StartCoroutine(createMapPlan());
-        }
-        if (mapPlanComplete || redoReplace)
-        {
-            redoReplace = false;
-            mapPlanComplete = false;
-            // start the next step
-            StartCoroutine(createMapPlanThread());
-        }
-        if (replacementComplete)
-        {
-            replacementComplete = false;
-            spawnItems();
-        }
-        if (spawnItemsComplete)
-        {
-            spawnItemsComplete = false;
-            unloadMap();
         }
     }
 
@@ -74,13 +94,20 @@ public class CreateMap : MonoBehaviour
     {
         yield return 20;
         replaceMapParts.replaceParts();
-        replacementComplete = true;
+        syncVars.currentStage.Value++;
+        startNextStage = false;
+        working = false;
+        Debug.Log("Map creation stage 1 finished");
     }
 
     void spawnItems()
     {
-        itemManager.spawnItems(moneyNeeded);
-        spawnItemsComplete = true;
+        if (NetworkManager.Singleton.LocalClient != null && NetworkManager.Singleton.IsHost)
+            itemManager.spawnItems(moneyNeeded);
+        syncVars.currentStage.Value++;
+        startNextStage = false;
+        working = false;
+        Debug.Log("Map creation stage 2 finished");
     }
 
     void unloadMap()
@@ -92,9 +119,12 @@ public class CreateMap : MonoBehaviour
             if (loadNearMapParts != null)
                 loadNearMapParts.checkShouldBeLoaded();
         }
+        syncVars.currentStage.Value++;
+        startNextStage = false;
+        working = false;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject player in players)
-            player.transform.position = new Vector3(0, 0, 0);
+            player.transform.position = new Vector3(0, 2.2f, 10);
     }
 
     public void alignNewPart(Transform parentB, Transform connectionPointA, Transform connectionPointB)
@@ -190,9 +220,7 @@ public class CreateMap : MonoBehaviour
     IEnumerator createMapPlan()
     {
         foreach (Transform child in transform)
-        {
             Destroy(child.gameObject);
-        }
         // Get the map parts from the LoadMapParts script
         LoadMapParts loadMapParts = GetComponent<LoadMapParts>();
         roomsData = loadMapParts.getRoomsData();
@@ -341,7 +369,10 @@ public class CreateMap : MonoBehaviour
             }
         }
         Debug.Log($"Stopped because room count: {roomCount}, hallway count: {hallwayCount}, available connections: {allAvailableConnections.Count}");
-        mapPlanComplete = true;
+        syncVars.currentStage.Value++;
+        startNextStage = false;
+        working = false;
+        Debug.Log("Map creation stage 0 finished");
     }
 
 }

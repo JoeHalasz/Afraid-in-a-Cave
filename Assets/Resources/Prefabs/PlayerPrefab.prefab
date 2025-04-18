@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: -876803523994673787}
   - component: {fileID: 1488438363271395565}
   - component: {fileID: 858302743281182491}
+  - component: {fileID: -6481020117856570087}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -634,7 +635,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   pickedUpItem: {fileID: 0}
   holdDistance: 1
-  moveForce: 5
   range: 4
 --- !u!114 &858302743281182491
 MonoBehaviour:
@@ -651,6 +651,19 @@ MonoBehaviour:
   sessionName: DefaultSession
   connect: 0
   createMap: 0
+--- !u!114 &-6481020117856570087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126033940717042450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0d8e2a686e1074096f506e50427985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &2746414707775465529
 GameObject:
   m_ObjectHideFlags: 0
