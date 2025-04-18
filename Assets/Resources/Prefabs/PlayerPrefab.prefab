@@ -664,6 +664,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isHost:
+    m_InternalValue: 0
+  currentStage:
+    m_InternalValue: 0
+  seed:
+    m_InternalValue: 0
+  startMapGen: 0
 --- !u!1 &2746414707775465529
 GameObject:
   m_ObjectHideFlags: 0

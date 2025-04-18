@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -5494314115879962729}
   - component: {fileID: 6897196322379081388}
   - component: {fileID: -6185107507302861824}
-  - component: {fileID: 3090304768835388395}
+  - component: {fileID: -3651534868785656843}
   m_Layer: 10
   m_Name: Red Rubber Duck
   m_TagString: Pickup
@@ -232,7 +232,7 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
---- !u!114 &3090304768835388395
+--- !u!114 &-3651534868785656843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,10 +241,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1520813607336596771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac35373b42abe46ea8f7cab1a1c353f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 312c6b4c6ca59e64ca90eb95935bd5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  mass:
+    m_InternalValue: 0
 --- !u!1 &5932294735036509524
 GameObject:
   m_ObjectHideFlags: 0

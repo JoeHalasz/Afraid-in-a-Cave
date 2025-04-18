@@ -6,7 +6,9 @@ public class Item : NetworkBehaviour
 {
     [SerializeField]
     float maxWorth = 100f;
-    float damagePercent = 0f;
+ 
+    public NetworkVariable<float> damagePercent = new NetworkVariable<float>(0);
+ 
     [SerializeField]
     float mass = 100f;
     [SerializeField]
@@ -99,18 +101,19 @@ public class Item : NetworkBehaviour
     // on collision with anything, make the damage go up based on how hard it hit the other object
     void OnCollisionEnter(Collision collision)
     {
+        if (!HasAuthority || !IsSpawned) return;
         float collisionForce = collision.relativeVelocity.magnitude;
         float damage = Mathf.Clamp01(collisionForce / damageDampener);
         if (damage < minDamageThreshold) return;
         
-        damagePercent += damage;
-        if (damagePercent >= maxHealth)
+        damagePercent.Value += damage;
+        if (damagePercent.Value >= maxHealth)
         {
-            damagePercent = maxHealth;
+            damagePercent.Value = maxHealth;
             itemBreak();
             return;
         }
-        worth = maxWorth * (1f - damagePercent);
+        worth = maxWorth * (1f - damagePercent.Value);
 
         makeRed();
         if (hurtSound != null)

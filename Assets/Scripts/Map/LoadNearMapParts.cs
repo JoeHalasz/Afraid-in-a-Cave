@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
 
-public class LoadNearMapParts : MonoBehaviour
+public class LoadNearMapParts : NetworkBehaviour
 {
     
     public List<GameObject> closeMapParts = new List<GameObject>();
@@ -24,17 +25,18 @@ public class LoadNearMapParts : MonoBehaviour
         // if its the player
         if (other.gameObject.CompareTag("Player"))
         {
-            foreach (GameObject obj in closeMapParts)
+            if (other.gameObject.GetComponent<NetworkObject>().IsOwner)
             {
-                LoadNearMapParts otherScript = obj.GetComponentInChildren<LoadNearMapParts>();
-                if (otherScript == null)
+                foreach (GameObject obj in closeMapParts)
                 {
-                    Debug.LogWarning($"LoadNearMapParts script not found on {obj.name}.");
-                    continue;
-                }
-                if (!otherScript.loadedFrom.Contains(gameObject))
-                {
-                    otherScript.addLoadedFrom(gameObject);
+                    LoadNearMapParts otherScript = obj.GetComponentInChildren<LoadNearMapParts>();
+                    if (otherScript == null)
+                    {
+                        Debug.LogWarning($"LoadNearMapParts script not found on {obj.name}.");
+                        continue;
+                    }
+                    if (!otherScript.loadedFrom.Contains(gameObject))
+                        otherScript.addLoadedFrom(gameObject);
                 }
             }
         }
@@ -45,17 +47,19 @@ public class LoadNearMapParts : MonoBehaviour
         // if its the player
         if (other.gameObject.CompareTag("Player"))
         {
-            foreach (GameObject obj in closeMapParts)
+            // make sure that player has authority
+            if (other.gameObject.GetComponent<NetworkObject>().IsOwner)
             {
-                LoadNearMapParts otherScript = obj.GetComponentInChildren<LoadNearMapParts>();
-                if (otherScript == null)
+                foreach (GameObject obj in closeMapParts)
                 {
-                    Debug.LogWarning($"LoadNearMapParts script not found on {obj.name}.");
-                    continue;
-                }
-                if (otherScript.loadedFrom.Contains(gameObject))
-                {
-                    otherScript.removeLoadedFrom(gameObject);
+                    LoadNearMapParts otherScript = obj.GetComponentInChildren<LoadNearMapParts>();
+                    if (otherScript == null)
+                    {
+                        Debug.LogWarning($"LoadNearMapParts script not found on {obj.name}.");
+                        continue;
+                    }
+                    if (otherScript.loadedFrom.Contains(gameObject))
+                        otherScript.removeLoadedFrom(gameObject);
                 }
             }
         }

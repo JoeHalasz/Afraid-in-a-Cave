@@ -51,7 +51,7 @@ public class SessionManager : MonoBehaviour
     async void Start()
     {
         // connect to a random session
-        sessionName = "Session2";// + UnityEngine.Random.Range(0, 10000).ToString();
+        sessionName = "Session1";// + UnityEngine.Random.Range(0, 10000).ToString();
         await startSession(sessionName);
     }
 

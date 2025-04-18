@@ -3,10 +3,10 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    public float speed = 5f; // Speed of the player
-    public float jumpForce = 5f; // Jump force of the player
-    private Rigidbody rb; // Reference to the Rigidbody component
-    private bool isGrounded; // Check if the player is on the ground
+    float speed = 4f; // Speed of the player
+    float jumpForce = 300f; // Jump force of the player
+    Rigidbody rb; // Reference to the Rigidbody component
+    bool isGrounded; // Check if the player is on the ground
     // store what time we were last grounded
     float lastGroundedTime = 0f;
     float lastJumpTime = 0f;
@@ -31,29 +31,19 @@ public class PlayerMovement : NetworkBehaviour
             float vertical = 0;
 
             if (Input.GetKey(KeyCode.W))
-            {
                 vertical = 1; // Move forward
-            }
             else if (Input.GetKey(KeyCode.S))
-            {
                 vertical = -1; // Move backward
-            }
 
             if (Input.GetKey(KeyCode.A))
-            {
                 horizontal = -1; // Move left
-            }
             else if (Input.GetKey(KeyCode.D))
-            {
                 horizontal = 1; // Move right
-            }
             
             Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
             
             if (moveDirection.magnitude > 1f)
-            {
                 moveDirection.Normalize();
-            }
 
             rb.linearVelocity = new Vector3(moveDirection.x * speed, rb.linearVelocity.y, moveDirection.z * speed); // Set the velocity of the player
         }
@@ -71,17 +61,13 @@ public class PlayerMovement : NetworkBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) // Check if the player collides with an object tagged as "Ground"
-        {
             isGrounded = true; // Set isGrounded to true when touching the ground
-        }
     }
 
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) // Check if the player is still colliding with an object tagged as "Ground"
-        {
             isGrounded = true; // Keep isGrounded true while touching the ground
-        }
     }
 
     private void OnCollisionExit(Collision collision)
