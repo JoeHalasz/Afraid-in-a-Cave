@@ -57,6 +57,16 @@ public class ItemManager : MonoBehaviour
                 Debug.LogWarning("No spawners found. Cannot spawn items.");
                 break;
             }
+
+            // go through the spawners in a random order
+            for (int i = 0; i < spawners.Count; i++)
+            {
+                int randomIndex = Random.Range(i, spawners.Count);
+                GameObject temp = spawners[i];
+                spawners[i] = spawners[randomIndex];
+                spawners[randomIndex] = temp;
+            }
+
             // loop through the spawners and spawn a random items based on the rarity. Normal is 83%, Rare is 15%, Ultra is 2%
             foreach (GameObject spawner in spawners)
             {

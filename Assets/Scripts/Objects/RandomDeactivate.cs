@@ -4,11 +4,11 @@ public class RandomDeactivate : MonoBehaviour
 {
     
     [SerializeField]
-    float percentChagne = 75f;
+    float percentChange = 75f;
 
     void Start()
     {
-        if (Random.Range(0f, 100f) < percentChagne)
+        if (Random.Range(0f, 100f) < percentChange)
         {
             gameObject.SetActive(false);
         }

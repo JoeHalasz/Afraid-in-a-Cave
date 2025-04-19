@@ -40,11 +40,9 @@ public class RedDuck : NetworkBehaviour
         }
         if (bounced)
         {
-            Debug.Log($"Old {lastVelocity}");
             Vector3 direction = Vector3.Reflect(lastVelocity, lastCollision.contacts[0].normal);
             if (direction.magnitude > maxVelocity)
                 direction = direction.normalized * maxVelocity;
-            Debug.Log($"New {direction*bounceForce}");
             rb.linearVelocity = direction * bounceForce;
             bounced = false;
         }

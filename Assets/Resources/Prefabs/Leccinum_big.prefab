@@ -192,4 +192,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1949017060d41194f9f69005ad3668ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  percentChagne: 60
+  percentChange: 60

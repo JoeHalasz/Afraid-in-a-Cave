@@ -39,19 +39,7 @@ public class ItemSpawner : MonoBehaviour
             item.transform.localScale.y + item.transform.localScale.y * scaleChange,
             item.transform.localScale.z + item.transform.localScale.z * scaleChange
         );
-        
-        // StartCoroutine(parentNetworkObject(item));
+
     }
 
-    // coroutine like parentNetworkObject function
-    IEnumerator parentNetworkObject(GameObject item)
-    {
-        Debug.Log($"Parenting item {item.name} to {transform.parent.name}");
-        if (!item.GetComponent<NetworkObject>().TrySetParent(transform.parent))
-        {
-            Debug.Log("trying again");
-            yield return new WaitForSeconds(.5f);
-            StartCoroutine(parentNetworkObject(item));
-        }
-    }
 }

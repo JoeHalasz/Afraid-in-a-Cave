@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 public class SyncVars : NetworkBehaviour
 {
     public NetworkVariable<bool> isHost = new NetworkVariable<bool>(false);
+    [SerializeField]
     NetworkVariable<int> hostNextStage = new NetworkVariable<int>(-1);
     public NetworkVariable<int> currentStage = new NetworkVariable<int>(0);
 
@@ -31,17 +32,19 @@ public class SyncVars : NetworkBehaviour
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.O))
+        {
+            generateNewSeed();
             startMapGen = true;
+        }
     }
 
     void FixedUpdate()
     {
         if (!HasAuthority || !IsSpawned) return;
-        if (currentStage.Value == -1) return; // -1 means map creation done
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         if (NetworkManager.LocalClient.IsSessionOwner) // host check
         {
-            if (hostNextStage.Value == -1 && startMapGen)
+            if (startMapGen)
             {
                 startMapGen = false;
                 hostNextStage.Value = 0;
@@ -58,14 +61,17 @@ public class SyncVars : NetworkBehaviour
                 Debug.Log($"Host {NetworkManager.LocalClientId} is starting stage {hostNextStage.Value}");
             }
         }
+        int hNextStage = -1;
+        foreach (GameObject player in players)
+        {
+            SyncVars playerSyncVars = player.GetComponent<SyncVars>();
+            if (playerSyncVars.isHost.Value)
+                hNextStage = playerSyncVars.hostNextStage.Value;
+        }
         if (!createMap.startNextStage)
         {
             foreach (GameObject player in players)
             {
-                SyncVars playerSyncVars = player.GetComponent<SyncVars>();
-                int hNextStage = -1;
-                if (playerSyncVars.isHost.Value)
-                    hNextStage = playerSyncVars.hostNextStage.Value;
                 if (hNextStage != -1)
                 {
                     Debug.Log($"Client {NetworkManager.LocalClientId} is checking host stage {hNextStage} and current stage {currentStage.Value}");
@@ -78,12 +84,11 @@ public class SyncVars : NetworkBehaviour
                 }
             }
         }
+        if (hNextStage == 0 && currentStage.Value == -1)
+        {
+            Debug.Log($"Client {NetworkManager.LocalClientId} is restarting map gen");
+            createMap.startNextStage = false;
+            currentStage.Value = 0;
+        }
     }
-
 }
-
-    // int hostNextStage 0
-    // int currentStage 0
-
-    // HOST when all current stages are the same as the host next stage then hostNextStage++
-    // CLIENT if hostNextStage > currentStage start the next stage

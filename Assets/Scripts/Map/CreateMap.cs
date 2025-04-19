@@ -7,7 +7,7 @@ using Unity.Netcode;
 public class CreateMap : MonoBehaviour
 {
     int maxRooms = 10;
-    float moneyNeeded = 50000f;
+    float moneyNeededPerRoom = 600f;
     [SerializeField]
     bool stopGeneration = false;
     List<LoadMapParts.MapPartData> roomsData;
@@ -19,6 +19,7 @@ public class CreateMap : MonoBehaviour
     ItemManager itemManager = null;
     SyncVars syncVars = null;
 
+    [SerializeField]
     public bool startNextStage = false;
     bool working = false;
 
@@ -102,7 +103,7 @@ public class CreateMap : MonoBehaviour
     void spawnItems()
     {
         if (syncVars.isHost.Value)
-            itemManager.spawnItems(moneyNeeded);
+            itemManager.spawnItems(moneyNeededPerRoom * maxRooms);
         syncVars.currentStage.Value++;
         startNextStage = false;
         working = false;
@@ -216,10 +217,18 @@ public class CreateMap : MonoBehaviour
         }
     }
 
-    IEnumerator createMapPlan()
+    void resetMap()
     {
         foreach (Transform child in transform)
             Destroy(child.gameObject);
+        GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
+        foreach (GameObject pickup in pickups)
+            Destroy(pickup);
+    }
+
+    IEnumerator createMapPlan()
+    {
+        resetMap();
         // Get the map parts from the LoadMapParts script
         LoadMapParts loadMapParts = GetComponent<LoadMapParts>();
         roomsData = loadMapParts.getRoomsData();

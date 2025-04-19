@@ -3,11 +3,12 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    float speed = 4f; // Speed of the player
+    float speed = 4.5f; // Speed of the player
     float jumpForce = 300f; // Jump force of the player
+    float acceleration = 10f; // Acceleration of the player
+    float deceleration = 8f; // Deceleration when no input is given
     Rigidbody rb; // Reference to the Rigidbody component
     bool isGrounded; // Check if the player is on the ground
-    // store what time we were last grounded
     float lastGroundedTime = 0f;
     float lastJumpTime = 0f;
 
@@ -39,13 +40,25 @@ public class PlayerMovement : NetworkBehaviour
                 horizontal = -1; // Move left
             else if (Input.GetKey(KeyCode.D))
                 horizontal = 1; // Move right
-            
+
             Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-            
+
             if (moveDirection.magnitude > 1f)
                 moveDirection.Normalize();
 
-            rb.linearVelocity = new Vector3(moveDirection.x * speed, rb.linearVelocity.y, moveDirection.z * speed); // Set the velocity of the player
+            // Apply acceleration force
+            Vector3 targetVelocity = moveDirection * speed;
+            Vector3 velocityChange = targetVelocity - rb.linearVelocity;
+            velocityChange.y = 0; // Ignore vertical changes
+            rb.AddForce(velocityChange * acceleration, ForceMode.Acceleration);
+
+            // Apply deceleration when no input is given
+            if (moveDirection.magnitude == 0)
+            {
+                Vector3 decelerationForce = -rb.linearVelocity * deceleration;
+                decelerationForce.y = 0; // Ignore vertical changes
+                rb.AddForce(decelerationForce, ForceMode.Acceleration);
+            }
         }
     }
 
