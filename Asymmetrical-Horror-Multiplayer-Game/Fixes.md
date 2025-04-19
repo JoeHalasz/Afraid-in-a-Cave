@@ -10,3 +10,9 @@ Maybe lantern on the player?
 turn on direct x 12 again
 
 fix breaking items over the network 
+
+add acceleration
+
+red rubber duck back to ultra
+Sounds over network
+missing random seed somewhere

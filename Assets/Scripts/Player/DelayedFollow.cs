@@ -3,24 +3,48 @@ using Unity.Netcode;
 
 public class DelayedFollow : NetworkBehaviour
 {
-
     [SerializeField]
-    private Transform target; // The target to follow
+    public GameObject targetX; // The target to follow for X-axis rotation
+    [SerializeField]
+    public GameObject targetY; // The target to follow for Y-axis rotation
     [SerializeField]
     private float followSpeed = 7.5f;
-    [SerializeField]
-    GameObject correctPosTarget = null;
-    
+
+    bool wasNullX = true;
+    bool wasNullY = true;
+
     void Update()
     {
         if (!IsOwner || !IsSpawned) return;
-        if (target != null)
+
+
+        Vector3 currentEulerAngles = transform.localEulerAngles;
+
+        if (wasNullX && targetX != null)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, Time.deltaTime*followSpeed);
+            wasNullX = false;
+            Vector3 targetXRotation = targetX.transform.localEulerAngles;
+            transform.localEulerAngles = new Vector3(targetXRotation.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
         }
-        if (correctPosTarget != null)
+        else if (targetX != null)
         {
-            transform.position = Vector3.Lerp(transform.position, correctPosTarget.transform.position, Time.deltaTime*followSpeed);
+            float targetXRotation = targetX.transform.localEulerAngles.x;
+            currentEulerAngles.x = Mathf.LerpAngle(currentEulerAngles.x, targetXRotation, Time.deltaTime * followSpeed);
         }
+        
+        if (!wasNullY && targetY == null)
+        {
+            wasNullY = true;
+            Vector3 targetYRotation = targetY.transform.localEulerAngles;
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, targetYRotation.y, transform.localEulerAngles.z);
+        }
+        else if (targetY != null)
+        {
+            float targetYRotation = targetY.transform.localEulerAngles.y;
+            currentEulerAngles.y = Mathf.LerpAngle(currentEulerAngles.y, targetYRotation, Time.deltaTime * followSpeed);
+        }
+
+        // Apply the updated rotation
+        transform.localEulerAngles = currentEulerAngles;
     }
 }

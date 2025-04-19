@@ -515,13 +515,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxWorth: 300
+  maxWorth: 1000
+  damagePercent:
+    m_InternalValue: 0
   mass: 50
   minDamageThreshold: 0.3
   damageDampener: 10
   hurtSound: {fileID: 0}
   destroySound: {fileID: 0}
-  rarity: 1
+  rarity: 2
   worth: 0
 --- !u!114 &-7790851596020856811
 MonoBehaviour:
@@ -558,7 +560,7 @@ MonoBehaviour:
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
-  SlerpPosition: 0
+  SlerpPosition: 1
 --- !u!54 &8843223921107314078
 Rigidbody:
   m_ObjectHideFlags: 0

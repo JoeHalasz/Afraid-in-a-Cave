@@ -28,6 +28,12 @@ public class SyncVars : NetworkBehaviour
         seed.Value = (int)System.DateTime.Now.Ticks;
     }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.O))
+            startMapGen = true;
+    }
+
     void FixedUpdate()
     {
         if (!HasAuthority || !IsSpawned) return;

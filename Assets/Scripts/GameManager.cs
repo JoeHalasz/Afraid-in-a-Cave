@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     GameObject mapManager;
 
     [SerializeField]
-    string sessionName = "DefaultSession";
+    int sessionNumber = 1;
     [SerializeField] 
     bool connect = false;
 
@@ -49,10 +49,10 @@ public class GameManager : MonoBehaviour
 
     async void onConnectPress()
     {
-        Debug.Log($"Joining session {sessionName}");
-        await networkManager.GetComponent<SessionManager>().startSession(sessionName);
+        Debug.Log($"Joining session Session{sessionNumber}");
+        await networkManager.GetComponent<SessionManager>().startSession(sessionNumber);
         if (!networkManager.GetComponent<SessionManager>().isConnected)
-            Debug.LogError($"Could not connect to {sessionName}");
+            Debug.LogError($"Could not connect to {sessionNumber}");
     }
 
 }

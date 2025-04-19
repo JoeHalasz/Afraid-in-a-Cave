@@ -26,6 +26,7 @@ public class ReplaceMapParts : MonoBehaviour
     {
         List<GameObject> newParts = new List<GameObject>();
         // for every child in map manager
+        Random.InitState(GameManager.Instance.getSeed());
         foreach (Transform child in mapManager.transform)
         {
             if (child.GetComponent<SavedPartType>() == null)

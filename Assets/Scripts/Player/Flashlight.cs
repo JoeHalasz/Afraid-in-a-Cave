@@ -3,21 +3,28 @@ using Unity.Netcode;
 
 public class Flashlight : NetworkBehaviour
 {
+    GameObject flashlight;
+
+    [SerializeField]
+    GameObject flashlightPrefab;
+
     void Update()
     {
         if (!IsOwner || !IsSpawned) return;
         if (Input.GetKeyDown(KeyCode.F))
         {
-            // this object is the flashlight
-            // toggle the flashlight on and off
-            Light flashlight = GetComponent<Light>();
-            if (flashlight != null)
+            // if it doesnt exist create it and turn on its network object
+            if (flashlight == null)
             {
-                flashlight.enabled = !flashlight.enabled;
+                flashlight = Instantiate(flashlightPrefab, transform.position, Quaternion.identity);
+                flashlight.GetComponent<DelayedFollow>().targetX = transform.Find("Camera").gameObject;
+                flashlight.GetComponent<DelayedFollow>().targetY = gameObject;
+                flashlight.GetComponent<FlashlightFollowTarget>().target = transform.Find("FlashlightCorrectPos").gameObject;
+                flashlight.GetComponent<NetworkObject>().SpawnAsPlayerObject(OwnerClientId);
             }
             else
             {
-                Debug.LogError("Flashlight component not found on this object.");
+                Destroy(flashlight);
             }
         }
     }

@@ -48,7 +48,7 @@ public class ItemManager : MonoBehaviour
         
         int maxItems = 100;
         int numItems = 0;
-
+        
         List<GameObject> spawners = new List<GameObject>(GameObject.FindGameObjectsWithTag("ItemSpawner"));
         while (totalValue < maxValue && numItems < maxItems)
         {
@@ -72,10 +72,12 @@ public class ItemManager : MonoBehaviour
                 ItemSpawner itemSpawner = spawner.GetComponent<ItemSpawner>();
                 totalValue += itemToSpawn.GetComponent<Item>().getMaxWorth();
                 numItems++;
+                Debug.Log("Spawning item: " + itemToSpawn.name + " with value: " + itemToSpawn.GetComponent<Item>().getMaxWorth());
                 itemSpawner.SpawnItem(itemToSpawn);
                 if (totalValue >= maxValue || numItems >= maxItems)
                     break;
             }
         }
+        Debug.Log("Spawned " + numItems + " items with a total value of " + totalValue + " worth of items.");
     }
 }

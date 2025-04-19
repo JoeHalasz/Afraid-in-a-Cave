@@ -33,7 +33,7 @@ public class SessionManager : MonoBehaviour
 
     const string playerNamePropertyKey = "PlayerName";
 
-    string sessionName = "MySession";
+    int sessionNumber = 10;
 
     void OnClientConnectedCallback(ulong clientId)
     {
@@ -51,40 +51,91 @@ public class SessionManager : MonoBehaviour
     async void Start()
     {
         // connect to a random session
-        sessionName = "Session1";// + UnityEngine.Random.Range(0, 10000).ToString();
-        await startSession(sessionName);
+        await startSession(sessionNumber);
     }
 
-    async public Task startSession(string sessionName)
+    async public Task startSession(int sessionNumber)
     {
-        // if we are connected to a session then leave it
+        // Initialize Unity Services if not already initialized
+        if (!UnityServices.State.Equals(ServicesInitializationState.Initialized))
+        {
+            Debug.Log("Initializing Unity Services...");
+            try
+            {
+                await UnityServices.InitializeAsync();
+                Debug.Log("Unity Services initialized successfully.");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to initialize Unity Services: {e.Message}");
+                return;
+            }
+        }
+
+        // If we are connected to a session, leave it
         if (ActiveSession != null)
         {
             await LeaveSession();
         }
-        try
+
+        int tries = 0;
+        while (tries < 50)
         {
-            networkManager = GetComponent<NetworkManager>();
-            networkManager.OnClientConnectedCallback += OnClientConnectedCallback;
-            networkManager.OnSessionOwnerPromoted += OnSessionOwnerPromoted;
-
-            await UnityServices.InitializeAsync();
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            Debug.Log("Signed in anonymously. PlayerID: " + AuthenticationService.Instance.PlayerId);
-
-            var options = new SessionOptions()
+            await Task.Delay(500);
+            tries++;
+            Debug.Log($"Attempting to create or join session Session{sessionNumber} (try {tries})");
+            try
             {
-                Name = sessionName,
-                MaxPlayers = 8
-            }.WithDistributedAuthorityNetwork();
+                networkManager = GetComponent<NetworkManager>();
+                networkManager.OnClientConnectedCallback += OnClientConnectedCallback;
+                networkManager.OnSessionOwnerPromoted += OnSessionOwnerPromoted;
 
-            ActiveSession = await MultiplayerService.Instance.CreateOrJoinSessionAsync(sessionName, options);
+                // Check if the player is already signed in
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    Debug.Log("Signed in anonymously. PlayerID: " + AuthenticationService.Instance.PlayerId);
+                }
+                else
+                {
+                    Debug.Log("Player is already signed in. Skipping sign-in.");
+                }
 
-            Debug.Log($"Session {ActiveSession.Id} created with code {ActiveSession.Code}");
-        }
-        catch (RequestFailedException e)
-        {
-            Debug.LogError($"Failed to sign in anonymously: {e.Message}");
+                var options = new SessionOptions()
+                {
+                    Name = "Session" + sessionNumber,
+                    MaxPlayers = 8
+                }.WithDistributedAuthorityNetwork();
+
+                ActiveSession = await MultiplayerService.Instance.CreateOrJoinSessionAsync("Session" + sessionNumber, options);
+                Debug.Log($"Session {ActiveSession.Id} created with code {ActiveSession.Code}");
+                break;
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("player is already a member of the lobby"))
+                {
+                    Debug.LogError("Player is already a member of the lobby. Attempting to leave and rejoin...");
+                    // reconnect
+                    try
+                    {
+                        await LeaveSession();
+                        await JoinSessionById(ActiveSession.Id.ToString());
+                        Debug.Log($"Rejoined session {ActiveSession.Id} with code {ActiveSession.Code}");
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"Failed to leave and rejoin session: {ex.Message}");
+                        sessionNumber++;
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"Failed to create or join session: {e.Message}");
+                    sessionNumber++;
+                }
+            }
         }
     }
 
@@ -114,19 +165,19 @@ public class SessionManager : MonoBehaviour
         }
     }
 
-    async UniTaskVoid JoinSessionById(string sessionId)
+    async Task JoinSessionById(string sessionId)
     {
         ActiveSession = await MultiplayerService.Instance.JoinSessionByIdAsync(sessionId);
         Debug.Log($"Joined session {ActiveSession.Id} with code {ActiveSession.Code}");
     }
 
-    async UniTaskVoid JoinSessionByCode(string sessionCode)
+    async Task JoinSessionByCode(string sessionCode)
     {
         ActiveSession = await MultiplayerService.Instance.JoinSessionByCodeAsync(sessionCode);
         Debug.Log($"Joined session {ActiveSession.Id} with code {ActiveSession.Code}");
     }
 
-    async UniTaskVoid KickPlayer(string playerId)
+    async Task KickPlayer(string playerId)
     {
         if (!ActiveSession.IsHost)
         {
@@ -150,7 +201,10 @@ public class SessionManager : MonoBehaviour
             await ActiveSession.LeaveAsync();
             Debug.Log($"Left session {ActiveSession.Id}");
         }
-        catch { }
+        catch (Exception e) 
+        {
+            Debug.LogError($"Failed to leave session: {e.Message}");
+        }
         finally
         {
             ActiveSession = null;
@@ -166,4 +220,21 @@ public class SessionManager : MonoBehaviour
         }
     }
 
+    // on game object destroy, leave the session
+    void OnDestroy()
+    {
+        if (ActiveSession != null)
+        {
+            LeaveSession().Forget();
+        }
+    }
+
+    void OnClientDisconnectCallback(ulong clientId)
+    {
+        Debug.Log($"Client {clientId} disconnected");
+        if (clientId == networkManager.LocalClientId)
+        {
+            LeaveSession().Forget();
+        }
+    }
 }

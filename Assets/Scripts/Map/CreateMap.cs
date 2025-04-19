@@ -6,11 +6,8 @@ using Unity.Netcode;
 
 public class CreateMap : MonoBehaviour
 {
-
-    [SerializeField]
-    int maxRooms = 30;
-    [SerializeField]
-    float moneyNeeded = 5000f;
+    int maxRooms = 10;
+    float moneyNeeded = 50000f;
     [SerializeField]
     bool stopGeneration = false;
     List<LoadMapParts.MapPartData> roomsData;

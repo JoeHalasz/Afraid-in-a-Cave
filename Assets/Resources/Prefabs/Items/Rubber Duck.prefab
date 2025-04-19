@@ -131,6 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxWorth: 100
+  damagePercent:
+    m_InternalValue: 0
   mass: 100
   minDamageThreshold: 0.1
   damageDampener: 25
@@ -173,7 +175,7 @@ MonoBehaviour:
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
-  SlerpPosition: 0
+  SlerpPosition: 1
 --- !u!54 &-2581842760025528396
 Rigidbody:
   m_ObjectHideFlags: 0

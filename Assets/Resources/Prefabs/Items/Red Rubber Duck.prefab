@@ -132,13 +132,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxWorth: 1000
+  maxWorth: 300
+  damagePercent:
+    m_InternalValue: 0
   mass: 100
   minDamageThreshold: 0.1
   damageDampener: 25
   hurtSound: {fileID: 0}
   destroySound: {fileID: 0}
-  rarity: 2
+  rarity: 1
   worth: 0
 --- !u!114 &-613089114100891769
 MonoBehaviour:
@@ -152,6 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3f4203c2a048647b32224883166150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  bounceSound: {fileID: 8300000, guid: f74d2c70c606f2441b6b67c6ddb810cf, type: 3}
 --- !u!114 &-5494314115879962729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +191,7 @@ MonoBehaviour:
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
-  SlerpPosition: 0
+  SlerpPosition: 1
 --- !u!54 &6897196322379081388
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class PickupItem : NetworkBehaviour
     float holdDistance = 1f; // distance to hold the item at
     float breakDistance = 3f;
 
-    float moveForce = 500f;
+    float moveForce = 400f;
     [SerializeField]
     float range = 4f;
 
@@ -32,7 +32,6 @@ public class PickupItem : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range, layerMask))
         {
-            Debug.Log("Hit: " + hit.collider.gameObject.name);
             if (hit.collider.gameObject != gameObject)
                 if (hit.collider.gameObject.tag == "Pickup")
                     pickupItem(hit.collider.gameObject);
@@ -73,7 +72,7 @@ public class PickupItem : NetworkBehaviour
             pickedUpItemRB.linearVelocity = Vector3.Lerp(pickedUpItemRB.linearVelocity, (targetPosition - pickedUpItem.transform.position) * acceleration, Time.fixedDeltaTime * 5f);
             // if its too close to the player camera then push it away 
             if (Vector3.Distance(cam.transform.position, pickedUpItem.transform.position) < 1f)
-                pickedUpItemRB.linearVelocity += cam.transform.forward * acceleration * Time.deltaTime * 3f;
+                pickedUpItemRB.linearVelocity += cam.transform.forward * acceleration * Time.deltaTime * 5f;
             pickedUpItemRB.angularVelocity = Vector3.Lerp(pickedUpItemRB.angularVelocity, Vector3.zero, Time.deltaTime * 5f);
         }
         // if the item gets too far away then drop the item

@@ -25,7 +25,6 @@ public class SyncMass : NetworkBehaviour
 
     void OnMassChanged(float oldValue, float newValue)
     {
-        Debug.Log($"Mass of {gameObject.name} changed from {oldValue} to {newValue}");
         if (!HasAuthority && rb != null)
             rb.mass = newValue;
     }
