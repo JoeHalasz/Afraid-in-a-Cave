@@ -12,9 +12,8 @@ public class ItemSpawner : MonoBehaviour
 
     public void SpawnItem(GameObject itemPrefab)
     {
-        // if the item is not spawned yet call this function in 1 second 
-
         // spawn an item randomly inside of this objects bounds, accounting for this items rotation
+
         // get the bounds of this object
         Bounds bounds = GetComponent<Collider>().bounds;
         bounds.min -= transform.position;
@@ -39,7 +38,5 @@ public class ItemSpawner : MonoBehaviour
             item.transform.localScale.y + item.transform.localScale.y * scaleChange,
             item.transform.localScale.z + item.transform.localScale.z * scaleChange
         );
-
     }
-
 }

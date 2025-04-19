@@ -9,5 +9,4 @@ turn on direct x 12 again
 fix breaking items over the network 
 
 Sounds over network
-missing random seed somewhere
-
+missing random seed somewhere? might be fixed now 

@@ -3,7 +3,6 @@ using Unity.Netcode;
 
 public class RedDuck : NetworkBehaviour
 {
-    
     Rigidbody rb;
     float bounceForce = 1.1f;
 
@@ -23,12 +22,9 @@ public class RedDuck : NetworkBehaviour
         Item item = GetComponent<Item>();
         item.changeMaxHealth(float.MaxValue);
         rb = GetComponent<Rigidbody>();
-        // make it interpolate
+        // Make it interpolate
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        AudioSource audioSource = GetComponent<AudioSource>();
-        if (audioSource != null)
-            audioSource.volume = 0.25f;
     }
 
     void FixedUpdate()
@@ -53,10 +49,27 @@ public class RedDuck : NetworkBehaviour
     {
         bounced = true;
         lastCollision = collision;
+
         float soundVolume = Mathf.Clamp01(rb.linearVelocity.magnitude / maxVelocity);
         soundVolume = Mathf.Clamp(soundVolume, 0.1f, 1f);
-        if (bounceSound != null)
-            AudioSource.PlayClipAtPoint(bounceSound, transform.position, soundVolume);
+
+        // Notify the server about the bounce
+        PlayBounceSoundServerRpc(soundVolume);
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    void PlayBounceSoundServerRpc(float volume)
+    {
+        // Broadcast to all clients to play the sound
+        PlayBounceSoundClientRpc(volume);
+    }
+
+    [ClientRpc]
+    void PlayBounceSoundClientRpc(float volume)
+    {
+        if (bounceSound != null)
+        {
+            AudioSource.PlayClipAtPoint(bounceSound, transform.position, volume);
+        }
+    }
 }

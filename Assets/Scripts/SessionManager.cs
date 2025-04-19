@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 public class SessionManager : MonoBehaviour
 {
-
     public static SessionManager Instance { get; private set; }
     void Awake() { Instance = this; }
 
@@ -33,7 +32,27 @@ public class SessionManager : MonoBehaviour
 
     const string playerNamePropertyKey = "PlayerName";
 
-    int sessionNumber = 10;
+    int sessionNumber = 0;
+    
+    void loadSessionFromFile()
+    {
+        // %appdata%\..\LocalLow\DefaultCompany\Asymmetrical-Horror-Multiplayer-Game
+        string sessionFile = $"{Application.persistentDataPath}/session.txt";
+        try
+        {
+            sessionNumber = int.Parse(System.IO.File.ReadAllText(sessionFile));
+            Debug.Log($"Loaded session number {sessionNumber} from file {sessionFile}");
+        }
+        catch (Exception e)
+        {
+            if (!System.IO.File.Exists(sessionFile))
+            {
+                System.IO.File.WriteAllText(sessionFile, sessionNumber.ToString());
+                Debug.Log($"Created session file {sessionFile} with session number {sessionNumber} at {Application.persistentDataPath}");
+            }
+            Debug.LogError($"Failed to load session number from file {sessionFile}: {e.Message}");
+        }
+    }
 
     void OnClientConnectedCallback(ulong clientId)
     {
@@ -50,6 +69,7 @@ public class SessionManager : MonoBehaviour
 
     async void Start()
     {
+        loadSessionFromFile();
         // connect to a random session
         await startSession(sessionNumber);
     }
@@ -113,22 +133,11 @@ public class SessionManager : MonoBehaviour
             }
             catch (Exception e)
             {
-                if (e.Message.Contains("player is already a member of the lobby"))
+                // TODO cant do anything about if it says the player is already in a session
+                if (e.Message.Contains("has been destroyed but you are still trying to access it."))
                 {
-                    Debug.LogError("Player is already a member of the lobby. Attempting to leave and rejoin...");
-                    // reconnect
-                    try
-                    {
-                        await LeaveSession();
-                        await JoinSessionById(ActiveSession.Id.ToString());
-                        Debug.Log($"Rejoined session {ActiveSession.Id} with code {ActiveSession.Code}");
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.LogError($"Failed to leave and rejoin session: {ex.Message}");
-                        sessionNumber++;
-                    }
+                    Debug.LogError("Session has been destroyed. Stopping");
+                    break;
                 }
                 else
                 {
