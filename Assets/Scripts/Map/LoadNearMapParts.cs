@@ -4,7 +4,6 @@ using Unity.Netcode;
 
 public class LoadNearMapParts : NetworkBehaviour
 {
-    
     public List<GameObject> closeMapParts = new List<GameObject>();
     public List<GameObject> loadedFrom = new List<GameObject>(); // list of game objects that this is loaded because of 
     public GameObject replacementObject = null;
@@ -27,6 +26,7 @@ public class LoadNearMapParts : NetworkBehaviour
         {
             if (other.gameObject.GetComponent<NetworkObject>().IsOwner)
             {
+                other.gameObject.GetComponent<TrackRoom>().currentRoom = replacementObject;
                 foreach (GameObject obj in closeMapParts)
                 {
                     LoadNearMapParts otherScript = obj.GetComponentInChildren<LoadNearMapParts>();

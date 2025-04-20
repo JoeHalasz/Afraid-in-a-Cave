@@ -72,9 +72,9 @@ public class ItemManager : MonoBehaviour
             {
                 float randomValue = Random.Range(0f, 1f);
                 GameObject itemToSpawn = null;
-                if (randomValue < 0.83f) // Normal
+                if (randomValue < 0.6f) // Normal
                     itemToSpawn = itemsByRarity[Rarity.Normal][Random.Range(0, itemsByRarity[Rarity.Normal].Count)];
-                else if (randomValue < 0.98f) // Rare
+                else if (randomValue < 0.95f) // Rare
                     itemToSpawn = itemsByRarity[Rarity.Rare][Random.Range(0, itemsByRarity[Rarity.Rare].Count)];
                 else // Ultra
                     itemToSpawn = itemsByRarity[Rarity.Ultra][Random.Range(0, itemsByRarity[Rarity.Ultra].Count)];
@@ -82,7 +82,7 @@ public class ItemManager : MonoBehaviour
                 ItemSpawner itemSpawner = spawner.GetComponent<ItemSpawner>();
                 totalValue += itemToSpawn.GetComponent<Item>().getMaxWorth();
                 numItems++;
-                Debug.Log("Spawning item: " + itemToSpawn.name + " with value: " + itemToSpawn.GetComponent<Item>().getMaxWorth());
+                // Debug.Log("Spawning item: " + itemToSpawn.name + " with value: " + itemToSpawn.GetComponent<Item>().getMaxWorth());
                 itemSpawner.SpawnItem(itemToSpawn);
                 if (totalValue >= maxValue || numItems >= maxItems)
                     break;

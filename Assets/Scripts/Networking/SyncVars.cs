@@ -33,7 +33,7 @@ public class SyncVars : NetworkBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.O))
         {
-            generateNewSeed();
+            // generateNewSeed();
             startMapGen = true;
         }
     }

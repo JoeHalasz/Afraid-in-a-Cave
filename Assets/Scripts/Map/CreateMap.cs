@@ -19,6 +19,9 @@ public class CreateMap : MonoBehaviour
     ItemManager itemManager = null;
     SyncVars syncVars = null;
 
+    Dictionary<string, List<string>> connections = new Dictionary<string, List<string>>();
+    public Dictionary<string, List<string>> getConnections() { return connections; }
+
     [SerializeField]
     public bool startNextStage = false;
     bool working = false;
@@ -114,7 +117,6 @@ public class CreateMap : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            Debug.Log("Unloading: " + child.name);
             LoadNearMapParts loadNearMapParts = child.GetComponentInChildren<LoadNearMapParts>();
             if (loadNearMapParts != null)
                 loadNearMapParts.checkShouldBeLoaded();
@@ -223,7 +225,12 @@ public class CreateMap : MonoBehaviour
             Destroy(child.gameObject);
         GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
         foreach (GameObject pickup in pickups)
-            Destroy(pickup);
+        {
+            // if we are the host of this object then destroy it
+            if (pickup.GetComponent<NetworkObject>().IsOwner)
+                Destroy(pickup);
+        }
+        connections.Clear();
     }
 
     IEnumerator createMapPlan()
@@ -251,6 +258,9 @@ public class CreateMap : MonoBehaviour
         // add the second connection point of that hallway to the list of available connections
         allAvailableConnections.Add(firstHallway.transform.GetChild(0).gameObject);
         allAvailableConnections.Add(firstHallway.transform.GetChild(1).gameObject);
+        connections.Add("Hallway0", new List<string> { "Hallway1" });
+        connections.Add("Hallway1", new List<string> { "Hallway0","Hallway2"});
+        connections.Add("Hallway2", new List<string> { "Hallway1" });
 
         // Procedurally generate the map
         while (roomCount < maxRooms && allAvailableConnections.Count > 0)
@@ -375,9 +385,23 @@ public class CreateMap : MonoBehaviour
                         roomCount++;
                     else if (newPart.name.Contains("Hallway"))
                         hallwayCount++;
+                    // add to the list of connections
+                    if (connections.ContainsKey(connectionPoint.transform.parent.name))
+                        connections[connectionPoint.transform.parent.name].Add(newPart.name);
+                    else
+                        connections.Add(connectionPoint.transform.parent.name, new List<string> { newPart.name });
+                    if (connections.ContainsKey(newPart.name))
+                        connections[newPart.name].Add(connectionPoint.transform.parent.name);
+                    else
+                        connections.Add(newPart.name, new List<string> { connectionPoint.transform.parent.name });
                     break;
                 }
             }
+        }
+        // print the connections
+        foreach (KeyValuePair<string, List<string>> kvp in connections)
+        {
+            Debug.Log(kvp.Key + ": " + string.Join(", ", kvp.Value));
         }
         Debug.Log($"Stopped because room count: {roomCount}, hallway count: {hallwayCount}, available connections: {allAvailableConnections.Count}");
         syncVars.currentStage.Value++;

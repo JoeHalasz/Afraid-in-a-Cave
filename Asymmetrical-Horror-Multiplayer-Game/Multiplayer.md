@@ -1,5 +1,5 @@
 
-
+DONE
 Create script for handling the map creation for all players.
 Generating the map seed on the host
 Send map seed to all players

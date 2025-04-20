@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 858302743281182491}
   - component: {fileID: -6481020117856570087}
   - component: {fileID: 7287172198616849808}
+  - component: {fileID: 8797128755853587720}
+  - component: {fileID: -3257244284264941574}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -395,6 +397,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   isHost:
     m_InternalValue: 0
+  hostNextStage:
+    m_InternalValue: -1
   currentStage:
     m_InternalValue: 0
   seed:
@@ -414,6 +418,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   flashlightPrefab: {fileID: 989715828107721247, guid: 9cb520f602c66974a857d3329f1a799d, type: 3}
+--- !u!114 &8797128755853587720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126033940717042450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6614798329245bc4b942c7d4413abb9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRoom: {fileID: 0}
+--- !u!114 &-3257244284264941574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126033940717042450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64169eaf1d47b874190a04e1d0cab514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  target: Hallway0
 --- !u!1 &2746414707775465529
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,12 +38,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Fixes.md",
+                "file": "Spawning enemy food.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Fixes"
+              "title": "Spawning enemy food"
             }
           }
         ],
@@ -241,21 +241,21 @@
   },
   "active": "a9e54c4126f6da8e",
   "lastOpenFiles": [
+    "proximity chat.md",
+    "Name.md",
     "Multiplayer.md",
+    "Mod Support.md",
+    "Lighting.md",
+    "Items.md",
+    "Fixes.md",
     "TODO.md",
     "Store.md",
     "Enemies.md",
-    "Items.md",
-    "Lighting.md",
     "Untitled.md",
-    "Fixes.md",
     "Enemy AI.md",
     "LOre.md",
     "Spawning enemy food.md",
     "Death.md",
-    "proximity chat.md",
-    "Mod Support.md",
-    "Name.md",
     "Sellables.md",
     "Classes.md",
     "Base idea.md",
