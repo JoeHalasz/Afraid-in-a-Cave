@@ -10,6 +10,7 @@ TagManager:
   - Pickup
   - Lights
   - ItemSpawner
+  - Mineable
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Rock
   - Item
   - PlayerDetect
-  - 
+  - Mineable
   - 
   - 
   - 

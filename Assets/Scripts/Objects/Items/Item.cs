@@ -11,6 +11,7 @@ public class Item : NetworkBehaviour
  
     [SerializeField]
     float mass = 100f;
+    public float getMass() { return mass; }
     [SerializeField]
     float minDamageThreshold = 0.1f;
     private float maxHealth = 1f;
@@ -29,7 +30,8 @@ public class Item : NetworkBehaviour
     {
         Normal,
         Rare,
-        Ultra
+        Ultra,
+        None
     }
 
     [SerializeField]
@@ -71,11 +73,6 @@ public class Item : NetworkBehaviour
         audioSource.spatialBlend = 1f; // 3D sound
         audioSource.maxDistance = 10f; // max distance for the sound to be heard
         audioSource = GetComponent<AudioSource>();
-        // set tag to Pickup
-        gameObject.tag = "Pickup";
-        // set layer to Rock
-        gameObject.layer = LayerMask.NameToLayer("Item");
-        // make sure it has a network object script component
     }
 
     void Start()

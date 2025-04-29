@@ -10,3 +10,23 @@ fix breaking items over the network
 
 Sounds over network?
 missing random seed somewhere? might be fixed now 
+
+fix crystal room
+
+map gen broken still
+
+Fix tracking which room the player is in
+
+fix sliding down ramp
+
+random.seed is not broken, map counter is broken
+
+lessen jump cooldown
+
+
+fix rocks on the left side white rock in ramp room
+Leaving lobbies and changing host on leave lobby(check using shift O)
+Redo sessions so that players can leave correctly and rejoin lobbies
+
+
+Make sure mining works over the network

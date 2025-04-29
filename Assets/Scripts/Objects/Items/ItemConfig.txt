@@ -3,3 +3,4 @@ Crystal,300,50,.3,10,Rare
 Red Rubber Duck,1000,100,.1,25,Ultra
 Rubber Duck,100,100,.1,25,Normal
 SpawnCube,100,100,.1,25000,Normal
+Ore,50,300,.1,100,None

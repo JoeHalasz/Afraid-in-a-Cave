@@ -6,6 +6,7 @@ public class PickupItem : NetworkBehaviour
     
     [SerializeField]
     GameObject pickedUpItem;
+    public bool isHoldingItem => pickedUpItem != null;
     Rigidbody pickedUpItemRB;
     GameObject cam;
 
@@ -18,24 +19,24 @@ public class PickupItem : NetworkBehaviour
     float range = 4f;
 
     LayerMask layerMask;
+    EquiptItem equiptItem;
 
     void Start()
     {
-        // get the camera child object
+        if (!HasAuthority || !IsSpawned) return;
         cam = transform.Find("Camera").gameObject;
         layerMask = LayerMask.GetMask("Item");
+        equiptItem = GetComponent<EquiptItem>();
     }
 
     public void checkPickupItem()
     {
         // raycast to check if the player is looking at the item
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range, layerMask))
-        {
-            if (hit.collider.gameObject != gameObject)
-                if (hit.collider.gameObject.tag == "Pickup")
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range, layerMask)
+            && (hit.collider.gameObject != gameObject)
+            && (hit.collider.gameObject.tag == "Pickup") )
                     pickupItem(hit.collider.gameObject);
-        }
         // draw the ray
         Debug.DrawRay(cam.transform.position, cam.transform.forward * range, Color.red);
     }
@@ -60,7 +61,7 @@ public class PickupItem : NetworkBehaviour
     public void FixedUpdate()
     {
         if (!HasAuthority || !IsSpawned) return;
-        if (Input.GetMouseButton(0) && pickedUpItem == null)
+        if (Input.GetMouseButton(0) && pickedUpItem == null && !equiptItem.hasItemEquipted)
             checkPickupItem();
         // while the mouse is held down, make the item float towards infront of the player by the holdDistance
         if (Input.GetMouseButton(0) && pickedUpItem != null)

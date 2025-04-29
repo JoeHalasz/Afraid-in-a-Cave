@@ -11,7 +11,8 @@ public class ItemManager : MonoBehaviour
     {
         Normal,
         Rare,
-        Ultra
+        Ultra,
+        None
     }
 
     IDictionary<Rarity, List<GameObject>> itemsByRarity = new Dictionary<Rarity, List<GameObject>>();

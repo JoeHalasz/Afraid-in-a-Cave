@@ -220,15 +220,6 @@ public class SessionManager : MonoBehaviour
         }
     }
 
-    // on game quit or application quit, leave the session
-    void OnApplicationQuit()
-    {
-        if (ActiveSession != null)
-        {
-            LeaveSession().Forget();
-        }
-    }
-
     // on game object destroy, leave the session
     void OnDestroy()
     {
