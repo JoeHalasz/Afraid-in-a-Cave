@@ -28,5 +28,6 @@ fix rocks on the left side white rock in ramp room
 Leaving lobbies and changing host on leave lobby(check using shift O)
 Redo sessions so that players can leave correctly and rejoin lobbies
 
-
 Make sure mining works over the network
+
+add break animation for mining things

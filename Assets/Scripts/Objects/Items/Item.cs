@@ -20,6 +20,9 @@ public class Item : NetworkBehaviour
     [SerializeField]
     float damageDampener = 25f;
 
+    float invincibilityTime = 0f;
+    public void setInvincibilityTime(float time) { invincibilityTime = time; }
+
     [SerializeField]
     AudioClip hurtSound;
     [SerializeField]
@@ -51,6 +54,7 @@ public class Item : NetworkBehaviour
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb == null)
             rb = gameObject.AddComponent<Rigidbody>();
+        rb.isKinematic = false;
         rb.mass = mass;
         rb.useGravity = true;
         // add rocks, player, and item as include layers
@@ -61,11 +65,11 @@ public class Item : NetworkBehaviour
         if (c != null)
             c.convex = true;
         if (GetComponent<NetworkObject>() == null)
-            Debug.LogError("Item does not have a NetworkObject component. Please add one.");
+            Debug.LogError($"Item {gameObject.name} does not have a NetworkObject component. Please add one.");
         if (GetComponent<NetworkTransform>() == null)
-            Debug.LogError("Item does not have a NetworkTransform component. Please add one.");
+            Debug.LogError($"Item {gameObject.name} does not have a NetworkTransform component. Please add one.");
         if (GetComponent<NetworkRigidbody>() == null)
-            Debug.LogError("Item does not have a NetworkRigidbody component. Please add one.");
+            Debug.LogError($"Item {gameObject.name} does not have a NetworkRigidbody component. Please add one.");
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -95,14 +99,20 @@ public class Item : NetworkBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (invincibilityTime > 0f)
+            invincibilityTime -= Time.fixedDeltaTime;
+    }
+
     // on collision with anything, make the damage go up based on how hard it hit the other object
     void OnCollisionEnter(Collision collision)
     {
         if (!HasAuthority || !IsSpawned) return;
+        if (invincibilityTime > 0f) return;
         float collisionForce = collision.relativeVelocity.magnitude;
         float damage = Mathf.Clamp01(collisionForce / damageDampener);
         if (damage < minDamageThreshold) return;
-        
         damagePercent.Value += damage;
         if (damagePercent.Value >= maxHealth)
         {

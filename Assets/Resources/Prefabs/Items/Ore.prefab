@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6224742273776912569, guid: 056c97431be4d434c8137ac08a848356, type: 3}
       propertyPath: m_Constraints
-      value: 0
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: -6224742273776912569, guid: 056c97431be4d434c8137ac08a848356, type: 3}
       propertyPath: m_IsKinematic
@@ -242,7 +242,7 @@ MonoBehaviour:
   damageDampener: 100
   hurtSound: {fileID: 0}
   destroySound: {fileID: 0}
-  rarity: 0
+  rarity: 3
   worth: 0
 --- !u!114 &250423548116917103
 MonoBehaviour:
@@ -256,3 +256,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ae7bb82eb1da7846af0ce046b2dde30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1

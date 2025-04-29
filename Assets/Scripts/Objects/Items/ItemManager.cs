@@ -22,6 +22,7 @@ public class ItemManager : MonoBehaviour
         itemsByRarity.Add(Rarity.Normal, new List<GameObject>());
         itemsByRarity.Add(Rarity.Rare, new List<GameObject>());
         itemsByRarity.Add(Rarity.Ultra, new List<GameObject>());
+        itemsByRarity.Add(Rarity.None, new List<GameObject>());
 
         // get every gameobject from the Resources/Prefabs/Items folder
         Object[] itemPrefabs = Resources.LoadAll("Prefabs/Items", typeof(GameObject));
@@ -38,7 +39,7 @@ public class ItemManager : MonoBehaviour
             if (itemsByRarity.ContainsKey((Rarity)itemScript.getRarity()))
                 itemsByRarity[(Rarity)itemScript.getRarity()].Add(item);
             else
-                Debug.LogError("Item prefab has an invalid rarity: " + item.name);
+                Debug.LogError("Item prefab has an invalid rarity: " + item.name + " " + itemScript.getRarity());
         }
     }
 
