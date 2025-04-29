@@ -27,7 +27,7 @@ public class CreateMap : MonoBehaviour
     bool working = false;
 
     int seed;
-    int randomStep = 0; // this is needed because this happens over multiple frames and we need the same random numbers every time
+    int randomStep = 1; // this is needed because this happens over multiple frames and we need the same random numbers every time
 
     void Start()
     {
@@ -299,13 +299,13 @@ public class CreateMap : MonoBehaviour
             }
 
             // try adding rooms until we cant anymore or something was added
+            Random.InitState((int)seed);
             while (roomsToTry.Count != 0 || hallwaysToTry.Count != 0)
             {
                 // make sure this connection point stil exists
                 if (connectionPoint == null)
                     break;
 
-                Random.InitState((int)seed+randomStep++);
                 bool spawnRoom = roomsToTry.Count != 0 && Random.value > .25f;
 
                 GameObject newPart = null;
@@ -344,7 +344,6 @@ public class CreateMap : MonoBehaviour
                     if (connectionPoint == null || newPart == null)
                         break;
                     // Align the new part using a random connection point on the new part 
-                    Random.InitState((int)seed+randomStep++);
                     newConnection = newConnectionsToTry[Random.Range(0, newConnectionsToTry.Count)];
                     newConnectionsToTry.Remove(newConnection);
                     if (newConnection == null)
@@ -359,6 +358,7 @@ public class CreateMap : MonoBehaviour
                     addCollider(newPart);
                     // wait 1 frame
                     yield return 0;
+                    Random.InitState((int)seed+randomStep++);
                     if (newPart == null)
                         continue;
                     else

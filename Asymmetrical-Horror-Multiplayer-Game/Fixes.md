@@ -19,10 +19,9 @@ Fix tracking which room the player is in
 
 fix sliding down ramp
 
-random.seed is not broken, map counter is broken
+random.seed is not broken, map counter is broken (might be fixed? test with the boys)
 
 lessen jump cooldown
-
 
 fix rocks on the left side white rock in ramp room
 Leaving lobbies and changing host on leave lobby(check using shift O)
