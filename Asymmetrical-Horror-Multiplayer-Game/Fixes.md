@@ -9,11 +9,8 @@ turn on direct x 12 again
 fix breaking items over the network 
 
 Sounds over network?
-missing random seed somewhere? might be fixed now 
 
 fix crystal room
-
-map gen broken still
 
 Fix tracking which room the player is in
 

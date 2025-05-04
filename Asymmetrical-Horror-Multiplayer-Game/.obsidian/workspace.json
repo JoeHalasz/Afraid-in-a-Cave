@@ -38,12 +38,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Fixes.md",
+                "file": "TODO.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Fixes"
+              "title": "TODO"
             }
           }
         ],
@@ -241,11 +241,11 @@
   },
   "active": "a9e54c4126f6da8e",
   "lastOpenFiles": [
+    "Fixes.md",
     "TODO.md",
     "Enemies.md",
     "Store.md",
     "Licences.md",
-    "Fixes.md",
     "proximity chat.md",
     "Spawning enemy food.md",
     "Untitled.md",
