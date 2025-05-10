@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 public class Insanity : MonoBehaviour
 {
-    
     PlayerStats playerStats;
-
     AudioSource audioSource;
 
     // first list is 20% chance, second list is 40% chance, third list is 60% chance
@@ -17,11 +15,11 @@ public class Insanity : MonoBehaviour
     List<AudioClip> insanitySounds40 = new List<AudioClip>();
     [SerializeField]
     List<AudioClip> insanitySounds60 = new List<AudioClip>();
-    
 
     void Start()
     {
         playerStats = GetComponent<PlayerStats>();
+        audioSource = GetComponent<AudioSource>();
         if (playerStats == null) Debug.LogError("Insanity: PlayerStats component not found on " + gameObject.name);
         insanitySounds.Add(insanitySounds20);
         insanitySounds.Add(insanitySounds40);
@@ -48,7 +46,9 @@ public class Insanity : MonoBehaviour
             if (insanitySounds[r].Count != 0)
             {
                 int randomSound = Random.Range(0, insanitySounds[r].Count);
-                audioSource.PlayOneShot(insanitySounds[r][randomSound]);
+                // play the sound far away from the player
+                Vector3 pos = transform.position + new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
+                AudioSource.PlayClipAtPoint(insanitySounds[r][randomSound], pos, 1f);
             }
         }
         //        min                                range size
