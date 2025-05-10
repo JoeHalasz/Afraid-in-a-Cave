@@ -25,6 +25,7 @@ Things to buy
 	Player revive
 	Soda can single use to run faster for a few seconds
 	Mouse trap for monster food
+	Strength upgrade (carry heavier items)
 	Specific monster kill items
 		1 : bb gun
 		2 : Some kind of mining thing
@@ -35,6 +36,3 @@ Things to buy
 		7 : Flashbang
 		8 : Bug spray
 		9 : Canary in a cage
-
-	
-	

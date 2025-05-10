@@ -42,6 +42,7 @@ Some enemies are not from this world. They will have a different style/look to t
 	Needs to eat something to be able to sprint
 	When it finds a dead player, it can become them (skin stealer) and use their items
 	Evil ethereal looking ( from the same place as the void enemy )
+	Being too close causes [[Insanity]]
 
 5
 	Mimic
@@ -69,6 +70,7 @@ Some enemies are not from this world. They will have a different style/look to t
 	Evil ethereal looking ( from the same place as the slenderman enemy )
 
 8
-	Spider that webs players to slow them down, and poisons them when it bites 
+	Spider like creature that webs players to slow them down, and poisons them when it bites 
 	Eat rats to make poison
 	Spider is low poly ( from this world )
+	Poison does more damage than insanity 

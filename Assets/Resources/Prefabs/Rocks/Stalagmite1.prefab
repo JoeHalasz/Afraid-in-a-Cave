@@ -148,6 +148,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stalagmite1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 533c286e11e401142950b8223c4e9cd0, type: 3}
+      propertyPath: m_TagString
+      value: RandomDeleteOnMapLoad
+      objectReference: {fileID: 0}
     - target: {fileID: 1996681692096063558, guid: 533c286e11e401142950b8223c4e9cd0, type: 3}
       propertyPath: m_Name
       value: Rock
@@ -161,9 +165,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3536725864522684321}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 533c286e11e401142950b8223c4e9cd0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -4295046507639703258}
     - targetCorrespondingSourceObject: {fileID: 1996681692096063558, guid: 533c286e11e401142950b8223c4e9cd0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4365942928667244613}
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3377578328
+  GlobalObjectIdHash: 3546103396
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 3
@@ -428,24 +429,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &3711790719198317322 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 533c286e11e401142950b8223c4e9cd0, type: 3}
-  m_PrefabInstance: {fileID: 4558632588019070555}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &-4295046507639703258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3711790719198317322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1949017060d41194f9f69005ad3668ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  percentChange: 80
 --- !u!4 &4091869162477457840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 533c286e11e401142950b8223c4e9cd0, type: 3}

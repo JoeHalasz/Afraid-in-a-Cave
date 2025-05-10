@@ -19,7 +19,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        if (!IsOwner || !IsSpawned) return;
+        if (!HasAuthority || !IsSpawned) return;
         Move(); // Call the Move function every frame
         Jump(); // Call the Jump function every frame
     }
@@ -55,7 +55,7 @@ public class PlayerMovement : NetworkBehaviour
             // Apply deceleration when no input is given
             if (moveDirection.magnitude == 0)
             {
-                Vector3 decelerationForce = -rb.linearVelocity * deceleration;
+                Vector3 decelerationForce = -rb.linearVelocity * (deceleration/100);
                 decelerationForce.y = 0; // Ignore vertical changes
                 rb.AddForce(decelerationForce, ForceMode.Acceleration);
             }

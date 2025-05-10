@@ -86,6 +86,16 @@ public class CreateMap : MonoBehaviour
                     unloadMap();
                     break;
                 case 4:
+                    working = true;
+                    Random.InitState((int)seed);
+                    // randomly delete RandomDeleteOnMapLoad objects
+                    GameObject[] randomDeleteOnMapLoadObjects = GameObject.FindGameObjectsWithTag("RandomDeleteOnMapLoad");
+                    Debug.Log("Randomly deleting " + randomDeleteOnMapLoadObjects.Length + " objects");
+                    foreach (GameObject obj in randomDeleteOnMapLoadObjects)
+                        if (Random.Range(0f, 100f) < 75f)
+                            obj.SetActive(false);
+                    break;
+                case 5:
                     Debug.Log("Map creation finished");
                     syncVars.currentStage.Value = -1;
                     break;
