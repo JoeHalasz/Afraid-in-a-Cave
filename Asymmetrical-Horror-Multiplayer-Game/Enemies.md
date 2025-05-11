@@ -43,6 +43,7 @@ Some enemies are not from this world. They will have a different style/look to t
 	When it finds a dead player, it can become them (skin stealer) and use their items
 	Evil ethereal looking ( from the same place as the void enemy )
 	Being too close causes [[Insanity]]
+	More visible when he is moving 
 
 5
 	Mimic

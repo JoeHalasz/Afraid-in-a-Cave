@@ -39,6 +39,8 @@ public class SlenderParticles : MonoBehaviour
         {
             visualEffect.SetVector3("PlayerPosition", player.transform.position);
             visualEffect.SetVector3("SlenderPosition", transform.parent.position);
+            // SlenderVelocity
+            
         }
     }
 }
