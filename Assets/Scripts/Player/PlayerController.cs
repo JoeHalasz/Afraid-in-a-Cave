@@ -3,6 +3,7 @@ using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
+using System.Collections.Generic;
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 namespace StarterAssets
@@ -116,13 +117,17 @@ namespace StarterAssets
 #endif
             }
         }
+        
+        List<string> bodyTypes;
+        List<GameObject> bodies = new List<GameObject>();
 
         private void Start()
         {
             if (!HasAuthority || !IsSpawned) return;
             _mainCamera = transform.Find("Camera").gameObject;
             
-            _hasAnimator = TryGetComponent(out _animator);
+            bodyTypes = GetComponent<PlayerChange>().getBodyTypes();
+            findBodies();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
@@ -138,11 +143,35 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
         }
 
+        void findBodies()
+        {
+            bodies.Clear();
+            foreach (string bodyType in bodyTypes)
+            {
+                GameObject body = transform.Find(bodyType).gameObject;
+                if (body != null)
+                    if (body.activeSelf)
+                        bodies.Add(body);
+            }
+        }
+
+        void findAnimator()
+        {
+            foreach (GameObject body in bodies)
+            {
+                if (body != null)
+                {
+                    _hasAnimator = body.TryGetComponent(out _animator);
+                    if (_hasAnimator)
+                        break;
+                }
+            }
+        }
+
         private void Update()
         {
             if (!HasAuthority || !IsSpawned) return;
-            _hasAnimator = TryGetComponent(out _animator);
-
+            findAnimator();
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -319,26 +348,6 @@ namespace StarterAssets
             Gizmos.DrawSphere(
                 new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
                 GroundedRadius);
-        }
-
-        private void OnFootstep(AnimationEvent animationEvent)
-        {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
-            {
-                if (FootstepAudioClips.Length > 0)
-                {
-                    var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
-                }
-            }
-        }
-
-        private void OnLand(AnimationEvent animationEvent)
-        {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
-            {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
-            }
         }
     }
 }

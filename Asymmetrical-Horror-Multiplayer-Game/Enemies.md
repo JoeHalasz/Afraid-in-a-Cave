@@ -69,6 +69,7 @@ Some enemies are not from this world. They will have a different style/look to t
 	As it gets closer the environment gets darker and darker. Once pitch black, for too long player dies
 	Needs to eat light to stay alive ( it has to move through the caves, cant just sit)
 	Evil ethereal looking ( from the same place as the slenderman enemy )
+	Made of particles like the Slenderman
 
 8
 	Spider like creature that webs players to slow them down, and poisons them when it bites 

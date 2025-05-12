@@ -6,6 +6,7 @@ public class PlayerChange : NetworkBehaviour
 {
 
     List<string> bodyTypes = new List<string>() { "NormalPlayer", "Slender" };
+    public List<string> getBodyTypes() { return bodyTypes; }
     string currentBodyType = "NormalPlayer";
 
     void Start()
@@ -14,6 +15,7 @@ public class PlayerChange : NetworkBehaviour
         // deactivate all bodyType on this object
         foreach (string bodyType in bodyTypes)
         {
+            if (bodyType == "NormalPlayer") continue;
             GameObject body = transform.Find(bodyType).gameObject;
             if (body != null)
                 body.SetActive(false);
@@ -31,9 +33,7 @@ public class PlayerChange : NetworkBehaviour
 
     void changeToBody(int bodyIndex)
     {
-        Debug.Log("Changing to body1: " + bodyTypes[bodyIndex]);
         if (bodyTypes[bodyIndex] == currentBodyType) return;
-        Debug.Log("Changing to body2: " + bodyTypes[bodyIndex]);
         GameObject currentBody = transform.Find(currentBodyType).gameObject;
         if (currentBody != null)
             currentBody.SetActive(false);

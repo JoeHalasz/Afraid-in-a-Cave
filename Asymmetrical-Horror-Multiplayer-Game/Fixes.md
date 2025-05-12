@@ -27,3 +27,9 @@ Redo sessions so that players can leave correctly and rejoin lobbies
 Make sure mining works over the network
 
 add break animation for mining things
+
+Sprinting is always enabled once its pressed once
+
+Make sure animations work over the network
+
+Make Slender work with animations and spinning
