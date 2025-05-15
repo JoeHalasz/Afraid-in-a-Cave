@@ -11,6 +11,7 @@ Some enemies are not from this world. They will have a different style/look to t
 	Other players take damage when looking at them
 	Can disappear (blinks and it disappears)
 	Extremely high res scary ( not from this world )
+	Blood drip sounds to know its there
 
 2 
 	Floating glowing crystal/rock
@@ -62,6 +63,7 @@ Some enemies are not from this world. They will have a different style/look to t
 	Has to rest after yelling, on the ceiling
 	Needs to eat rats  
 	Realistic look ( same look as the eye )
+	Scream causes insanity 
 	
 7
 	Void enemy that breaks lighting items like flashlights and dims cave lights 

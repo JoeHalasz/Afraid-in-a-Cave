@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerView : MonoBehaviour
+public class PlayerView : NetworkBehaviour
 {
 
     GameObject cam;
@@ -8,11 +9,13 @@ public class PlayerView : MonoBehaviour
 
     void Start()
     {
+        if (!HasAuthority || !IsSpawned) return;
         cam = transform.Find("Camera").gameObject;
     }
 
     void Update()
     {
+        if (!HasAuthority || !IsSpawned) return;
         // rotate the camera up and down, and this object left and right
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
