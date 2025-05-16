@@ -96,11 +96,9 @@ GameObject:
   - component: {fileID: -2082970881777335281}
   - component: {fileID: -7089274626593292787}
   - component: {fileID: 725155867955464503}
-  - component: {fileID: 7606944489224409269}
   - component: {fileID: 87738536943866180}
   - component: {fileID: 8068197035231109151}
   - component: {fileID: 3025178307751619694}
-  - component: {fileID: 8953058399474362885}
   - component: {fileID: 3636883553803837349}
   - component: {fileID: 5264457778955672786}
   - component: {fileID: 447831993812451092}
@@ -301,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0d11f3e34ba3b4eacb2b3c031877eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   mouseSensitivity: 0.5
 --- !u!114 &1488438363271395565
 MonoBehaviour:
@@ -546,23 +545,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7606944489224409269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126033940717042450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 909d917d73a63f940ac158d02e936645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pushLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  canPush: 0
-  strength: 1.1
 --- !u!143 &87738536943866180
 CharacterController:
   m_ObjectHideFlags: 0
@@ -642,28 +624,6 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
---- !u!95 &8953058399474362885
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126033940717042450}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
-  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3636883553803837349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,6 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be50b5c5bf7ac464fa07bf6738799ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
   jump: 0
@@ -1233,7 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1675759018
+  GlobalObjectIdHash: 2993893171
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1359,7 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1675759018
+  GlobalObjectIdHash: 2923862857
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1

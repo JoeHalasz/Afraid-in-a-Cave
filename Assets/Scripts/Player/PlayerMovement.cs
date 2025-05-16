@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    float moveSpeed = 4.5f; // Speed of the player
+    float moveSpeed = 3f; // Speed of the player
     float jumpForce = 300f; // Jump force of the player
     float acceleration = 10f; // Acceleration of the player
     float deceleration = 8f; // Deceleration when no input is given
@@ -42,12 +42,12 @@ public class PlayerMovement : NetworkBehaviour
         bodyTypes = GetComponent<PlayerChange>().getBodyTypes();
         findBodies();
         _fallTimeoutDelta = FallTimeout;
+        InvokeRepeating("findAnimator", 0f, 0.1f);
     }
 
     void Update()
     {
         if (!HasAuthority || !IsSpawned) return;
-        findAnimator();
         Move();
         Jump();
     }
@@ -79,70 +79,49 @@ public class PlayerMovement : NetworkBehaviour
 
     void Move()
     {
-        float targetSpeed = _input.sprint ? moveSpeed*2 : moveSpeed;
+        float targetSpeed = _input.sprint ? moveSpeed*1.5f : moveSpeed;
         if (_input.move == Vector2.zero) targetSpeed = 0.0f;
         float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
-        float currentHorizontalSpeed = rb.linearVelocity.magnitude;
-        float speedOffset = 0.1f;
         float speed;
         
         if (isGrounded || Time.time - lastGroundedTime > 2f)
         {
-            // if (currentHorizontalSpeed < targetSpeed - speedOffset ||
-            //     currentHorizontalSpeed > targetSpeed + speedOffset)
-            // {
-            //     speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
-            //         Time.deltaTime * SpeedChangeRate);
-
-            //     // round speed to 3 decimal places
-            //     speed = Mathf.Round(speed * 1000f) / 1000f;
-            // }
-            // else
-                speed = targetSpeed * inputMagnitude;
-            Debug.Log("Speed: " + speed);
+            speed = targetSpeed * inputMagnitude;
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
-            // move
-            rb.AddForce(inputDirection * speed * acceleration, ForceMode.Acceleration);
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            Vector3 right = transform.TransformDirection(Vector3.right);
+            inputDirection = (inputDirection.x * right + inputDirection.z * forward).normalized;
 
-            // dont go over max speed
-            if (rb.linearVelocity.magnitude > targetSpeed)
-            {
-                Vector3 force = rb.linearVelocity.normalized * targetSpeed;
-                force.y = rb.linearVelocity.y; // keep vertical speed
-                rb.linearVelocity = force;
-            }
+            // set velocity
+            rb.linearVelocity = new Vector3(inputDirection.x * speed, rb.linearVelocity.y, inputDirection.z * speed);
 
-            // Update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetFloat(_animIDSpeed, 1.0f);//_animationBlend);
-
+                _animator.SetFloat(_animIDSpeed, speed);//_animationBlend);
                 if (_input.move.y < 0) // Moving backward
                     inputMagnitude = -inputMagnitude;
-
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
+            
+            // slow down
+            if (inputDirection.x == 0)
+                rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, rb.linearVelocity.z);
+            if (inputDirection.z == 0)
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, 0);
         }
-
-        // Apply deceleration when no input is given
-        if (targetSpeed == 0.0f)
-        {
-            Vector3 decelerationForce = -rb.linearVelocity * (deceleration/100);
-            decelerationForce.y = 0; // Ignore vertical changes
-            // rb.AddForce(decelerationForce, ForceMode.Acceleration);
-        }
-
     }
 
     void Jump()
     {
         if (_hasAnimator)
         {
+            _animator.SetBool(_animIDGrounded, isGrounded);
+
             if(isGrounded)
             {
                 _fallTimeoutDelta = FallTimeout;
