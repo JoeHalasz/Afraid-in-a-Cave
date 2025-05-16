@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Enemies.md",
+                "file": "TODO.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Enemies"
+              "title": "TODO"
             }
           },
           {
@@ -235,8 +235,8 @@
   },
   "active": "56b9a8d75e08f30b",
   "lastOpenFiles": [
-    "Insanity.md",
     "Enemies.md",
+    "Insanity.md",
     "Fixes.md",
     "TODO.md",
     "Classes.md",

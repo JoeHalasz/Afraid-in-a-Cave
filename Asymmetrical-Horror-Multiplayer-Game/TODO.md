@@ -27,3 +27,5 @@ FIX MAP GEN ( had to revert last changes )
 Make stalagmites deal damage maybe
 Make player death
 Test insanity sound frequency 
+add crouching 
+add sounds to movements (volume based on speed)

@@ -42,12 +42,13 @@ public class PlayerMovement : NetworkBehaviour
         bodyTypes = GetComponent<PlayerChange>().getBodyTypes();
         findBodies();
         _fallTimeoutDelta = FallTimeout;
-        InvokeRepeating("findAnimator", 0f, 0.1f);
+        // InvokeRepeating("findAnimator", 0f, 0.1f);
     }
 
     void Update()
     {
         if (!HasAuthority || !IsSpawned) return;
+        findAnimator();
         Move();
         Jump();
     }
@@ -56,7 +57,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         foreach (GameObject body in bodies)
         {
-            if (body != null)
+            if (body != null && body.activeSelf)
             {
                 _hasAnimator = body.TryGetComponent(out _animator);
                 if (_hasAnimator)
@@ -72,8 +73,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             GameObject body = transform.Find(bodyType).gameObject;
             if (body != null)
-                if (body.activeSelf)
-                    bodies.Add(body);
+                bodies.Add(body);
         }
     }
 
