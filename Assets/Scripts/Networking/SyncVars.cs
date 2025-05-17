@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Networking;
+using UnityEngine.InputSystem;
 
 public class SyncVars : NetworkBehaviour
 {
@@ -9,12 +10,17 @@ public class SyncVars : NetworkBehaviour
     NetworkVariable<int> hostNextStage = new NetworkVariable<int>(-1);
     public NetworkVariable<int> currentStage = new NetworkVariable<int>(0);
 
+    public NetworkVariable<int> playerBody = new NetworkVariable<int>(0);
+    NetworkVariable<int> playerCurrentItem = new NetworkVariable<int>(0);
+
     CreateMap createMap;
 
     public NetworkVariable<int> seed = new NetworkVariable<int>(0);
 
     [SerializeField]
     bool startMapGen = false;
+
+    GameObject[] players;
 
     void Start()
     {
@@ -41,7 +47,12 @@ public class SyncVars : NetworkBehaviour
     void FixedUpdate()
     {
         if (!HasAuthority || !IsSpawned) return;
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        players = GameObject.FindGameObjectsWithTag("Player");
+        mapGen();
+    }
+
+    void mapGen()
+    {
         if (NetworkManager.LocalClient.IsSessionOwner) // host check
         {
             if (startMapGen)

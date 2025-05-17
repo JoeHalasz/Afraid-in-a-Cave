@@ -83,7 +83,6 @@ GameObject:
   - component: {fileID: 1276405841128004130}
   - component: {fileID: 1747348690414518889}
   - component: {fileID: 5111432083115278370}
-  - component: {fileID: 6954069727367320281}
   - component: {fileID: -876803523994673787}
   - component: {fileID: 1488438363271395565}
   - component: {fileID: 858302743281182491}
@@ -274,19 +273,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   camera: {fileID: 8179578419554847107}
---- !u!114 &6954069727367320281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126033940717042450}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fac3dda4607ca27428fb6d2c1baa868f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &-876803523994673787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +336,8 @@ MonoBehaviour:
   hostNextStage:
     m_InternalValue: -1
   currentStage:
+    m_InternalValue: 0
+  playerBody:
     m_InternalValue: 0
   seed:
     m_InternalValue: 0
@@ -454,7 +442,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126033940717042450}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1136,9 +1124,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8929321688657787096}
-    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1187089225953564716}
   m_SourcePrefab: {fileID: 100100000, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
 --- !u!1 &3897220189785428110 stripped
 GameObject:
@@ -1182,31 +1167,6 @@ MonoBehaviour:
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
---- !u!114 &1187089225953564716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897220189785428110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2993893171
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 1
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!4 &4422083697777592884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
@@ -1280,6 +1240,10 @@ PrefabInstance:
       propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[0].m_Overridden
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4235325507562176467, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7672319147116693419, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
       propertyPath: m_Name
       value: Slender
@@ -1294,15 +1258,14 @@ PrefabInstance:
     - {fileID: 4980535059813647824, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
     - {fileID: 9042032697386876054, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
     - {fileID: 8870839884842071478, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
+    - {fileID: 5933445151609710501, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
+    - {fileID: 4235325507562176467, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7672319147116693419, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2646086026484781999}
-    - targetCorrespondingSourceObject: {fileID: 7672319147116693419, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 518225969016332912}
   m_SourcePrefab: {fileID: 100100000, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}
 --- !u!1 &2761212770110617075 stripped
 GameObject:
@@ -1324,31 +1287,6 @@ MonoBehaviour:
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
---- !u!114 &518225969016332912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2761212770110617075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2923862857
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 1
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!4 &5262298853522210473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 373571251681381617, guid: 1c8d82f8d30bee448bf7da1ebd10ff64, type: 3}

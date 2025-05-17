@@ -2,10 +2,9 @@ using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
-using Unity.Netcode;
 namespace StarterAssets
 {
-	public class MovementInputs : NetworkBehaviour
+	public class MovementInputs : MonoBehaviour
 	{
 		[Header("Character Input Values")]
 		public Vector2 move;
@@ -46,25 +45,21 @@ namespace StarterAssets
 #endif
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			if (!HasAuthority || !IsSpawned) return;
 			move = newMoveDirection;
 		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
-			if (!HasAuthority || !IsSpawned) return;
 			look = newLookDirection;
 		}
 
 		public void JumpInput(bool newJumpState)
 		{
-			if (!HasAuthority || !IsSpawned) return;
 			jump = newJumpState;
 		}
 
 		public void SprintInput(bool newSprintState)
 		{
-			if (!HasAuthority || !IsSpawned) return;
 			sprint = newSprintState;
 		}
 		
@@ -75,7 +70,6 @@ namespace StarterAssets
 
 		private void SetCursorState(bool newState)
 		{
-			if (!HasAuthority || !IsSpawned) return;
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}

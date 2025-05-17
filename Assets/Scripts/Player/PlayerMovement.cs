@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : NetworkBehaviour
 {
@@ -33,11 +34,13 @@ public class PlayerMovement : NetworkBehaviour
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
 
+    PlayerInput _playerInput;
+
     void Start()
     {
-        if (!HasAuthority || !IsSpawned) return;
         rb = GetComponent<Rigidbody>(); // Get the Rigidbody component attached to the player
         _input = GetComponent<Inputs>();
+        _playerInput = GetComponent<PlayerInput>();
         AssignAnimationIDs();
         bodyTypes = GetComponent<PlayerChange>().getBodyTypes();
         findBodies();
@@ -79,6 +82,8 @@ public class PlayerMovement : NetworkBehaviour
 
     void Move()
     {
+        if (!_playerInput.enabled) // this needs to be deactive at the start for multiplayer. See https://discussions.unity.com/t/player-input-components-not-working-on-spawned-playerobjects/885960/3
+            _playerInput.enabled = true;
         float targetSpeed = _input.sprint ? moveSpeed*1.5f : moveSpeed;
         if (_input.move == Vector2.zero) targetSpeed = 0.0f;
         float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
@@ -107,7 +112,7 @@ public class PlayerMovement : NetworkBehaviour
                     inputMagnitude = -inputMagnitude;
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
-            
+
             // slow down
             if (inputDirection.x == 0)
                 rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, rb.linearVelocity.z);

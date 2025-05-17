@@ -64,6 +64,7 @@ Some enemies are not from this world. They will have a different style/look to t
 	Needs to eat rats  
 	Realistic look ( same look as the eye )
 	Scream causes insanity 
+	When the bat screams the controls are inverted
 	
 7
 	Void enemy that breaks lighting items like flashlights and dims cave lights 
