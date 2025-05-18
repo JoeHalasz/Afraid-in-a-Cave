@@ -19,14 +19,14 @@ public class PickupItem : NetworkBehaviour
     float range = 4f;
 
     LayerMask layerMask;
-    EquiptItem equiptItem;
+    EquipItem equiptItem;
 
     void Start()
     {
         if (!HasAuthority || !IsSpawned) return;
         cam = transform.Find("Camera").gameObject;
         layerMask = LayerMask.GetMask("Item");
-        equiptItem = GetComponent<EquiptItem>();
+        equiptItem = GetComponent<EquipItem>();
     }
 
     public void checkPickupItem()
@@ -61,7 +61,7 @@ public class PickupItem : NetworkBehaviour
     public void FixedUpdate()
     {
         if (!HasAuthority || !IsSpawned) return;
-        if (Input.GetMouseButton(0) && pickedUpItem == null && !equiptItem.hasItemEquipted)
+        if (Input.GetMouseButton(0) && pickedUpItem == null && !equiptItem.hasItemEquipped)
             checkPickupItem();
         // while the mouse is held down, make the item float towards infront of the player by the holdDistance
         if (Input.GetMouseButton(0) && pickedUpItem != null)

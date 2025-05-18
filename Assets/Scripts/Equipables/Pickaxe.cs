@@ -15,29 +15,36 @@ public class Pickaxe : NetworkBehaviour
     [SerializeField]
     float range = 4f;
 
+    ExactFollow exactFollow;
+
     void Start()
     {
         if (!HasAuthority || !IsSpawned) return;
-        cam = transform.parent.parent.Find("Camera").gameObject;
+        // find all the player objects and find the one that has a camera enabled 
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject p in players)
+        {
+            GameObject camera = p.transform.Find("Camera").gameObject;
+            if (camera != null && camera.activeSelf)
+            {
+                cam = camera;
+                break;
+            }
+        }
+
         layerMask = LayerMask.GetMask("Mineable");
+        exactFollow = GetComponent<ExactFollow>();
     }
 
     private void OnEnable()
     {
-        if (!HasAuthority || !IsSpawned) return;
         transform.localRotation = Quaternion.Euler(0, 0, 0);
         isSwinging = false;
     }
 
-    void Update()
+    public void OnClick()
     {
         if (!HasAuthority || !IsSpawned) return;
-        if (Input.GetMouseButton(0))
-            OnClick();
-    }
-
-    private void OnClick()
-    {
         if (!isSwinging)
         {
             StartCoroutine(SwingPickaxe());
@@ -51,9 +58,8 @@ public class Pickaxe : NetworkBehaviour
         // cast a ray from the camera straight forward and see if it hits something with the "Mineable" tag
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range, layerMask)
-            && (hit.collider.gameObject != gameObject) )
-                hit.collider.GetComponent<Mineable>().mine();
-        // draw the ray
+            && (hit.collider.gameObject != gameObject))
+            hit.collider.GetComponent<Mineable>().mine();
     }
 
     private IEnumerator SwingPickaxe()
@@ -69,7 +75,8 @@ public class Pickaxe : NetworkBehaviour
         {
             elapsedTime += Time.deltaTime;
             float rotation = Mathf.Lerp(startRotation, endRotation, elapsedTime / (swingDuration / 2));
-            transform.localRotation = Quaternion.Euler(rotation, 0, 0);
+            exactFollow.rotationOffset = new Vector3(rotation, 0, 0);
+            // transform.localRotation = Quaternion.Euler(rotation, 0, 0);
             yield return null;
         }
 
@@ -80,7 +87,8 @@ public class Pickaxe : NetworkBehaviour
         {
             elapsedTime += Time.deltaTime;
             float rotation = Mathf.Lerp(endRotation, startRotation, elapsedTime / (swingDuration / 2));
-            transform.localRotation = Quaternion.Euler(rotation, 0, 0);
+            exactFollow.rotationOffset = new Vector3(rotation, 0, 0);
+            // transform.localRotation = Quaternion.Euler(rotation, 0, 0);
             yield return null;
         }
 

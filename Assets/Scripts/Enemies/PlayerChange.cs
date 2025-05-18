@@ -8,6 +8,7 @@ public class PlayerChange : NetworkBehaviour
     List<string> bodyTypes = new List<string>() { "NormalPlayer", "Slender" };
     public List<string> getBodyTypes() { return bodyTypes; }
     string currentBodyType = "NormalPlayer";
+    public string getCurrentBodyType() { return currentBodyType; }
     SyncVars syncVars;
 
     void Start()
@@ -27,7 +28,6 @@ public class PlayerChange : NetworkBehaviour
 
     void activateBody(int bodyIndex)
     {
-
         if (bodyIndex < 0 || bodyIndex >= bodyTypes.Count) return;
         GameObject newBody = transform.Find(bodyTypes[bodyIndex])?.gameObject;
         if (newBody != null)

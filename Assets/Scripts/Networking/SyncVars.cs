@@ -11,7 +11,7 @@ public class SyncVars : NetworkBehaviour
     public NetworkVariable<int> currentStage = new NetworkVariable<int>(0);
 
     public NetworkVariable<int> playerBody = new NetworkVariable<int>(0);
-    NetworkVariable<int> playerCurrentItem = new NetworkVariable<int>(0);
+    public NetworkVariable<int> playerEquippedItem = new NetworkVariable<int>(-1);
 
     CreateMap createMap;
 
