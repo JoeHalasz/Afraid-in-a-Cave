@@ -12,7 +12,7 @@ ITEMS
 	Pineapple
 Different masks that laugh, cry, scream, ect... once they are put on. Once held for 5 seconds they go on ur face and make the noise. Make lots of sound so that enemies can find you. Another player has to take it off of you. 
 Cart for items thats heavy so that makes sound when moved
-Cart upgrades 
+[[Cart]] upgrades 
 	Cap that opens and closes
 	Size of cart
 	Weight of cart 
@@ -20,7 +20,7 @@ Cart upgrades
 Small chests that spawn that can also be used for items
 SECURITY APERATIS FOR EXTRACTION S.A.F.E
 players picking up players
-Sounds when player gets hit by red duck
+[[Sounds]] when player gets hit by red duck
 Sounds for stalagmites and test over network
 make some stalagmites not fall / dont make them fall every time
 FIX MAP GEN ( had to revert last changes )

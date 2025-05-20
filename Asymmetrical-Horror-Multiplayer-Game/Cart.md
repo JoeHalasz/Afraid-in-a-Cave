@@ -1,0 +1,1 @@
+[[Items]] can be placed into the cart so lots of them can be moved at once

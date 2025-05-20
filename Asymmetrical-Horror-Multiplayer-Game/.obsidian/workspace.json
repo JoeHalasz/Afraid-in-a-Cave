@@ -8,21 +8,35 @@
         "type": "tabs",
         "children": [
           {
-            "id": "56b9a8d75e08f30b",
+            "id": "0a7d9ca62ddb93a7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TODO.md",
+                "file": "Voice Chat.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "TODO"
+              "title": "Voice Chat"
             }
           },
           {
-            "id": "058ed7f0d1c9427c",
+            "id": "910af016c57fe431",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Death.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Death"
+            }
+          },
+          {
+            "id": "ac7422a00e0a800a",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -36,7 +50,7 @@
             }
           },
           {
-            "id": "a9e54c4126f6da8e",
+            "id": "4df443233333834e",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -50,45 +64,51 @@
             }
           },
           {
-            "id": "09f5e494a278cb59",
+            "id": "efe1b10ee092593d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Store.md",
+                "file": "Cart.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Store"
+              "title": "Cart"
             }
           },
           {
-            "id": "e7265b9e249c58c8",
+            "id": "f694bdfe9af67476",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Base idea.md",
+                "file": "World.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Base idea"
+              "title": "World"
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "c2dec84699ed029d",
+        "type": "tabs",
+        "children": [
           {
-            "id": "03be4f698966b5b9",
+            "id": "94aa7c6d5a9f8c42",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Classes.md",
+                "file": "Sounds.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Classes"
+              "title": "Sounds"
             }
           }
         ]
@@ -233,29 +253,32 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "56b9a8d75e08f30b",
+  "active": "0a7d9ca62ddb93a7",
   "lastOpenFiles": [
     "Enemies.md",
-    "TODO.md",
+    "Voice Chat.md",
+    "Death.md",
     "Insanity.md",
     "Items.md",
-    "Store.md",
-    "Base idea.md",
-    "Classes.md",
-    "Fixes.md",
-    "Licences.md",
-    "proximity chat.md",
-    "Spawning enemy food.md",
+    "Sounds.md",
+    "World.md",
     "Untitled.md",
+    "TODO.md",
+    "Cart.md",
+    "Store.md",
+    "Spawning enemy food.md",
+    "proximity chat.md",
     "Name.md",
     "Multiplayer.md",
     "Mod Support.md",
     "Lighting.md",
+    "Licences.md",
+    "Fixes.md",
     "Enemy AI.md",
+    "Classes.md",
+    "Base idea.md",
     "LOre.md",
-    "Death.md",
     "Sellables.md",
-    "World.md",
     "Untitled.canvas",
     "Untitled 1.canvas",
     "2025-03-29.md",

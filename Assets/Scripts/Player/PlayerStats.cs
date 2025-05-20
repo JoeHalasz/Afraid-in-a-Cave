@@ -39,5 +39,4 @@ public class PlayerStats : MonoBehaviour
         }
         if (insanity < 0) insanity = 0;
     }
-
 }
