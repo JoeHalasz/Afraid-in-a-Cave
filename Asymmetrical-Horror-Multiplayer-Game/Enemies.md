@@ -32,7 +32,10 @@ Some enemies are not from this world. They will have a different style/look to t
 	Anvils that drop
 	Need to eat vegetables to spawn more traps
 	Can leave cameras around for all enemies to use 
-	2D, always faces whatever camera is seeing it ( not from this dimension )
+	2D, always faces whatever camera is seeing it ( not from this dimension ) 
+	Kind of like how Strinova does it but rotated 90*
+	Maybe a button to rotate it 90 degrees as well. 
+	circle shadow under it 
 
 4
 	Slenderman look
