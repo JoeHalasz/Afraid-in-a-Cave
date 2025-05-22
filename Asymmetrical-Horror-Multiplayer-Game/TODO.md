@@ -31,3 +31,6 @@ add crouching
 add sounds to movements (volume based on speed)
 
 Brighter flashlight can be done by making a camera filter so the darkness is because of the filter and the flashlight is a holepunch in that filter 
+Fix falling rocks in other hallways
+Fix camera and seeing the player model
+fix spawning another map

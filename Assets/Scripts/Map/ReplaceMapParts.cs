@@ -13,7 +13,7 @@ public class ReplaceMapParts : MonoBehaviour
     void Start()
     {
         mapManager = GameObject.Find("MapManager");
-        foreach (GameObject obj in Resources.LoadAll<GameObject>("Prefabs/MapPartsFinished"))
+        foreach (GameObject obj in Resources.LoadAll<GameObject>("Prefabs/Map/MapPartsFinished"))
         {
             if (obj != null)
             {

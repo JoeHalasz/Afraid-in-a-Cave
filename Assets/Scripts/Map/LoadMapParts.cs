@@ -12,14 +12,16 @@ public class LoadMapParts : MonoBehaviour
 
     List<MapPartData> roomsData = new List<MapPartData>();
     List<MapPartData> hallwaysData = new List<MapPartData>();
+    List<MapPartData> extrasData = new List<MapPartData>();
 
     public List<MapPartData> getRoomsData() { return roomsData; }
     public List<MapPartData> getHallwaysData() { return hallwaysData; }
+    public List<MapPartData> getExtrasData() { return extrasData; }
 
     void Start()
     {
         Debug.Log("Loading map parts...");
-        foreach (GameObject obj in Resources.LoadAll<GameObject>("Prefabs/MapParts"))
+        foreach (GameObject obj in Resources.LoadAll<GameObject>("Prefabs/Map/MapParts"))
         {
             if (obj != null)
             {
@@ -28,17 +30,13 @@ public class LoadMapParts : MonoBehaviour
                 data.number = roomsData.Count + hallwaysData.Count;
                 data.Connections = new List<GameObject>();
                 foreach (Transform child in obj.transform)
-                {
                     data.Connections.Add(child.gameObject);
-                }
                 if (obj.name.Contains("Room"))
-                {
                     roomsData.Add(data);
-                }
                 else if (obj.name.Contains("Hallway"))
-                {
                     hallwaysData.Add(data);
-                }
+                else if (obj.name.Contains("Extra"))
+                    extrasData.Add(data);
             }
         }
         

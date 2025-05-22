@@ -106,4 +106,7 @@ Stalagmites
 		Lights humming 
 		Grass sound for when walking
 		Ominous Chime for when walking into the cave for the first time
+	Metal clang sound for when minecart hits stopper
+	Minecart wheel sounds 
+	Button sound for minecart
 		

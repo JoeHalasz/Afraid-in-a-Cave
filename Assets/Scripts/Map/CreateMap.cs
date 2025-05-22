@@ -12,12 +12,14 @@ public class CreateMap : MonoBehaviour
     bool stopGeneration = false;
     List<LoadMapParts.MapPartData> roomsData;
     List<LoadMapParts.MapPartData> hallwaysData;
+    List<LoadMapParts.MapPartData> extrasData;
     List<GameObject> allAvailableConnections = new List<GameObject>();
     private List<Bounds> collisionBounds = new List<Bounds>();
     int totalParts = 1;
     ReplaceMapParts replaceMapParts = null;
     ItemManager itemManager = null;
     SyncVars syncVars = null;
+    float extraSpawnChance = .1f;
 
     Dictionary<string, List<string>> connections = new Dictionary<string, List<string>>();
     public Dictionary<string, List<string>> getConnections() { return connections; }
@@ -250,6 +252,7 @@ public class CreateMap : MonoBehaviour
         LoadMapParts loadMapParts = GetComponent<LoadMapParts>();
         roomsData = loadMapParts.getRoomsData();
         hallwaysData = loadMapParts.getHallwaysData();
+        extrasData = loadMapParts.getExtrasData();
 
         allAvailableConnections.Clear();
 
@@ -271,6 +274,7 @@ public class CreateMap : MonoBehaviour
         connections.Add("Hallway0", new List<string> { "Hallway1" });
         connections.Add("Hallway1", new List<string> { "Hallway0","Hallway2"});
         connections.Add("Hallway2", new List<string> { "Hallway1" });
+        bool spawnedOneSell = false;
 
         // Procedurally generate the map
         while (roomCount < maxRooms && allAvailableConnections.Count > 0)
@@ -290,10 +294,14 @@ public class CreateMap : MonoBehaviour
 
             List<LoadMapParts.MapPartData> roomsToTry = new List<LoadMapParts.MapPartData>();
             List<LoadMapParts.MapPartData> hallwaysToTry = new List<LoadMapParts.MapPartData>();
+            List<LoadMapParts.MapPartData> extrasToTry = new List<LoadMapParts.MapPartData>();
 
+            Random.InitState((int)seed + randomStep++);
             if (connectionPoint.transform.parent.name.Contains("Room")) // rooms only connect to hallways
             {
                 hallwaysToTry.AddRange(hallwaysData);
+                if (Random.value < extraSpawnChance)
+                    extrasToTry.AddRange(extrasData);
             }
             else if (connectionPoint.transform.parent.name.Contains("Hallway")) // hallways connect to anything
             {
@@ -306,6 +314,9 @@ public class CreateMap : MonoBehaviour
                         hallwaysToTry.Add(hallway);
                     }
                 }
+                // random chance or we are 50% done and we havent spawned a sell yet
+                if (Random.value < extraSpawnChance || (roomCount > maxRooms / 2 && !spawnedOneSell))
+                    extrasToTry.AddRange(extrasData);
             }
 
             // try adding rooms until we cant anymore or something was added
@@ -315,11 +326,24 @@ public class CreateMap : MonoBehaviour
                 if (connectionPoint == null)
                     break;
 
-                Random.InitState((int)seed+randomStep++);
+                Random.InitState((int)seed + randomStep++);
                 bool spawnRoom = roomsToTry.Count != 0 && Random.value > .25f;
+                bool spawnExtra = extrasToTry.Count != 0;
 
                 GameObject newPart = null;
-                if (spawnRoom || hallwaysToTry.Count == 0)
+                if (spawnExtra)
+                {
+                    int choice = 0;
+                    if (!spawnedOneSell)
+                        spawnedOneSell = true;
+                    else
+                        choice = Random.Range(0, extrasToTry.Count);
+                    newPart = Instantiate(extrasToTry[choice].obj);
+                    extrasToTry.RemoveAt(choice);
+                    newPart.GetComponent<SavedPartType>().partTypeName = newPart.name.Replace("(Clone)", "");
+                    newPart.name = "Extra" + totalParts;
+                }
+                else if (spawnRoom || hallwaysToTry.Count == 0)
                 {
                     spawnRoom = true; // for counting later if there are no hallways
                     int choice = Random.Range(0, roomsToTry.Count);
@@ -354,7 +378,7 @@ public class CreateMap : MonoBehaviour
                     if (connectionPoint == null || newPart == null)
                         break;
                     // Align the new part using a random connection point on the new part 
-                    Random.InitState((int)seed+randomStep++);
+                    Random.InitState((int)seed + randomStep++);
                     newConnection = newConnectionsToTry[Random.Range(0, newConnectionsToTry.Count)];
                     newConnectionsToTry.Remove(newConnection);
                     if (newConnection == null)
