@@ -34,3 +34,7 @@ Brighter flashlight can be done by making a camera filter so the darkness is bec
 Fix falling rocks in other hallways
 Fix camera and seeing the player model
 fix spawning another map
+Maybe make the comeback timer on the minecart depend on how much money was made
+Make sure timer on minecart is good
+Add getting money for selling
+Add stopper with button to start the minecart
